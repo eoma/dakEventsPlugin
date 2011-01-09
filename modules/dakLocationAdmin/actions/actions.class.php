@@ -27,7 +27,7 @@ class dakLocationAdminActions extends autodakLocationAdminActions
       $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
     }
 
-    $this->redirect('@location');
+    $this->redirect('@dak_location_admin');
   }
 
   protected function executeBatchDelete(sfWebRequest $request)
