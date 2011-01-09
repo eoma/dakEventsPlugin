@@ -30,10 +30,10 @@ class PlugindakArrangerForm extends BasedakArrangerForm
     if ($this->getOption('currentUser')->hasGroup('admin')) {
       if ( ! $this->isNew() ) {
         // Don't embed non-existing relations
-        $this->embedRelation('users', 'arrangerUserForm', array( 'options' => array('hideArranger' => true)));
+        $this->embedRelation('users', 'dakArrangerUserForm', array( 'options' => array('hideArranger' => true)));
       }
 
-      $arrangerUserForm = new arrangerUserForm(array(), array('hideArranger' => true));
+      $arrangerUserForm = new dakArrangerUserForm(array(), array('hideArranger' => true));
       $arrangerUserForm->getWidget('user_id')->setOption('add_empty', true );
 
       $this->embedForm('newArrangerUser', $arrangerUserForm);
@@ -89,7 +89,7 @@ class PlugindakArrangerForm extends BasedakArrangerForm
         // We'll delete objects marked for deletion
         unset($values['users'][$index]);
         unset($this->object['users'][$index]);
-        Doctrine::getTable('arrangerUser')->findOneById($id)->delete();
+        Doctrine::getTable('dakArrangerUser')->findOneById($id)->delete();
       }
     }
  
