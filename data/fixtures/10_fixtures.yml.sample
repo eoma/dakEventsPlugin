@@ -1,0 +1,127 @@
+dakFestival:
+  testFestival:
+    title: Test festival
+    leadParagraph: <p><b>Fuck <em>yeah</em></b></p>
+    startDate: "2012-03-17"
+    startTime: "14:00:00"
+    endDate: "2012-03-20"
+    endTime: "15:00:00"
+    commonLocation: Kvarteret
+
+dakFestivalArranger:
+  testASF:
+    arranger: ASF
+    festival: testFestival
+  testRF:
+    arranger: RF
+    festival: testFestival
+
+<?php $arrangers = array('RF', 'ASF', 'Samfunnet', 'BF', 'Immaturus') ?>
+<?php $locations = array('Tivoli', 'Speilsalen', 'Teglverket', 'Maos', 'Stoy', 'Storelogen') ?>
+<?php $categories = array('debate', 'concert', 'theater', 'cinema', 'club', 'quiz') ?>
+
+dakEvent:
+  testEvent:
+    title: A little test event far in the future
+    leadParagraph: As the title says
+    startDate: "2012-04-15"
+    startTime: "14:00:00"
+    endDate: "2012-04-15"
+    endTime: "15:00:00"
+    commonLocation: Teglverket
+    arranger: RF
+    is_public: true
+  testEvent2: 
+    title: Another testevent with custom location
+    leadParagraph: Custom location must be manually typed in
+    startDate: "2012-05-10"
+    startTime: "14:00:00"
+    endDate: "2012-05-10"
+    endTime: "15:00:00"
+    customLocation: Some remote area
+    arranger: ASF
+    is_public: true
+  testEvent3:
+    title: Debate in the future
+    description: A little description
+    leadParagraph: <p>A little lead paragraph</p><p>Another "lead" paragraph</p>
+    startDate: "2012-05-17"
+    startTime: "14:00:00"
+    endDate: "2012-05-17"
+    endTime: "15:00:00"
+    commonLocation: Tivoli
+    arranger: RF
+    is_public: true
+  festivalEventOne:
+    title: Festival event one
+    description: <p>abc one</p>
+    leadParagraph: testy test <b>one</b>
+    startDate: "2012-03-18"
+    startTime: "14:00:00"
+    endDate: "2012-03-19"
+    endTime: "15:00:00"
+    commonLocation: Teglverket
+    arranger: RF
+    is_public: true
+    festival: testFestival
+  festivalEventTwo:
+    title: Festival event two
+    description: <p>abc two</p>
+    leadParagraph: testy test <b>two</b>
+    startDate: "2012-03-19"
+    startTime: "14:00:00"
+    endDate: "2012-03-20"
+    endTime: "15:00:00"
+    commonLocation: Speilsalen
+    arranger: RF
+    is_public: true
+    festival: testFestival
+
+<?php for ($i = 4; $i < 60; $i++): ?>
+  testEvent<?php echo $i ?>:
+    title: <?php echo $categories[mt_rand(0,5)] ?> in the future event <?php echo $i . "\n" ?>
+    leadParagraph: |
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rutrum congue sollicitudin. Pellentesque aliquet mi eget massa sodales faucibus. Pellentesque adipiscing ultricies mi, vel rhoncus massa semper nec. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut convallis, metus eu elementum aliquet, leo neque volutpat arcu, eget ultrices justo libero in arcu. Nunc vestibulum augue ut mi porta faucibus condimentum justo hendrerit.</p>
+    description: |
+      <p>Proin eu lacus mauris, lacinia porttitor risus. Pellentesque egestas sem vitae est molestie adipiscing. Aenean leo quam, volutpat eu rhoncus vel, aliquet sit amet ligula. Morbi augue purus, tristique vel viverra sit amet, cursus a nulla. Phasellus dapibus malesuada orci in feugiat. Curabitur nibh mi, tincidunt non mollis non, lacinia feugiat velit. Fusce nec purus risus, vitae ornare quam. In sagittis pretium nulla, a interdum arcu tristique a. Maecenas blandit sollicitudin risus sed sodales.</p>
+
+      <p>Donec blandit mattis rhoncus. Cras at porttitor leo. Nam faucibus orci nec mauris pharetra dignissim. Praesent nec dui massa, id ultricies erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla sollicitudin vestibulum ante, eu pellentesque massa sollicitudin fermentum. Duis pulvinar, turpis et gravida adipiscing, nunc eros ultricies diam, ac faucibus dui erat at elit. Suspendisse adipiscing urna et eros sodales vitae mattis massa sollicitudin. Aliquam adipiscing odio accumsan sapien aliquet ac malesuada massa consequat. Cras ac ante eu nibh aliquam ultrices.</p>
+
+    startDate: "<?php $sd = mt_rand(time() + 86400, time() + 86400 * 100); echo date("Y-m-d", $sd); ?>"
+    startTime: "<?php echo date("H:i:s", $sd) ?>"
+    endDate: "<?php $ed = $sd + mt_rand(3600, 86400); echo date("Y-m-d", $ed); ?>"
+    endTime: "<?php echo date("H:i:s", $ed) ?>"
+    commonLocation: <?php echo $locations[mt_rand(0,5)] . "\n" ?>
+    arranger: <?php echo $arrangers[mt_rand(0,4)] . "\n" ?>
+    is_public: true
+<?php endfor ?>
+
+dakEventCategory:
+  testEventCategory:
+    dakEvent: testEvent
+    dakCategory: debate
+  testEvent2Category:
+    dakEvent: testEvent2
+    dakCategory: concert
+  testEvent3Category:
+    dakEvent: testEvent3
+    dakCategory: debate
+  festivalEventOneCategory:
+    dakEvent: festivalEventOne
+    dakCategory: concert
+  festivalEventTwoCategory:
+    dakEvent: festivalEventTwo
+    dakCategory: concert
+  festivalEventTwoCategory2:
+    dakEvent: festivalEventTwo
+    dakCategory: debate
+
+<?php for ($i = 4; $i < 60; $i++): ?>
+<?php $rand_keys = array_rand($categories, mt_rand(1,3)) ?>
+<?php $rand_keys = is_array($rand_keys) ? $rand_keys : array($rand_keys) ?>
+<?php foreach ($rand_keys as $ii): ?>
+  testEvent<?php echo $i . '-' . $ii ?>Category:
+    dakEvent: testEvent<?php echo $i . "\n" ?>
+    dakCategory: <?php echo $categories[$ii] . "\n" ?>
+<?php endforeach ?>
+<?php endfor ?>

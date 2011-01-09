@@ -1,0 +1,32 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           dakLocation
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          dak_location_admin
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions:
+        _edit:
+          credentials: [admin]
+        _delete:
+          credentials: [admin]
+        _new:
+          credentials: [admin]
+      fields:  ~
+      list:
+        max_per_page: 10
+        title: Locations
+        display: [=name]
+        # It's not possible to sort by name by the very nature of nested sets
+        sort: [lft, asc]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

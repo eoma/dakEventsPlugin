@@ -1,0 +1,38 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           dakEvent
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          dak_event_admin
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_public: { label: Public?, help: Whether the event is public to the world }
+        is_accepted: { label: Accepted?, help: Whether the event has been accepted by location owner }
+        leadParagraph: { label: Lead paragraph, help: "A short description of the event, maximum 800 signs, including html elements" }
+        customLocation: { label: Custom location }
+        location_id: { label: Recurring location, help: "Specify recurring location, takes preferance over custom location" }
+      list:
+        max_per_page: 10
+        title: Eventlist
+        sort: [startDate, asc, startTime, asc, title, asc]
+        layout: stacked
+        display: [=title, startDate, updated_at]
+#        params: |
+#          %%is_accepted%% %%_linkToShowEvent%%<br />At %%location%% %%_mergedStartDateTime%% by %%arranger%%.<br />
+#          %%_eventHasFestival%%
+#          <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
+        table_method: defaultJoinsAndRequirements # defaultJoinsAndRequirements will make it impossible to get event lists vefore current date
+      filter:  ~
+      form:    ~
+      edit:
+        title: Editing event "%%title%%"
+      new:
+        title: Create new event

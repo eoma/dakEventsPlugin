@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="no" datatype="plaintext" original="messages" date="2011-01-03T11:25:39Z" product-name="messages">
+    <header/>
+    <body>
+      <!-- Navigation -->
+      <trans-unit id="1">
+        <source>Main</source>
+        <target>Hoved</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Festivals</source>
+        <target>Festivaler</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Locations</source>
+        <target>Steder</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Arrangers</source>
+        <target>Arrangører</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Categories</source>
+        <target>Kategorier</target>
+      </trans-unit>
+      <!-- Events -->
+      <trans-unit id="7">
+        <source>Title</source>
+        <target>Tittel</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Lead paragraph</source>
+        <target>Ingress</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Location</source>
+        <target>Sted</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Linkout</source>
+        <target>Mer info</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Start</source>
+        <target>Start</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>End</source>
+        <target>Slutt</target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Arranger</source>
+        <target>Arrangør</target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Where?</source>
+        <target>Hvor?</target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>When?</source>
+        <target>Når?</target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>%1% from %2% to %3%</source>
+        <target>%1% fra %2% til %3%</target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>from %1% to %2%</source>
+        <target>fra %1% til %2%</target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>Who?</source>
+        <target>Hvem?</target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>What?</source>
+        <target>Hva?</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Created at %1%. Updated at %2%.</source>
+        <target>Opprettet %1%. Oppdatert %2%.</target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>Read more &lt;a href="%1%"&gt;here&lt;/a&gt;</source>
+        <target>Les mer &lt;a href="%1%"&gt;her&lt;/a&gt;</target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Id</source>
+        <target>Id</target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Name</source>
+        <target>Navn</target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Description</source>
+        <target>Beskrivelse</target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Created at</source>
+        <target>Opprettet</target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>Updated at</source>
+        <target>Oppdatert</target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>Back to list</source>
+        <target>Tilbake til listen</target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>Events scheduled for %1%</source>
+        <target>Events planlagt for %1%</target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>Events at this festival</source>
+        <target>Events ved denne festivalen</target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>No events at this festival</source>
+        <target>Ingen events på denne festivalen</target>
+      </trans-unit>
+      <trans-unit id="34">
+        <source>Root</source>
+        <target>Rot</target>
+      </trans-unit>
+      <trans-unit id="35">
+        <source>Lft</source>
+        <target>Venstre</target>
+      </trans-unit>
+      <trans-unit id="36">
+        <source>Rgt</source>
+        <target>Høyre</target>
+      </trans-unit>
+      <trans-unit id="37">
+        <source>Level</source>
+        <target>Nivå</target>
+      </trans-unit>
+      <trans-unit id="39">
+        <source>Event Calendar</source>
+        <target>Eventkalender</target>
+      </trans-unit>
+      <trans-unit id="41">
+        <source>Festival list</source>
+        <target>Festivalliste</target>
+      </trans-unit>
+      <trans-unit id="43">
+        <source>Location list</source>
+        <target>Stedsliste</target>
+      </trans-unit>
+      <trans-unit id="46">
+        <source>Category</source>
+        <target>Kategori</target>
+      </trans-unit>
+      <trans-unit id="47">
+        <source>Arranger list</source>
+        <target>Arrangørliste</target>
+      </trans-unit>
+      <trans-unit id="48">
+        <source>Festival</source>
+        <target>Festival</target>
+      </trans-unit>
+      <trans-unit id="49">
+        <source>Event list</source>
+        <target>Eventliste</target>
+      </trans-unit>
+      <trans-unit id="50">
+        <source>Category list</source>
+        <target>Kategoriliste</target>
+      </trans-unit>
+      <trans-unit id="51">
+        <source>Part of</source>
+        <target>Del av</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

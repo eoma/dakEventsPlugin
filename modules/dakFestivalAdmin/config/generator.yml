@@ -1,0 +1,29 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           dakFestival
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             true
+    singular:              ~
+    plural:                ~
+    route_prefix:          dak_festival_admin
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        max_per_page: 10
+        title: Festival list
+        sort: [startDate, asc, title, asc]
+        layout: stacked
+        display: [=title, startDate, updated_at]
+        params: |
+          %%_linkToShowFestival%%<br />At %%location%% %%_mergedStartDateTime%% by %%_renderedFestivalArrangers%%.<br />
+          <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

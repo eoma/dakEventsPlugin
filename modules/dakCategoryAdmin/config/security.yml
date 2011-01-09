@@ -1,0 +1,7 @@
+# Security and access definitions for category module
+
+edit:
+  credentials: [admin]
+
+delete:
+  credentials: [admin]

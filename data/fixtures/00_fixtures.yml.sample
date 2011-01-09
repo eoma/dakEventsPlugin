@@ -1,0 +1,111 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+
+dakCategory:
+  concert:
+    name: Konsert
+  debate:
+    name: Debatt
+  theater:
+    name: Teater
+  cinema:
+    name: Kino
+  club:
+    name: Klubb
+  quiz:
+    name: Quiz
+
+dakLocation:
+  Kvarteret:
+    name: Kvarteret
+    description: Studentkulturhuset i Bergen
+    children:
+      Teglverket:
+        name: Teglverket
+        description: Teglverket
+      Tivoli:
+        name: Tivoli
+        description: Tivoli
+      Storelogen:
+        name: Storelogen
+        description: Storelogen
+      Maos:
+        name: Maos lille røde
+        description: Maos lille røde
+      Speilsalen:
+        name: Speilsalen
+        description: Speilsalen
+      Stoy:
+        name: Støy
+        description: Støy
+
+dakArranger:
+  Samfunnet:
+    name: Studentersamfunnet i Bergen
+  RF:
+    name: Realfagsforeningen
+  ASF:
+    name: Aktive Studenters Forening
+  Immaturus:
+    name: Immaturus
+  BF:
+    name: Bergen Filmklubb
+
+# Setup a few dummy users to get us rolling
+sfGuardUser:
+  User_admin:
+    first_name:     Ola
+    last_name:      Nordmann
+    email_address:  ola.nordmann@example.com
+    username:       admin
+    password:       changeme
+    is_super_admin: true
+    Groups:         [Group_admin]
+  locationOwner:
+    first_name:     Location
+    last_name:      Owner
+    email_address:  location.owner@example.com
+    username:       locationOwner
+    password:       changeme
+    is_super_admin: false
+    Groups:         [Group_user]
+  arranger:
+    first_name:     Arranger
+    last_name:      of Culture
+    email_address:  arranger@example.com
+    username:       arranger
+    password:       changeme
+    is_super_admin: false
+    Groups:         [Group_user]
+
+sfGuardGroup:
+  Group_admin:
+    name:           admin
+    description:    Administrator group
+    Permissions:    [Permission_admin, Permission_user]
+  Group_user:
+    name:           user
+    description:    User group
+    Permissions:    [Permission_user]
+
+sfGuardPermission:
+  Permission_admin:
+    name:           admin
+    description:    Administrator permission
+  Permission_user:
+    name:           user
+    description:    User permission
+
+dakLocationUser:
+  locationTeglverket:
+    user: locationOwner
+    location: Teglverket
+
+dakArrangerUser:
+  arrangerSamfunnet:
+    user: arranger
+    arranger: Samfunnet

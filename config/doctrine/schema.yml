@@ -1,0 +1,340 @@
+---
+
+dakCategory:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    name: string(255)
+  indexes:
+    name_idx:
+      fields: [name]
+      type: unique
+
+dakLocation:
+  actAs: 
+    Timestampable: true
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: root_id
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    name: string(255)
+    description: string
+    is_requiringReservation: { type: boolean, notnull: true, default: false }
+    is_visible: { type: boolean, notnull: true, default: true } # If the location is visible for every
+                                                                # visitor not logged in.
+  indexes:
+    name_idx:
+      fields: [name]
+
+dakLocationReservation: # This table contains reservations of locations
+  actAs: [Timestampable]
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: string(255)
+    description: string
+    location_id: { type: integer, notnull: true }
+    accessDate: date # By default it will be set to startDate
+    accessTime: time # By default it will be set to startTime
+    startDate: { type: date, notnull: true }
+    startTime: { type: time, notnull: true }
+    endDate: { type: date, notnull: true }
+    endTime: { type: time, notnull: true }
+    arranger_id: integer
+    user_id: integer
+    parentLocationReservation_id: { type: integer, default: null }
+    status: { type: integer, default: 3 } # Status codes: 3 -> unread, 2 -> pending, 1 -> accepted, 0 -> not accepted
+    usageType_id: integer
+  relations:
+    parentLocationReservation:
+      class: dakLocationReservation
+      local: parentLocationReservation_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: childLocationReservations
+      owningSide: true
+    location:
+      class: dakLocation
+      local: location_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: reservations
+    arranger:
+      class: dakArranger
+      local: arranger_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: locationReservations
+    user:
+      class: sfGuardUser
+      local: user_id
+      foreign: id
+      foreignAlias: locationReservations
+      onDelete: CASCADE
+  indexes:
+    title_idx:
+      fields: [title]
+    status_idx:
+      fields: [status]
+
+dakLocationReservationRequirementBase: # Base table for all location reservation requirements, will not be created or used directly.
+                                    # Sadly, child tables don't inherit relations
+  actAs: [Timestampable]
+  columns:
+    locationReservation_id: { type: integer, notnull: true }
+    other: string
+
+dakRequirementLightSound:
+  inheritance:
+    extends: dakLocationReservationRequirementBase
+    type: concrete
+  columns:
+    externalSoundTech: boolean
+    externalLightTech: boolean
+    externalBackline: boolean
+    is_requiringSmoke: boolean
+    numberOfCrewMembers: integer
+    numberOfBandMembers: integer
+    soundCheckDate: { type: date, notnull: true }
+    soundCheckTime: { type: time, notnull: true }
+    getInDate: { type: date, notnull: true }
+    getInTime: { type: time, notnull: true }
+  relations:
+    locationReservation:
+      class: dakLocationReservation
+      local: locationReservation_id
+      foreign: id
+      foreignType: one
+      onDelete: CASCADE
+
+dakRequirementPhotography:
+  inheritance:
+    extends: dakLocationReservationRequirementBase
+    type: concrete
+  columns:
+    print: integer # 0 -> no print, 1 -> less than or equal to A3, 2 -> more than A3
+    web: integer # 0 -> no web, 1 -> 800x600, 2 -> original
+    analogue: integer # 0 -> no analogue, 1 -> color, 2 -> black/white
+    meetAtDate: { type: date, notnull: true }
+    meetAtTime: { type: time, notnull: true }
+  relations:
+    locationReservation:
+      class: dakLocationReservation
+      local: locationReservation_id
+      foreign: id
+      foreignType: one
+      onDelete: CASCADE
+
+dakRequirementCatering:
+  inheritance:
+    extends: dakLocationReservationRequirementBase
+    type: concrete
+  columns:
+    allergy: string
+    numberOfEaters: { type: integer, notnull: true }
+    servedAtDate: { type: date, notnull: true }
+    servedAtTime: { type: time, notnull: true }
+  relations:
+    locationReservation:
+      class: dakLocationReservation
+      local: locationReservation_id
+      foreign: id
+      foreignType: one
+      onDelete: CASCADE
+
+dakLocationAccessory: # This table can be used to list what accomodations/items a location can provide
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    location_id: integer
+    name: string(128)
+  relations:
+    location:
+      class: dakLocation
+      local: location_id
+      foreign: id
+      foreignAlias: accessories
+  indexes:
+    name_idx:
+      fields: [name]
+
+dakLocationUser:
+  columns:
+    user_id: {type: integer, notnull: true}
+    location_id: {type: integer, notnull: true}
+  relations:
+    user:
+      class: sfGuardUser
+      local: user_id
+      foreign: id
+      foreignAlias: locations
+      onDelete: CASCADE
+    location:
+      class: dakLocation
+      local: location_id
+      foreign: id
+      foreignAlias: users
+      onDelete: CASCADE
+  indexes:
+    user_location:
+      fields: [user_id, location_id]
+      type: unique
+
+dakArranger:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    name: string(255)
+    description: string
+  indexes:
+    name_idx:
+      fields: [name]
+      type: unique
+
+dakArrangerUser:
+  columns:
+    user_id: {type: integer, notnull: true}
+    arranger_id: {type: integer, notnull: true}
+    is_arrangerUserAdmin: {type: boolean, notnull: true, default: false} # If this flag is set, a user can add other users to this arranger
+  relations:
+    user:
+      class: sfGuardUser
+      local: user_id
+      foreign: id
+      foreignAlias: arrangers
+      onDelete: CASCADE
+    arranger:
+      class: dakArranger
+      local: arranger_id
+      foreign: id
+      foreignAlias: users
+      onDelete: CASCADE
+  indexes:
+    user_arranger:
+      fields: [user_id, arranger_id]
+      type: unique
+
+dakFestival: # This table will hold all festivals
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer
+      notnull: true
+      primary: true
+      autoincrement: true
+    title: { type: string(255), notnull: true }
+    leadParagraph: string(800)
+    description: string
+    linkout: {type: string(255), notnull: false}
+    startDate: date
+    startTime: time
+    endDate: date
+    endTime: time
+    customLocation: {type: string(255), notnull: false}
+    location_id: integer
+  relations:
+    commonLocation:
+      class: dakLocation
+      local: location_id
+      foreign: id
+      foreignAlias: festivals
+    arrangers:
+      class: dakArranger
+      refClass: dakFestivalArranger
+      foreignAlias: festivals
+  indexes:
+    name_idx:
+      fields: [title]
+
+dakFestivalArranger: # This table will hold relations between festivals and arrangers
+  columns:
+    dak_festival_id: {type: integer, primary: true}
+    dak_arranger_id: {type: integer, primary: true}
+  relations:
+    festival:
+      class: dakFestival
+      local: dak_festival_id
+      foreign: id
+      onDelete: CASCADE
+    arranger:
+      class: dakArranger
+      local: dak_arranger_id
+      foreign: id
+      onDelete: CASCADE
+
+dakEvent: # This table will hold all events.
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer
+      notnull: true
+      primary: true
+      autoincrement: true
+    title: { type: string(255), notnull: true }
+    leadParagraph: string(800)
+    description: string
+    linkout: {type: string(255), notnull: false}
+    startDate: date
+    startTime: time
+    endDate: date
+    endTime: time
+    # If an event has been accepted by a user in locationUser, if the location_id is connected to a user
+    is_accepted: {type: boolean, default: true}
+    is_public: {type: boolean, default: false}
+    customLocation: {type: string(255), notnull: false}
+    location_id: integer # This will be used for locations that recur, instead of manually typing locations.
+    arranger_id: {type: integer, notnull: true}
+    festival_id: integer
+  relations:
+    arranger:
+      class: dakArranger
+      local: arranger_id
+      foreign: id
+      foreignAlias: events
+    commonLocation:
+      class: dakLocation
+      local: location_id
+      foreign: id
+      foreignAlias: events
+    categories:
+      class: dakCategory
+      refClass: dakEventCategory
+      foreignAlias: events
+    festival:
+      class: dakFestival
+      local: festival_id
+      foreign: id
+      foreignAlias: events
+  indexes:
+    locations:
+      fields: [location_id]
+    arrangers:
+      fields: [arranger_id]
+    title_idx:
+      fields: [title]
+
+dakEventCategory:
+  columns:
+    dak_event_id: {type: integer, primary: true}
+    dak_category_id: {type: integer, primary: true}
+  relations:
+    dakEvent:
+      local: dak_event_id
+      foreign: id
+      onDelete: CASCADE
+    dakCategory:
+      local: dak_category_id
+      foreign: id
+      onDelete: CASCADE

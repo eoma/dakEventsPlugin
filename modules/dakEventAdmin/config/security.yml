@@ -1,0 +1,13 @@
+
+edit:
+  credentials: [[admin, owner]]
+
+update:
+  credentials: [[admin, owner]]
+
+delete:
+  credentials: [[admin, owner]]
+
+batchDelete:
+  credentials: [[admin, owner]]
+

@@ -1,0 +1,102 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+#homepage:
+#  url:   /
+#  param: { module: dakEvent, action: index }
+
+#homepage_localized:
+#  url:   /:sf_culture/
+#  param: { module: dakEvent, action: index }
+#  requirements:
+#    sf_culture: (?:en|no)
+
+dak_api_upcomingEvents:
+  url: /api/:sf_format/upcomingEvents/*
+  param: { module: dakApi , action: upcomingEvents, sf_format: json }
+  requirements:
+    sf_format: (?:json|xml|atom)
+
+dak_api_filteredEvents:
+  url: /api/:sf_format/filteredEvents/*
+  param: { module: dakApi, action: filteredEvents, sf_format: json }
+  requirements:
+    sf_format: (?:json|xml|atom)
+
+dak_api:
+  url: /api/:sf_format/:action/:subaction/*
+  param: { module: dakApi }
+  requirements:
+    sf_format: (?:json|xml)
+
+dak_event_index:
+  url: /:sf_culture/event
+  param: { module: dakEvent, action: index }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_event_show:
+  url: /:sf_culture/event/:id
+  param: { module: dakEvent, action: show }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_festival_index:
+  url: /:sf_culture/festival
+  param: { module: dakFestival, action: index }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_festival_show:
+  url: /:sf_culture/festival/:id
+  param: { module: dakFestival, action: show }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_arranger_index:
+  url: /:sf_culture/arranger
+  param: { module: dakArranger, action: index }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_arranger_show:
+  url: /:sf_culture/arranger/:id
+  param: { module: dakArranger, action: show }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_category_index:
+  url: /:sf_culture/category
+  param: { module: dakCategory, action: index }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_category_show:
+  url: /:sf_culture/category/:id
+  param: { module: dakCategory, action: show }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_location_index:
+  url: /:sf_culture/location
+  param: { module: dakLocation, action: index }
+  requirements:
+    sf_culture: (?:en|no)
+
+dak_location_show:
+  url: /:sf_culture/location/:id
+  param: { module: dakLocation, action: show }
+  requirements:
+    sf_culture: (?:en|no)
+
+# generic rules
+# please, remove them by adding more specific rules
+#default_index:
+#  url:   /:sf_culture/:module
+#  param: { action: index }
+#  requirements: { sf_culture: (?:en|no) }
+
+#default:
+#  url:   /:sf_culture/:module/:action/*
+#  requirements: { sf_culture: (?:en|no) }

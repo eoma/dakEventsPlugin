@@ -1,0 +1,10 @@
+# Security and access definitions for location module
+
+edit:
+  credentials: [admin]
+
+delete:
+  credentials: [admin]
+
+new:
+  credentials: [admin]

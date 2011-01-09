@@ -1,0 +1,10 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  max_events_on_page: 10
+  max_arrangers_on_page: 10
+  max_categories_on_page: 10
+  max_locations_on_page: 10
+  max_festivals_on_page: 10
