@@ -22,7 +22,7 @@ class PlugindakLocationForm extends BasedakLocationForm
 
     // create a new widget to represent this location's "parent"
     $this->setWidget('parent', new sfWidgetFormDoctrineChoiceNestedSet(array(
-      'model'     => 'location',
+      'model'     => 'dakLocation',
       'add_empty' => true,
     )));
 
@@ -49,7 +49,7 @@ class PlugindakLocationForm extends BasedakLocationForm
     // set a validator for parent which prevents a location being moved to one of its own descendants
     $this->setValidator('parent', new sfValidatorDoctrineChoiceNestedSet(array(
       'required' => false,
-      'model'    => 'location',
+      'model'    => 'dakLocation',
       'node'     => $this->getObject(),
     )));
     $this->getValidator('parent')->setMessage('node', 'A location cannot be made a descendent of itself.');
@@ -70,7 +70,7 @@ class PlugindakLocationForm extends BasedakLocationForm
     // if a parent has been specified, add/move this node to be the child of that node
     if ($this->getValue('parent'))
     {
-      $parent = Doctrine::getTable('location')->findOneById($this->getValue('parent'));
+      $parent = Doctrine::getTable('dakLocation')->findOneById($this->getValue('parent'));
       if ($this->isNew())
       {
         $this->getObject()->getNode()->insertAsLastChildOf($parent);
@@ -83,7 +83,7 @@ class PlugindakLocationForm extends BasedakLocationForm
     // if no parent was selected, add/move this node to be a new root in the tree
     else
     {
-      $categoryTree = Doctrine::getTable('location')->getTree();
+      $categoryTree = Doctrine::getTable('dakLocation')->getTree();
       if ($this->isNew())
       {
         $categoryTree->createRoot($this->getObject());
