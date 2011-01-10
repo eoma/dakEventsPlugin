@@ -4,6 +4,12 @@ class dakEventsPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
   {
+
+    if (!sfConfig::get('dak_admin_module_web_dir'))
+    {
+      sfConfig::set('dak_admin_module_web_dir', '/dakEventsPlugin');
+    }
+
     $this->dispatcher->connect('user.method_not_found', array('dakEventsUser', 'methodNotFound'));
 
     $adminModules = array(
