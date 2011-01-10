@@ -1,6 +1,6 @@
 <?php
-if ($event['location_id'] > 0) {
-  echo link_to($event['recurringLocation'], '@location_show?id=' . $event['location_id']);
+if ($dak_event['location_id'] > 0) {
+  echo link_to($dak_event['commonLocation'], '@dak_location_admin_show?id=' . $dak_event['location_id']);
 } else {
-  echo $event['customLocation'];
+  echo $dak_event['customLocation'];
 }
