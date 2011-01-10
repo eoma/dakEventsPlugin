@@ -6,42 +6,42 @@ use_helper('Date');
   <p>
     <b>Where?</b> 
     <?php 
-      if (!$event['location_id']) {
-        echo $event['customLocation']; 
+      if (!$dak_event['location_id']) {
+        echo $dak_event['customLocation']; 
        } else {
-        echo link_to($event['commonLocation']['name'], '@dak_location_admin_show/?id='. $event['location_id']);
+        echo link_to($event['commonLocation']['name'], '@dak_location_admin_show/?id='. $dak_event['location_id']);
       } 
      ?>
   </p>
   <p>
     <b>When?</b> 
     <?php 
-    if ($event['startDate'] == $event['endDate']):
+    if ($dak_event['startDate'] == $dak_event['endDate']):
     ?>
-    <?php echo format_date($event['startDate']) ?> from <? echo $event['startTime'] ?> to <?php echo $event['endTime'] ?>
+    <?php echo format_date($dak_event['startDate']) ?> from <? echo $dak_event['startTime'] ?> to <?php echo $dak_event['endTime'] ?>
     <?php else: ?>
-    from <?php echo format_date($event['startDate']) . ' ' . $event['startTime'] ?> to <?php echo format_date($event['endDate']) . ' ' . $event['endTime'] ?>
+    from <?php echo format_date($dak_event['startDate']) . ' ' . $dak_event['startTime'] ?> to <?php echo format_date($dak_event['endDate']) . ' ' . $event['endTime'] ?>
     <?php endif ?>
   </p>
   <p>
-    <b>Who?</b> <?php echo link_to($event['arranger']['name'], '@dak_arranger_admin_show/?id=' . $event['arranger_id']) ?>
+    <b>Who?</b> <?php echo link_to($dak_event['arranger']['name'], '@dak_arranger_admin_show/?id=' . $event['arranger_id']) ?>
   </p>
   <p>
-    <b>What?</b> <?php foreach ($event['categories'] as $c) { echo link_to($c['name'], '@dak_category_admin_show/?id=' . $c['id']) .' '; } ?>
+    <b>What?</b> <?php foreach ($dak_event['categories'] as $c) { echo link_to($c['name'], '@dak_category_admin_show/?id=' . $c['id']) .' '; } ?>
   </p>
   <p>
-    <small>Created at <?php echo format_datetime($event['created_at']) ?>. Updated at <?php echo format_datetime($event['updated_at']) ?>.</small>
+    <small>Created at <?php echo format_datetime($dak_event['created_at']) ?>. Updated at <?php echo format_datetime($dak_event['updated_at']) ?>.</small>
   </p>
 </div>
 
 <div id="eventContent">
-  <h2><?php echo $event['title'] ?></h2>
+  <h2><?php echo $dak_event['title'] ?></h2>
 
- <?echo $event->getRaw('leadParagraph'); ?>
- <?echo $event->getRaw('description'); ?>
+ <?echo $dak_event->getRaw('leadParagraph'); ?>
+ <?echo $dak_event->getRaw('description'); ?>
 
   <?php if (!empty($event['linkout'])): ?>
-  <p>Read more <a href="<?php echo $events['linkout'] ?>">here</a></p>
+  <p>Read more <a href="<?php echo $dak_event['linkout'] ?>">here</a></p>
   <?php endif ?>
 
 </div>
