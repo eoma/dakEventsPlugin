@@ -86,7 +86,7 @@ class PlugindakEventForm extends BasedakEventForm
       $user = $this->getOption('currentUser')->getGuardUser();
 
       $this->widgetSchema['arranger_id']->setOption('query', 
-        Doctrine_Core::getTable('arranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
+        Doctrine_Core::getTable('dakArranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
       );
 
       // Mere arrangers won't be able to accept event at a location if
