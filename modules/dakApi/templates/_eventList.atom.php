@@ -19,7 +19,7 @@
 	  <?php if ($e['festival_id'] > 0): ?>
           <p>
 	    <?php echo __('Part of festival') . "\n" ?>
-	    <?php echo link_to($e['festival']['title'] . ' ' . format_date($e['festival']['startDate']), '@dak_festival_show?id=' . $e['festival_id']) . "\n" ?>
+	    <?php echo link_to($e['festival']['title'] . ' ' . format_date($e['festival']['startDate']), '@dak_festival_show?id=' . $e['festival_id'], true) . "\n" ?>
 	  </p>
 	  <?php endif ?>
 
