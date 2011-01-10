@@ -42,6 +42,7 @@ class dakCategoryActions extends sfActions
 
     $q->where('c.id = ?', $request->getParameter('id'))
       ->andWhere('e.startDate >= ? OR e.endDate >= ?', array(date('Y-m-d'), date('Y-m-d')))
+      ->andWhere('e.is_public = ?', true)
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     $this->pager = new sfDoctrinePager('dakEvent', sfConfig::get('app_max_events_on_page'));

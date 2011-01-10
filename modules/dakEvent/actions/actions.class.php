@@ -39,6 +39,7 @@ class dakEventActions extends sfActions
     Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
 
     $q->where('e.startDate >= ? OR e.endDate >= ?', array(date('Y-m-d'), date('Y-m-d')))
+      ->andWhere('e.is_public = ?', true)
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     $this->pager = new sfDoctrinePager('dakEvent', sfConfig::get('app_max_events_on_page'));
@@ -55,6 +56,7 @@ class dakEventActions extends sfActions
       ->createQuery('e');
     Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
     $q->where('e.id = ?', $request->getParameter('id'))
+      ->andWhere('e.is_public = ?', true)
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     $this->event = $q->fetchOne();

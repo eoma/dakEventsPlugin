@@ -50,6 +50,7 @@ class dakFestivalActions extends sfActions
     Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
 
     $q->where('e.festival_id = ?', $request->getParameter('id'));
+    $q->andWhere('e.is_public = ?', true);
 
     $this->pager = new sfDoctrinePager('dakEvent', sfConfig::get('app_max_events_on_page'));
     $this->pager->setQuery($q);

@@ -166,6 +166,7 @@ class dakApiActions extends sfActions
         ->createQuery('e');
       Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
       $q->where('e.id = ?', $request->getParameter('id'))
+        ->andWhere('e.is_public = ?', true)
         ->limit($limit)
         ->offset($offset)
         ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
@@ -232,6 +233,7 @@ class dakApiActions extends sfActions
       ->createQuery('e');
     Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
     $q->where('e.startDate >= ? OR e.endDate >= ?', array(date('Y-m-d'), date('Y-m-d')))
+      ->andWhere('e.is_public = ?', true)
       ->limit($limit)
       ->offset($offset)
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
@@ -320,6 +322,9 @@ class dakApiActions extends sfActions
       $endDate = $request->getParameter('endDate');
       $q->andWhere('e.startDate <= ? OR e.endDate <= ?', array($endDate, $endDate));
     }
+
+    // Don't fetch non-public events
+    $q->andWhere('e.is_public = ?', true);
 
     $limit = intval($request->getParameter('limit', 20));
     $offset = 0;
