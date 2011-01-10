@@ -9,7 +9,7 @@ use_helper('Date');
       if (!$dak_event['location_id']) {
         echo $dak_event['customLocation']; 
        } else {
-        echo link_to($event['commonLocation']['name'], '@dak_location_admin_show/?id='. $dak_event['location_id']);
+        echo link_to($event['commonLocation']['name'], '@dak_location_admin_show?id='. $dak_event['location_id']);
       } 
      ?>
   </p>
@@ -20,14 +20,14 @@ use_helper('Date');
     ?>
     <?php echo format_date($dak_event['startDate']) ?> from <? echo $dak_event['startTime'] ?> to <?php echo $dak_event['endTime'] ?>
     <?php else: ?>
-    from <?php echo format_date($dak_event['startDate']) . ' ' . $dak_event['startTime'] ?> to <?php echo format_date($dak_event['endDate']) . ' ' . $event['endTime'] ?>
+    from <?php echo format_date($dak_event['startDate']) . ' ' . $dak_event['startTime'] ?> to <?php echo format_date($dak_event['endDate']) . ' ' . $dak_event['endTime'] ?>
     <?php endif ?>
   </p>
   <p>
-    <b>Who?</b> <?php echo link_to($dak_event['arranger']['name'], '@dak_arranger_admin_show/?id=' . $event['arranger_id']) ?>
+    <b>Who?</b> <?php echo link_to($dak_event['arranger']['name'], '@dak_arranger_admin_show?id=' . $event['arranger_id']) ?>
   </p>
   <p>
-    <b>What?</b> <?php foreach ($dak_event['categories'] as $c) { echo link_to($c['name'], '@dak_category_admin_show/?id=' . $c['id']) .' '; } ?>
+    <b>What?</b> <?php foreach ($dak_event['categories'] as $c) { echo link_to($c['name'], '@dak_category_admin_show?id=' . $c['id']) .' '; } ?>
   </p>
   <p>
     <small>Created at <?php echo format_datetime($dak_event['created_at']) ?>. Updated at <?php echo format_datetime($dak_event['updated_at']) ?>.</small>
@@ -40,7 +40,7 @@ use_helper('Date');
  <?echo $dak_event->getRaw('leadParagraph'); ?>
  <?echo $dak_event->getRaw('description'); ?>
 
-  <?php if (!empty($event['linkout'])): ?>
+  <?php if (!empty($dak_event['linkout'])): ?>
   <p>Read more <a href="<?php echo $dak_event['linkout'] ?>">here</a></p>
   <?php endif ?>
 
