@@ -8,15 +8,16 @@
 
 li.sf_admin_action_new {
   background: url(../images/greenbutton.png) right 0px;
-  height: 33px;
+  height: 34px;
+  width: 107px;
 }
 
 li.sf_admin_action_new:hover {
-  background: url(../images/greenbutton.png) right 33px;
-  height: 33px;
+  background: url(../images/greenbutton.png) right 34px;
+  height: 34px;
 }
 
 li.sf_admin_action_new:active {
-  background: url(../images/greenbutton.png) right 66px;
-  height: 33px;
+  background: url(../images/greenbutton.png) right 68px;
+  height: 34px;
 }
