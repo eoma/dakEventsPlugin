@@ -29,7 +29,7 @@ class PlugindakFestivalForm extends BasedakFestivalForm
     $this->setDefault('endTime', '21:00');
 
     $this->setWidget('location_id', new sfWidgetFormDoctrineChoiceNestedSet(array(
-      'model'     => 'location',
+      'model'     => 'dakLocation',
       'add_empty' => true,
     )));
 
@@ -70,7 +70,7 @@ class PlugindakFestivalForm extends BasedakFestivalForm
       $user = $this->getOption('currentUser')->getGuardUser();
 
       $this->widgetSchema['arrangers_list']->setOption('query',
-        Doctrine_Core::getTable('arranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
+        Doctrine_Core::getTable('dakArranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
       );
     }
   }
@@ -82,7 +82,7 @@ class PlugindakFestivalForm extends BasedakFestivalForm
       $error = new sfValidatorError($validator, $errorMsg);
       throw new sfValidatorErrorSchema($validator, array(
         'customLocation' => $error,
-	'location_id' => $error,
+        'location_id' => $error,
       ));
     }
 
@@ -104,7 +104,7 @@ class PlugindakFestivalForm extends BasedakFestivalForm
       $error = new sfValidatorError($validator, $errorMsg);
       throw new sfValidatorErrorSchema($validator, array(
         'startDate' => $error,
-	'startTime' => $error,
+        'startTime' => $error,
       ));
     }
 
@@ -114,7 +114,7 @@ class PlugindakFestivalForm extends BasedakFestivalForm
       $error = new sfValidatorError($validator, $errorMsg);
       throw new sfValidatorErrorSchema($validator, array(
         'endDate' => $error,
-	'endTime' => $error,
+        'endTime' => $error,
       ));
     }
 
