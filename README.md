@@ -166,5 +166,8 @@ See [frontend](#project-frontend) on how to enable these modules.
 Each of these modules can be referenced through the routes dak_event_admin,
 dak_festival_admin, dak_arranger_admin and so forth.
 
+Each of these modules use a bit of javascript, jQuery, so it has 
+to be defined in the backend's view.yml or layout.php
+
 It's recommended that you set the backend to be secure by default, but you've probably
 did that already, as it's assumed you've install the plugin [sfDoctrineGuardPlugin][].
