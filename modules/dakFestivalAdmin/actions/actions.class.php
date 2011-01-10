@@ -22,7 +22,7 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
 
   public function executeShow (sfWebRequest $request)
   {
-    $this->festival = $this->getRoute()->getObject();
+    $this->dak_festival = $this->getRoute()->getObject();
   }
 
   protected function buildQuery()
@@ -52,7 +52,7 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
 
     if (!$user->hasCredential('admin') && in_array($action, array('edit', 'update', 'delete', 'batchDelete')))
     {
-      $this->festival = $this->getRoute()->getObject();
+      $this->dak_festival = $this->getRoute()->getObject();
       $usersArrangers = $user->getArrangerIds();
 
       $festivalArrangers = $this->festival->getArrangers();
