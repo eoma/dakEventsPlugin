@@ -10,7 +10,7 @@
 <author>
   <name><?php echo __('Event calendar') ?></name>
 </author>
-<id><?php echo sha1(url_for('@dak_api_filteredEvents?sf_format=atom', true) . '?' . $extraArguments) ?></id>
+<id><?php echo url_for('@dak_api_filteredEvents?sf_format=atom', true) . '?' . $extraArguments ?></id>
 
 <?php include_partial('eventList', array('events' => $events)) ?>
 
