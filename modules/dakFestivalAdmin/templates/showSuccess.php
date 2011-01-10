@@ -11,10 +11,10 @@ use_helper('I18N', 'Date');
   <p>
     <b>Where?</b> 
     <?php 
-      if (!$festival['location_id']) {
-        echo $festival['customLocation']; 
+      if (!$dak_festival['location_id']) {
+        echo $dak_festival['customLocation']; 
       } else {
-        echo link_to($festival['commonLocation']['name'], '@dak_location_admin_show?id='. $dak_festival['location_id']);
+        echo link_to($dak_festival['commonLocation']['name'], '@dak_location_admin_show?id='. $dak_festival['location_id']);
       } 
      ?>
   </p>
@@ -25,7 +25,7 @@ use_helper('I18N', 'Date');
     ?>
     <?php echo format_date($dak_festival['startDate']) ?> from <? echo $dak_festival['startTime'] ?> to <?php echo $dak_festival['endTime'] ?>
     <?php else: ?>
-    from <?php echo format_date($dak_festival['startDate']) . ' ' . $dak_festival['startTime'] ?> to <?php echo format_date($dak_festival['endDate']) . ' ' . $festival['endTime'] ?>
+    from <?php echo format_date($dak_festival['startDate']) . ' ' . $dak_festival['startTime'] ?> to <?php echo format_date($dak_festival['endDate']) . ' ' . $dak_festival['endTime'] ?>
     <?php endif ?>
   </p>
   <p>
