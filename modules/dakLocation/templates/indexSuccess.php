@@ -21,5 +21,5 @@
 </table>
 
 <?php if ($pager->haveToPaginate()): ?>
-  <?php include_partial('dakGlobal/pager', array('route' => '@dak_locations_index', 'pager' => $pager)) ?>
+  <?php include_partial('dakGlobal/pager', array('route' => '@dak_location_index', 'pager' => $pager)) ?>
 <?php endif ?>
