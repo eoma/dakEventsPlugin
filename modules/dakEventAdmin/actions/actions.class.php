@@ -27,7 +27,7 @@ class dakEventAdminActions extends autodakEventAdminActions
 
     if (!$user->hasCredential('admin') && in_array($action, array('edit', 'delete', 'update', 'batchDelete')))
     {
-      $this->event = $this->getRoute()->getObject();
+      $this->dak_event = $this->getRoute()->getObject();
 
       if (in_array($this->event->getArrangerId(), $user->getArrangerIds())) {
         $this->getUser()->addCredential('owner');
@@ -41,7 +41,7 @@ class dakEventAdminActions extends autodakEventAdminActions
   }
 
   public function executeShow(sfWebRequest $request) {
-    $this->event = $this->getRoute()->getObject();
+    $this->dak_event = $this->getRoute()->getObject();
   }
 
   public function executeNew(sfWebRequest $request)
@@ -55,7 +55,7 @@ class dakEventAdminActions extends autodakEventAdminActions
     }
 
     $this->form = $this->configuration->getForm(null, $options);
-    $this->event = $this->form->getObject();
+    $this->dak_event = $this->form->getObject();
   }
 
   protected function buildQuery()
