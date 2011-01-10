@@ -5,7 +5,7 @@
         <?php echo $e['title'] . "\n" ?>
       </title>
       <link href="<?php echo url_for('@dak_event_show?id=' . $e['id'], true) ?>" />
-      <id><?php echo sha1($e['id']) ?></id>
+      <id><?php echo url_for('@dak_event_show?id=' . $e['id'], true) ?></id>
       <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', strtotime($e['updated_at'])) ?></updated>
       <summary type="xhtml">
         <div xmlns="http://www.w3.org/1999/xhtml">
