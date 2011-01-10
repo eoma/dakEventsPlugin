@@ -9,7 +9,7 @@ use_helper('Date');
       if (!$event['location_id']) {
         echo $event['customLocation']; 
        } else {
-        echo link_to($event['recurringLocation']['name'], 'location/show/?id='. $event['location_id']);
+        echo link_to($event['commonLocation']['name'], '@dak_location_admin_show/?id='. $event['location_id']);
       } 
      ?>
   </p>
@@ -24,10 +24,10 @@ use_helper('Date');
     <?php endif ?>
   </p>
   <p>
-    <b>Who?</b> <?php echo link_to($event['arranger']['name'], 'arranger/show/?id=' . $event['arranger_id']) ?>
+    <b>Who?</b> <?php echo link_to($event['arranger']['name'], '@dak_arranger_admin_show/?id=' . $event['arranger_id']) ?>
   </p>
   <p>
-    <b>What?</b> <?php foreach ($event['categories'] as $c) { echo link_to($c['name'], 'category/show/?id=' . $c['id']) .' '; } ?>
+    <b>What?</b> <?php foreach ($event['categories'] as $c) { echo link_to($c['name'], '@dak_category_admin_show/?id=' . $c['id']) .' '; } ?>
   </p>
   <p>
     <small>Created at <?php echo format_datetime($event['created_at']) ?>. Updated at <?php echo format_datetime($event['updated_at']) ?>.</small>

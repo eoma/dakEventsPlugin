@@ -6,7 +6,7 @@ use_helper('I18N', 'Date');
   <ul>
     <?php echo $helper->linkToEdit($festival, array('params' => array(), 'class_suffix' => 'edit', 'label' => 'Edit')) ?>
     <?php echo $helper->linkToDelete($festival, array('params' => array(), 'confirm' => 'Are you sure?', 'class_suffix' => 'delete', 'label' => 'Delete')) ?>
-    <li><?php echo link_to('Add event to this festival', '@event_new?festival_id=' . $festival['id']) ?></li>
+    <li><?php echo link_to('Add event to this festival', '@dak_event_admin_new?festival_id=' . $festival['id']) ?></li>
   </ul>
   <p>
     <b>Where?</b> 
@@ -14,7 +14,7 @@ use_helper('I18N', 'Date');
       if (!$festival['location_id']) {
         echo $festival['customLocation']; 
       } else {
-        echo link_to($festival['commonLocation']['name'], '@location_show?id='. $festival['location_id']);
+        echo link_to($festival['commonLocation']['name'], '@dak_location_admin_show?id='. $festival['location_id']);
       } 
      ?>
   </p>
@@ -36,20 +36,20 @@ use_helper('I18N', 'Date');
     echo "<ul>\n";
 
     foreach ($festival['arrangers'] as $arranger) {
-      echo "<li>" . link_to($arranger['name'], '@arranger_show?id=' . $arranger['id']) . "</li>\n";
+      echo "<li>" . link_to($arranger['name'], '@dak_arranger_admin_show?id=' . $arranger['id']) . "</li>\n";
     }
 
     echo "</ul>";
   }
   ?>
   <p>
-    <b>What?</b> <?php //echo link_to($festival['category']['name'], '@category_show?id=' . $festival['category_id'])?>
+    <b>What?</b> <?php //echo link_to($festival['category']['name'], '@dak_category_admin_show?id=' . $festival['category_id'])?>
   </p>
   <p>
     <small>Created at <?php echo format_datetime($festival['created_at']) ?>. Updated at <?php echo format_datetime($festival['updated_at']) ?>.</small>
   </p>
   <p>
-    <?php echo link_to('Back to list', '@festival') ?>
+    <?php echo link_to('Back to list', '@dak_festival_admin') ?>
   </p>
 </div>
 
@@ -71,10 +71,10 @@ use_helper('I18N', 'Date');
       <?php foreach ($festival['events'] as $event): ?>
       <tr>
         <td>
-          <?php echo link_to($event['title'], '@event_show?id=' . $event['id']) ?><br />
+          <?php echo link_to($event['title'], '@dak_event_admin_show?id=' . $event['id']) ?><br />
           <?php include_partial('event/startEndDateTime', array('event' => $event)) ?><br />
           Location: <?php include_partial('event/location', array('event' => $event)) ?><br />
-          Categories: <?php foreach ($event['categories'] as $c) { echo link_to($c, '@category_show?id=' . $c['id']) . " "; } ?>
+          Categories: <?php foreach ($event['categories'] as $c) { echo link_to($c, '@dak_category_admin_show?id=' . $c['id']) . " "; } ?>
         </td>
       </tr>
       <?php endforeach; ?>
