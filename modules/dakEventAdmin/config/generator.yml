@@ -25,10 +25,10 @@ generator:
         sort: [startDate, asc, startTime, asc, title, asc]
         layout: stacked
         display: [=title, startDate, updated_at]
-#        params: |
-#          %%is_accepted%% %%_linkToShowEvent%%<br />At %%location%% %%_mergedStartDateTime%% by %%arranger%%.<br />
-#          %%_eventHasFestival%%
-#          <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
+        params: |
+          %%is_accepted%% %%_linkToShowEvent%%<br />At %%location%% %%_mergedStartDateTime%% by %%arranger%%.<br />
+          %%_eventHasFestival%%
+          <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
         table_method: defaultJoinsAndRequirements # defaultJoinsAndRequirements will make it impossible to get event lists vefore current date
       filter:  ~
       form:    ~
