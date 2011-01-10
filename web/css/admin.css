@@ -6,18 +6,24 @@
   display: none;
 }
 
-li.sf_admin_action_new a {
+#sf_admin_container ul li.sf_admin_action_new a {
+  padding-left: 0;
   background: url(../images/greenbutton.png) right 0px;
   height: 34px;
   width: 107px;
+  text-align:center;
+  text-decoration:none;
+  line-height: 34px;
+  display: inline-block;
+  color: #fff;
 }
 
-li.sf_admin_action_new a:hover {
+#sf_admin_container ul li.sf_admin_action_new a:hover{
   background: url(../images/greenbutton.png) right 34px;
   height: 34px;
 }
 
-li.sf_admin_action_new a:active {
+#sf_admin_container ul li.sf_admin_action_new a:active{
   background: url(../images/greenbutton.png) right 68px;
   height: 34px;
 }
