@@ -217,7 +217,14 @@ class dakApiActions extends sfActions
       );
     }
 
-    return $this->returnJson($data);
+    if ($request->getRequestFormat() == 'json') {
+      return $this->returnJson($data);
+    } else {
+      if ($subaction == 'get') {
+        $this->festival = $festival;
+        $this->setTemplate('festivalGet');
+      }
+    }
   }
 
   public function executeUpcomingEvents (sfWebRequest $request) {
