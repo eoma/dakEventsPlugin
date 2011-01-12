@@ -220,7 +220,7 @@ class dakApiActions extends sfActions
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
     } else {
-      if ($subaction == 'get') {
+      if ($subAction == 'get') {
         $this->festival = $festival;
         $this->setTemplate('festivalGet');
       }
