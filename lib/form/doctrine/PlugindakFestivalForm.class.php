@@ -23,10 +23,14 @@ class PlugindakFestivalForm extends BasedakFestivalForm
 
     unset($this['created_at'], $this['updated_at']);
 
+    $minutes = range(0, 55, 5);
+
     $this->setDefault('startDate', date('Y-m-d', time() + 86400));
     $this->setDefault('startTime', '19:00');
+    $this->widgetSchema['startTime']->setOption('minutes', $minutes);
     $this->setDefault('endDate', date('Y-m-d', time() + 86400));
     $this->setDefault('endTime', '21:00');
+    $this->widgetSchema['endTime']->setOption('minutes', $minutes);
 
     $this->setWidget('location_id', new sfWidgetFormDoctrineChoiceNestedSet(array(
       'model'     => 'dakLocation',

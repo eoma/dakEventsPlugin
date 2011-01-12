@@ -33,11 +33,15 @@ class PlugindakEventForm extends BasedakEventForm
       'years' => array_combine($years, $years),
     ));
 
+    $minutes = range(0, 55, 5);
+
     // Set default start and end date to the next day
     $this->setDefault('startDate', date('Y-m-d', time() + 86400));
     $this->setDefault('startTime', '19:00');
+    $this->widgetSchema['startTime']->setOption('minutes', $minutes);
     $this->setDefault('endDate', date('Y-m-d', time() + 86400));
     $this->setDefault('endTime', '21:00');
+    $this->widgetSchema['endTime']->setOption('minutes', $minutes);
 
     $this->setValidator('linkout', new sfValidatorUrl(array('required' => false)));
 
