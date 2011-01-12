@@ -23,7 +23,8 @@ class PlugindakFestivalForm extends BasedakFestivalForm
 
     unset($this['created_at'], $this['updated_at']);
 
-    $minutes = range(0, 55, 5);
+    $minutes = array();
+    for ($i = 0; $i < 60; $i = $i + 5) $minutes[] = sprintf("%02d", $i);
 
     $this->setDefault('startDate', date('Y-m-d', time() + 86400));
     $this->setDefault('startTime', '19:00');
