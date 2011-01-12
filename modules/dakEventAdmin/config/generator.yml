@@ -18,7 +18,7 @@ generator:
         is_accepted: { label: Accepted?, help: Whether the event has been accepted by location owner }
         leadParagraph: { label: Lead paragraph, help: "A short description of the event, maximum 800 signs, including html elements" }
         customLocation: { label: Custom location }
-        location_id: { label: Recurring location, help: "Specify recurring location, takes preferance over custom location" }
+        location_id: { label: Common location, help: "Specify common location, takes preferance over custom location" }
       list:
         max_per_page: 10
         title: Eventlist
