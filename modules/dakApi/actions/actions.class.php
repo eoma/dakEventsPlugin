@@ -197,7 +197,7 @@ class dakApiActions extends sfActions
 
       $q = Doctrine_Core::getTable('dakFestival')
         ->createQuery('f');
-      Doctrine_Core::getTable('festival')->defaultQueryOptions($q);
+      Doctrine_Core::getTable('dakFestival')->defaultQueryOptions($q);
       $q->where('f.id = ?', $request->getParameter('id'))
         ->limit($limit)
         ->offset($offset)
