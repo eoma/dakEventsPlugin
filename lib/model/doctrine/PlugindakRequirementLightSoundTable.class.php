@@ -14,6 +14,6 @@ abstract class PlugindakRequirementLightSoundTable extends PlugindakLocationRese
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('requirementLightSound');
+        return Doctrine_Core::getTable('dakRequirementLightSound');
     }
 }

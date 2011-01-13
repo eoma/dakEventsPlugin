@@ -14,6 +14,6 @@ abstract class PlugindakLocationReservationRequirementBaseTable extends Doctrine
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('locationReservationRequirementBase');
+        return Doctrine_Core::getTable('dakLocationReservationRequirementBase');
     }
 }

@@ -14,6 +14,6 @@ abstract class PlugindakFestivalArrangerTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('festivalArranger');
+        return Doctrine_Core::getTable('dakFestivalArranger');
     }
 }

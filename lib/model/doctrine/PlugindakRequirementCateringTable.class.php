@@ -14,6 +14,6 @@ abstract class PlugindakRequirementCateringTable extends PlugindakLocationReserv
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('requirementCatering');
+        return Doctrine_Core::getTable('dakRequirementCatering');
     }
 }

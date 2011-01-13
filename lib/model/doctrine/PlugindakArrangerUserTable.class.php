@@ -14,7 +14,7 @@ abstract class PlugindakArrangerUserTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('arrangerUser');
+        return Doctrine_Core::getTable('dakArrangerUser');
     }
 
     /**

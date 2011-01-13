@@ -14,6 +14,6 @@ abstract class PlugindakRequirementPhotographyTable extends PlugindakLocationRes
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('requirementPhotography');
+        return Doctrine_Core::getTable('dakRequirementPhotography');
     }
 }

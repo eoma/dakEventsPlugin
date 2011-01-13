@@ -14,6 +14,6 @@ abstract class PlugindakLocationAccessoryTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('locationAccessory');
+        return Doctrine_Core::getTable('dakLocationAccessory');
     }
 }

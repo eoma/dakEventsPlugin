@@ -14,6 +14,6 @@ abstract class PlugindakLocationUserTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('locationUser');
+        return Doctrine_Core::getTable('dakLocationUser');
     }
 }

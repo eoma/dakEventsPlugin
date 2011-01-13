@@ -14,6 +14,6 @@ abstract class PlugindakEventCategoryTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('eventCategory');
+        return Doctrine_Core::getTable('dakEventCategory');
     }
 }

@@ -14,7 +14,7 @@ abstract class PlugindakFestivalTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('festival');
+        return Doctrine_Core::getTable('dakFestival');
     }
 
     public function defaultJoins(Doctrine_Query $q)

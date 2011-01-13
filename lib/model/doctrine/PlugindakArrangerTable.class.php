@@ -14,7 +14,7 @@ abstract class PlugindakArrangerTable extends Doctrine_Table
      */
     public static function getInstance()
     {
-        return Doctrine_Core::getTable('arranger');
+        return Doctrine_Core::getTable('dakArranger');
     }
 
     public function defaultJoins(Doctrine_Query $q)
