@@ -34,7 +34,7 @@ class PlugindakEventForm extends BasedakEventForm
     ));
 
     $minutes = array();
-    for ($i = 0; $i < 60; $i = $i + 5) $minutes[] = sprintf("%02d", $i);
+    for ($i = 0; $i < 60; $i = $i + 5) $minutes[$i] = sprintf("%02d", $i);
 
     // Set default start and end date to the next day
     $this->setDefault('startDate', date('Y-m-d', time() + 86400));
