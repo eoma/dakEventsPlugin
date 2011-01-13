@@ -29,7 +29,7 @@ class dakEventAdminActions extends autodakEventAdminActions
     {
       $this->dak_event = $this->getRoute()->getObject();
 
-      if (in_array($this->event->getArrangerId(), $user->getArrangerIds())) {
+      if (in_array($this->dak_event->getArrangerId(), $user->getArrangerIds())) {
         $this->getUser()->addCredential('owner');
       } else {
         $this->getUser()->removeCredential('owner');
