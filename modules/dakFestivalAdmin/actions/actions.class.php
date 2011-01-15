@@ -23,6 +23,19 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
   public function executeShow (sfWebRequest $request)
   {
     $this->dak_festival = $this->getRoute()->getObject();
+
+    $q = Doctrine_Core::getTable('dakEvent')
+      ->createQuery('e')
+      ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+    Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
+
+    $q->where('e.festival_id = ?', $request->getParameter('id'));
+    //$q->andWhere('e.is_public = ?', true);
+
+    $this->pager = new sfDoctrinePager('dakEvent', sfConfig::get('app_max_events_on_page'));
+    $this->pager->setQuery($q);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
   }
 
   protected function buildQuery()
