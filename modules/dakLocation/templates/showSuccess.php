@@ -1,33 +1,12 @@
+<?php use_helper('Date') ?>
 <?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', $location['name'] . ' - ' . __('Location')) ?>
+
 <h1><?php echo $location['name'] ?></h1>
 
-<table>
-  <tbody>
-    <tr>
-      <th><?php echo __('Id') ?>:</th>
-      <td><?php echo $location['id'] ?></td>
-    </tr>
-    <tr>
-      <th><?php echo __('Name') ?>:</th>
-      <td><?php echo $location['name'] ?></td>
-    </tr>
-    <tr>
-      <th><?php echo __('Description') ?>:</th>
-      <td><?php echo $location['description'] ?></td>
-    </tr>
-    <tr>
-      <th><?php echo __('Created at') ?>:</th>
-      <td><?php echo $location['created_at'] ?></td>
-    </tr>
-    <tr>
-      <th><?php echo __('Updated at') ?>:</th>
-      <td><?php echo $location['updated_at'] ?></td>
-    </tr>
-  </tbody>
-</table>
+<?php echo $location->getRaw('description') ?>
 
-<hr />
+<p><small><?php echo __('Created at %1%. Updated at %2%.', array('%1%' => format_datetime($location['created_at']), '%2%' => format_datetime($location['updated_at']))) ?></small></p>
 
 <a href="<?php echo url_for('@dak_location_index') ?>"><?php echo __('Back to list') ?></a>
 

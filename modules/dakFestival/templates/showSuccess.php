@@ -15,8 +15,7 @@ slot('title', $festival['title'] . ' - ' . __('Festival'));
         echo link_to($festival['commonLocation']['name'], '@dak_location_show?id='. $festival['location_id']);
       } 
      ?>
-  </p>
-  <p>
+    <br />
     <b><?php echo __('When?') ?></b> 
     <?php 
     if ($festival['startDate'] == $festival['endDate']):
@@ -25,22 +24,16 @@ slot('title', $festival['title'] . ' - ' . __('Festival'));
     <?php else: ?>
     <?php echo __('from %1% to %2%', array('%1%' => format_date($festival['startDate']) . ' ' . $festival['startTime'], '%2%' => format_date($festival['endDate']) . ' ' . $festival['endTime'])) ?>
     <?php endif ?>
-  </p>
-  <p>
+    <br />
     <b><?php echo __('Who?') ?></b>
-  </p>
-  <?php
-  if (count($festival['arrangers']) > 0) {
-    echo "<ul>\n";
-
-    foreach ($festival['arrangers'] as $arranger) {
-      echo "<li>" . link_to($arranger['name'], '@dak_arranger_show?id=' . $arranger['id']) . "</li>\n";
+    <?php
+    if (count($festival['arrangers']) > 0) {
+      foreach ($festival['arrangers'] as $arranger) {
+        echo link_to($arranger['name'], '@dak_arranger_show?id=' . $arranger['id']) . " \n";
+      }
     }
-
-    echo "</ul>";
-  }
-  ?>
-  <p>
+    ?>
+    <br />
     <small><?php echo __('Created at %1%. Updated at %2%.', array('%1%' => format_datetime($festival['created_at']), '%2%' => format_datetime($festival['updated_at']))) ?></small>
   </p>
   <p>
@@ -49,9 +42,8 @@ slot('title', $festival['title'] . ' - ' . __('Festival'));
 </div>
 
 <div id="eventContent">
-  <h2><?php echo $festival['title'] ?></h2>
 
- <?echo $festival->getRaw('leadParagraph'); ?>
+ <p><?echo $festival->getRaw('leadParagraph'); ?></p>
  <?echo $festival->getRaw('description'); ?>
 
   <?php if (!empty($festival['linkout'])): ?>
