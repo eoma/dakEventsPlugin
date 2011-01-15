@@ -1,3 +1,4 @@
+<?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', $location['name'] . ' - ' . __('Location')) ?>
 <h1><?php echo $location['name'] ?></h1>
 

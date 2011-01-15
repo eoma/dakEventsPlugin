@@ -1,3 +1,4 @@
+<?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', $category['name'] . ' - ' . __('Category')) ?>
 <h1><?php echo $category['name'] ?></h1>
 

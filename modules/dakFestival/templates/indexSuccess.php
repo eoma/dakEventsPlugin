@@ -1,3 +1,4 @@
+<?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', __('Festival list')) ?>
 <h1><?php echo __('Festival list') ?></h1>
 

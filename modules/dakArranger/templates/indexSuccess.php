@@ -1,4 +1,5 @@
 <?php use_helper('HtmlList') ?>
+<?php include_partial('dakGlobal/assets') ?>
 
 <?php slot('title', 'Arranger list') ?>
 <h1><?php echo __('Arranger list') ?></h1>

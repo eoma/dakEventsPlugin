@@ -1,3 +1,4 @@
+<?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', $arranger['name'] . ' - ' . __('Arranger')) ?>
 <h1><?php echo $arranger['name'] ?></h1>
 

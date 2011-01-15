@@ -1,4 +1,5 @@
 <?php
+include_partial('dakGlobal/assets');
 slot('title', $dak_event['title']);
 
 // We use the dakEvent showFullEvent partial as it contains all of the same information

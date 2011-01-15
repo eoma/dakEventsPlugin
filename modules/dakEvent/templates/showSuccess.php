@@ -1,4 +1,5 @@
-<?php 
+<?php
+include_partial('dakGlobal/assets');
 use_helper('Date');
 slot('title', $event['title']);
 
