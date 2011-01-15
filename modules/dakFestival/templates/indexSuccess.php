@@ -2,7 +2,7 @@
 <?php slot('title', __('Festival list')) ?>
 <h1><?php echo __('Festival list') ?></h1>
 
-<table>
+<table id="eventList">
   <tbody>
     <?php foreach ($pager->getResults() as $festival): ?>
     <tr class="<?php echo HtmlList::Alternate('odd','even'); ?>">
