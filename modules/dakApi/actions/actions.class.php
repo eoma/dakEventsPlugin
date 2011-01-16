@@ -22,13 +22,13 @@ class dakApiActions extends sfActions
 
   public function executeArranger(sfWebRequest $request) {
 
-    $subAction = $request->getParameter('subaction', 'list');
+    $this->subAction = $request->getParameter('subaction', 'list');
 
     $q = Doctrine_Core::getTable('dakArranger')
       ->createQuery('a')
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-    if (($subAction == 'get') && ($request->hasParameter('id'))) {
+    if (($this->subAction == 'get') && ($request->hasParameter('id'))) {
       $limit = 1;
       $offset = 0;
 
@@ -39,7 +39,7 @@ class dakApiActions extends sfActions
       $totalCount = $q->count();
       $count = count($dbResponse);
 
-    } else if ($subAction == 'list') {
+    } else if ($this->subAction == 'list') {
       $limit = intval($request->getParameter('limit', 20));
       $offset = 0;
       if ($limit > 0) {
@@ -64,18 +64,22 @@ class dakApiActions extends sfActions
       'data' => $dbResponse,
     );
 
-    return $this->returnJson($data);
+    if ($request->getRequestFormat() == 'json') {
+      return $this->returnJson($data);
+    } else {
+      $this->data = $data;
+    }
   }
 
   public function executeCategory(sfWebRequest $request) {
 
-    $subAction = $request->getParameter('subaction', 'list');
+    $this->subAction = $request->getParameter('subaction', 'list');
 
     $q = Doctrine_Core::getTable('dakCategory')
       ->createQuery('c')
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-    if (($subAction == 'get') && ($request->hasParameter('id'))) {
+    if (($this->subAction == 'get') && ($request->hasParameter('id'))) {
       $limit = 1;
       $offset = 0;
 
@@ -83,7 +87,7 @@ class dakApiActions extends sfActions
       $q->limit($limit);
       $dbResponse = $q->execute();
 
-    } else if ($subAction == 'list') {
+    } else if ($this->subAction == 'list') {
       $limit = intval($request->getParameter('limit', 20));
       $offset = 0;
       if ($limit > 0) {
@@ -108,18 +112,22 @@ class dakApiActions extends sfActions
       'data' => $dbResponse,
     );
 
-    return $this->returnJson($data);
+    if ($request->getRequestFormat() == 'json') {
+      return $this->returnJson($data);
+    } else {
+      $this->data = $data;
+    }
   }
   
   public function executeLocation(sfWebRequest $request) {
 
-    $subAction = $request->getParameter('subaction', 'list');
+    $this->subAction = $request->getParameter('subaction', 'list');
 
     $q = Doctrine_Core::getTable('dakLocation')
       ->createQuery('l')
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-    if (($subAction == 'get') && ($request->hasParameter('id'))) {
+    if (($this->subAction == 'get') && ($request->hasParameter('id'))) {
       $limit = 1;
       $offset = 0;
 
@@ -127,7 +135,7 @@ class dakApiActions extends sfActions
       $q->limit($limit);
       $dbResponse = $q->execute();
 
-    } else if ($subAction == 'list') {
+    } else if ($this->subAction == 'list') {
       $limit = intval($request->getParameter('limit', 20));
       $offset = 0;
       if ($limit > 0) {
@@ -152,13 +160,17 @@ class dakApiActions extends sfActions
       'data' => $dbResponse,
     );
 
-    return $this->returnJson($data);
+    if ($request->getRequestFormat() == 'json') {
+      return $this->returnJson($data);
+    } else {
+      $this->data = $data;
+    }
   }
 
   public function executeEvent(sfWebRequest $request) {
-    $subAction = $request->getParameter('subaction', 'get');
+    $this->subAction = $request->getParameter('subaction', 'get');
 
-    if (($subAction == 'get') && ($request->hasParameter('id'))) {
+    if (($this->subAction == 'get') && ($request->hasParameter('id'))) {
       $limit = 1;
       $offset = 0;
 
@@ -185,13 +197,17 @@ class dakApiActions extends sfActions
       );
     }
 
-    return $this->returnJson($data);
+    if ($request->getRequestFormat() == 'json') {
+      return $this->returnJson($data);
+    } else {
+      $this->data = $data;
+    }
   }
 
   public function executeFestival(sfWebRequest $request) {
-    $subAction = $request->getParameter('subaction', 'get');
+    $this->subAction = $request->getParameter('subaction', 'get');
 
-    if (($subAction == 'get') && ($request->hasParameter('id'))) {
+    if (($this->subAction == 'get') && ($request->hasParameter('id'))) {
       $limit = 1;
       $offset = 0;
 
@@ -220,10 +236,7 @@ class dakApiActions extends sfActions
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
     } else {
-      if ($subAction == 'get') {
-        $this->festival = $festival;
-        $this->setTemplate('festivalGet');
-      }
+      $this->data = $data;
     }
   }
 

@@ -1,10 +1,6 @@
-<?php
-echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-?>
-<eventdb xmlns="https://intern.kvarteret.no/events/api">
   <festival>
     <id><?php echo $festival['id'] ?></id>
-    <title><?php echo $festival['id'] ?></title>
+    <title><?php echo $festival['title'] ?></title>
     <leadParagraph><?php echo $festival['leadParagraph'] ?></leadParagraph>
     <description><?php echo $festival['description'] ?></description>
     <startDate><?php echo $festival['startDate'] ?></startDate>
@@ -17,9 +13,8 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
       <?php foreach ($festival['arrangers'] as $a): ?>
       <arranger>
         <id><?php echo $a['id'] ?></id>
-	<name><?php echo $a['name'] ?></name>
+        <name><?php echo $a['name'] ?></name>
       </arranger>
       <?php endforeach ?>
     </arrangers>
   </festival>
-</eventdb>
