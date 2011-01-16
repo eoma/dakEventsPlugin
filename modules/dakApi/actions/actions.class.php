@@ -252,7 +252,9 @@ class dakApiActions extends sfActions
     $q = Doctrine_Core::getTable('dakEvent')
       ->createQuery('e');
     Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
-    $q->where('e.startDate >= ? OR e.endDate >= ?', array(date('Y-m-d'), date('Y-m-d')))
+    // This specific query will ensure it only picks events currently
+    // happening or will happen
+    $q->where('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')))
       ->andWhere('e.is_public = ?', true)
       ->limit($limit)
       ->offset($offset)
@@ -334,7 +336,9 @@ class dakApiActions extends sfActions
       $startDate = $request->getParameter('startDate');
       $q->andWhere('e.startDate >= ? OR e.endDate >= ?', array($startDate, $startDate));
     } else {
-      $q->andWhere('e.startDate >= ? OR e.endDate >= ?', array(date('Y-m-d'), date('Y-m-d')));
+      // This specific query will ensure it only picks events currently
+      // happening or will happen
+      $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
     }
 
     if ($request->hasParameter('endDate')) {
