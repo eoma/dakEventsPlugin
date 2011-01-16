@@ -261,7 +261,7 @@ class dakApiActions extends sfActions
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
     } else {
-      $this->events = $events;
+      $this->data = $data;
       $this->latestUpdate = 0;
 
       foreach ($events as $e) {
@@ -376,7 +376,7 @@ class dakApiActions extends sfActions
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
     } else {
-      $this->events = $events;
+      $this->data = $data;
       $this->latestUpdate = 0;
 
       foreach ($events as $e) {

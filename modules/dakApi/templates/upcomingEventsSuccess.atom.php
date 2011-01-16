@@ -12,6 +12,6 @@
 </author>
 <id><?php echo url_for('@dak_api_upcomingEvents?sf_format=atom', true) ?></id>
 
-<?php include_partial('eventList', array('events' => $events)) ?>
+<?php include_partial('eventList', array('events' => $data['data'])) ?>
 
 </feed>
