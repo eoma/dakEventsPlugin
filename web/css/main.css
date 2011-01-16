@@ -51,12 +51,12 @@ body {
   padding: 0.5em;
 }
 
-p:first-child {
+#eventContent p:first-child {
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
-p {
+#eventContent p {
   margin-bottom: 1em;
 }
 
