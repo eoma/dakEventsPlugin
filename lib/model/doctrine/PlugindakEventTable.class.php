@@ -39,13 +39,17 @@ abstract class PlugindakEventTable extends Doctrine_Table
         return $q;
     }
 
-    public function defaultOrderBy(Doctrine_Query $q)
+    public function defaultOrderBy(Doctrine_Query $q, $order = 'asc')
     {
         $rootAlias = $q->getRootAlias();
 
-        $q->orderBy($rootAlias . '.startDate asc, ' .
-                    $rootAlias . '.startTime asc, ' .
-                    $rootAlias . '.title asc');
+        if ( !in_array($order, array('asc', 'desc')) ) {
+            $order = 'asc';
+        }
+
+        $q->orderBy($rootAlias . '.startDate ' . $order . ', ' .
+                    $rootAlias . '.startTime ' . $order . ', ' .
+                    $rootAlias . '.title ' . $order);
 
         return $q;
     }
@@ -66,18 +70,18 @@ abstract class PlugindakEventTable extends Doctrine_Table
         return $q;
     }
 
-    public function defaultQueryOptions(Doctrine_Query $q)
+    public function defaultQueryOptions(Doctrine_Query $q, $order = 'asc')
     {
         $q = $this->defaultJoins($q);
         $q = $this->defaultSelect($q);
-        $q = $this->defaultOrderBy($q);
+        $q = $this->defaultOrderBy($q, $order);
 
         return $q;
     }
 
-    public function defaultQueryOptionsAndRequirements(Doctrine_Query $q)
+    public function defaultQueryOptionsAndRequirements(Doctrine_Query $q, $order = 'asc')
     {
-        $q = $this->defaultQueryOptions($q);
+        $q = $this->defaultQueryOptions($q, $order);
         $q = $this->defaultRequirements($q);
 
         return $q;
