@@ -291,13 +291,24 @@ class dakApiActions extends sfActions
   public function executeFilteredEvents (sfWebRequest $request) {
     // This method will accept the following parameters:
     // location_id, arranger_id, category_id, festival_id,
-    // startDate, endDate, limit, offset
+    // startDate, endDate, history, limit, offset
+
+    $history = $request->getParameter('history', 'future');
+    // The history parameter is only good for getting mostly past events
+    // without specifying a date and getting it sorted from the most recent
+    // to the oldest. Can have values future or past. only past is
+    // given special meaning.
 
     $q = Doctrine_Core::getTable('dakEvent')
       ->createQuery('e');
-    Doctrine_Core::getTable('dakEvent')->defaultJoins($q);
-    Doctrine_Core::getTable('dakEvent')->defaultOrderBy($q);
     $q->select('e.id');
+    Doctrine_Core::getTable('dakEvent')->defaultJoins($q);
+
+    if ($history == 'past') {
+      Doctrine_Core::getTable('dakEvent')->defaultOrderBy($q, 'desc');
+    } else {
+      Doctrine_Core::getTable('dakEvent')->defaultOrderBy($q);
+    }
 
     // extraArguments variable is for templates wishing to use current url.
     // Probably wrong way to do it.
@@ -331,20 +342,41 @@ class dakApiActions extends sfActions
       $q->andWhereIn('e.festival_id', $festival_id);
     }
 
-    if ($request->hasParameter('startDate')) {
-      $this->extraArguments .= '&startDate=' . $request->getParameter('startDate');
-      $startDate = $request->getParameter('startDate');
-      $q->andWhere('e.startDate >= ? OR e.endDate >= ?', array($startDate, $startDate));
-    } else {
-      // This specific query will ensure it only picks events currently
-      // happening or will happen
-      $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
-    }
+    if ($history == 'past') {
+      $this->extraArguments .= '&history=past';
 
-    if ($request->hasParameter('endDate')) {
-      $this->extraArguments .= '&endDate=' . $request->getParameter('endDate');
-      $endDate = $request->getParameter('endDate');
-      $q->andWhere('e.startDate <= ? OR e.endDate <= ?', array($endDate, $endDate));
+      if ($request->hasParameter('startDate')) {
+        $this->extraArguments .= '&startDate=' . $request->getParameter('startDate');
+        $startDate = $request->getParameter('startDate');
+        $q->andWhere('e.startDate >= ? OR e.endDate >= ?', array($startDate, $startDate));
+      }
+
+      if ($request->hasParameter('endDate')) {
+        $this->extraArguments .= '&endDate=' . $request->getParameter('endDate');
+        $endDate = $request->getParameter('endDate');
+        $q->andWhere('e.startDate <= ? OR e.endDate <= ?', array($endDate, $endDate));
+      } else {
+        // This specific query will ensure it only picks events that
+        // has already happened
+        $q->andWhere('e.startDate <= ? OR e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));        
+      }
+	} else {
+      // Future events
+      if ($request->hasParameter('startDate')) {
+        $this->extraArguments .= '&startDate=' . $request->getParameter('startDate');
+        $startDate = $request->getParameter('startDate');
+        $q->andWhere('e.startDate >= ? OR e.endDate >= ?', array($startDate, $startDate));
+      } else {
+        // This specific query will ensure it only picks events currently
+        // happening or will happen
+        $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+      }
+
+      if ($request->hasParameter('endDate')) {
+        $this->extraArguments .= '&endDate=' . $request->getParameter('endDate');
+        $endDate = $request->getParameter('endDate');
+        $q->andWhere('e.startDate <= ? OR e.endDate <= ?', array($endDate, $endDate));
+      }
     }
 
     // Don't fetch non-public events
@@ -370,7 +402,11 @@ class dakApiActions extends sfActions
       }
 
       $q = Doctrine_Core::getTable('dakEvent')->createQuery('e');
-      Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
+      if ($history == 'past') {
+        Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q, 'desc');
+      } else {
+        Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
+      }
 
       $q->whereIn('e.id', $eventIds);
       $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
