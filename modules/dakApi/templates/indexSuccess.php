@@ -31,7 +31,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
     <ul>
       <li>get (subaction)
         <ul>
-          <li>id (req.)</li>
+          <li>id (req., integer)</li>
         </ul>
       </li>
       <li>list
@@ -92,10 +92,12 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
   </li>
 </ul>
 
-<p>In addition there are two special actions, they don't have any subactions, only parameters. Thee query must have the format</p>
+<p>In addition there are two special actions, they don't have any subactions, only parameters. The query must have the format</p>
 <code>
 http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;param2=value2&amp;...
 </code>
+
+<p>The actions and related optional parameters</p>
 
 <ul>
   <li>upcomingEvents
@@ -110,9 +112,9 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>arranger_id (csv)</li>
       <li>category_id (csv)</li>
       <li>festival_id (csv)</li>
-      <li>history (past or future)</li>
-      <li>startDate (yyyy-mm-dd format)</li>
-      <li>endDate (yyyy-mm-dd format)</li>
+      <li>history (past or future, future is default)</li>
+      <li>startDate (yyyy-mm-dd format, current date is default if history=future)</li>
+      <li>endDate (yyyy-mm-dd format, current date is default if history=past)</li>
       <li>limit</li>
       <li>offset</li>
     </ul>
