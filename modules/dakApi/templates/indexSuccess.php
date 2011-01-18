@@ -6,6 +6,12 @@
   <ul>
     <li><a href="#howtoQuery">How to make a query</a></li>
     <li><a href="#responseFormat">Response format</a></li>
+    <li><a href="#externalPlugins">External plugins</a>
+      <ul>
+        <li><a href="#wordpress">Wordpress</a></li>
+        <li><a href="#standAloneClient">Stand alone client library</a></li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -15,6 +21,8 @@ that fit your specific needs, ie. a mobile application that displays
 upcoming or previous events for your favorite arranger(s)/category(-ies)/location(s)
 or all three.
 </p>
+
+<p>It is an open source project, you can find it at <a href="https://github.com/eoma/dakEventsPlugin">github.com</a>.</p>
 
 <h2 id="howtoQuery">How to make a query</h2>
 
@@ -140,3 +148,15 @@ We supply two response formats: <tt>json</tt> and <tt>xml</tt>.
 <pre>
 <?php echo esc_entities(file_get_contents(dirname(__FILE__) . '/apiSamples/upcomingEvents.xml')) ?>
 </pre>
+
+<h2 id="externalPlugins">External plugins</h2>
+
+<p>There exist some software for interacting with the event calendar.</p>
+
+<h3 id="wordpress">Wordpress</h3>
+
+<p>Take a look at <a href="https://github.com/eoma/dak_events_wp">dak_events_wp</a>.</p>
+
+<h3 id="standAloneClient">Stand alone client</h3>
+
+<p>Take a look at <a href="https://github.com/eoma/dak_events_wp/blob/master/eventsCalendarClient.php">eventsCalendarClient</a>.</p>
