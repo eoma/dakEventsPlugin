@@ -24,11 +24,15 @@ dak_api_filteredEvents:
   requirements:
     sf_format: (?:json|xml|atom)
 
-dak_api:
+dak_api_actions:
   url: /api/:sf_format/:action/:subaction/*
   param: { module: dakApi }
   requirements:
     sf_format: (?:json|xml)
+
+dak_api:
+  url: /api
+  param: { module: dakApi, action: index }
 
 dak_event_index:
   url: /:sf_culture/event

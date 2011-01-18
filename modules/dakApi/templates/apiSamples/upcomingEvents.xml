@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eventdb xmlns="https://intern.kvarteret.no/events/api">
+  <limit>20</limit>
+  <offset>0</offset>
+  <count>2</count>
+  <totalCount>2</totalCount>
+  <data>
+    <events>
+      <event>
+        <id>6</id>
+        <title>Storm Weather Shanty Choir</title>
+        <leadParagraph>Storm Weather Shanty Choir</leadParagraph>
+        <description></description>
+        <startDate>2011-01-20</startDate>
+        <startTime>22:00:00</startTime>
+        <endDate>2011-01-21</endDate>
+        <endTime>02:00:00</endTime>
+        <createdAt>2011-01-10 14:25:27</createdAt>
+        <updatedAt>2011-01-10 16:07:34</updatedAt>
+        <categories>
+          <category>
+            <id>1</id>
+            <name>Konsert</name>
+          </category>
+        </categories>
+        <arranger>
+          <id>2</id>
+          <name>RF</name>
+        </arranger>
+        <commonLocation>
+          <id>2</id>
+          <name>Teglverket</name>
+        </commonLocation>
+      </event>
+      <event>
+        <id>9</id>
+        <title>Optical Substance</title>
+        <leadParagraph></leadParagraph>
+        <description></description>
+        <startDate>2011-01-22</startDate>
+        <startTime>21:30:00</startTime>
+        <endDate>2011-01-22</endDate>
+        <endTime>22:30:00</endTime>
+        <createdAt>2011-01-10 14:27:43</createdAt>
+        <updatedAt>2011-01-14 10:08:21</updatedAt>
+        <categories>
+          <category>
+            <id>1</id>
+            <name>Konsert</name>
+          </category>
+        </categories>
+        <arranger>
+          <id>1</id>
+          <name>ASF</name>
+        </arranger>
+        <commonLocation>
+          <id>6</id>
+          <name>Storelogen</name>
+        </commonLocation>
+        <festival>
+          <id>3</id>
+          <title>Helhus</title>
+          <startDate>2011-01-22</startDate>
+          <startTime>22:00:00</startTime>
+        </festival>
+      </event>
+    </events>
+  </data>
+</eventdb>
