@@ -1,0 +1,27 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           dakPicture
+    theme:                 dakAdmin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          dak_picture_admin
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        max_per_page: 40
+        sort: [created_at, desc]
+        title: Picture management
+        display: [=description, created_at, updated_at]
+      filter:  ~
+      form:    ~
+      edit:
+        title: Editing picture
+      new:
+        title: Picture upload
