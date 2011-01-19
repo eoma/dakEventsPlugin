@@ -1,5 +1,21 @@
 ---
 
+dakFile:
+  actAs: [Timestampable]
+  columns:
+    filename: { type: string(50), notnull: true }
+    mime_type: { type: string(50), notnull: true }
+    description: { type: clob, notnull: true }
+    size: { type: integer(8), notnull: true, default: 0}
+
+dakPicture:
+  inheritance:
+    type: concrete
+    extends: dakFile
+  columns:
+    #source: { type: integer, notnull: true } # 0 -> upload, 1 for web
+    #source_address: { type: string(2048) } # Depends upon whether source is set to web
+
 dakCategory:
   actAs: [Timestampable]
   columns:
@@ -297,6 +313,7 @@ dakEvent: # This table will hold all events.
     location_id: integer # This will be used for locations that recur, instead of manually typing locations.
     arranger_id: {type: integer, notnull: true}
     festival_id: integer
+    primaryPicture_id: integer
   relations:
     arranger:
       class: dakArranger
@@ -317,6 +334,16 @@ dakEvent: # This table will hold all events.
       local: festival_id
       foreign: id
       foreignAlias: events
+    primaryPicture:
+      class: dakPicture
+      local: primaryPicture_id
+      foreign: id
+      foreignAlias: eventsWithPrimaryPicture
+      onDelete: SET NULL # Prevent deletion of event if picture is deleted
+    pictures:
+      class: dakPicture
+      refClass: dakEventPicture
+      foreignAlias: events
   indexes:
     locations:
       fields: [location_id]
@@ -336,5 +363,19 @@ dakEventCategory:
       onDelete: CASCADE
     dakCategory:
       local: dak_category_id
+      foreign: id
+      onDelete: CASCADE
+
+dakEventPicture:
+  columns:
+    dak_event_id: {type: integer, primary: true}
+    dak_picture_id: {type: integer, primary: true}
+  relations:
+    dakEvent:
+      local: dak_event_id
+      foreign: id
+      onDelete: CASCADE
+    dakPicture:
+      local: dak_picture_id
       foreign: id
       onDelete: CASCADE
