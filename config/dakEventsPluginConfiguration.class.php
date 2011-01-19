@@ -19,6 +19,7 @@ class dakEventsPluginConfiguration extends sfPluginConfiguration
       'dakCategoryAdmin',
       'dakLocationAdmin',
       'dakLocationReservationAdmin',
+      'dakPictureAdmin',
     );
 
     foreach ($adminModules as $module)

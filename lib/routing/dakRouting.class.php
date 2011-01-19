@@ -80,4 +80,17 @@ class dakRouting
       'requirements'        => array(),
     )));
   }
+  
+  static public function addRouteForPictureAdmin (sfEvent $event)
+  {
+    $event->getSubject()->prependRoute('dak_picture_admin', new sfDoctrineRouteCollection(array(
+      'name'                => 'dak_picture_admin',
+      'model'               => 'dakPicture',
+      'module'              => 'dakPictureAdmin',
+      'prefix_path'         => 'picture',
+      'with_wildcard_routes' => true,
+      'collection_actions'  => array('filter' => 'post', 'batch' => 'post'),
+      'requirements'        => array(),
+    )));
+  }
 }
