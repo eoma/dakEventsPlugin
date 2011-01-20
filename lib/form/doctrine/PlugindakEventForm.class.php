@@ -22,8 +22,8 @@ class PlugindakEventForm extends BasedakEventForm
       $this['created_at'], $this['updated_at'], $this['user_id']
     );
 
-    // Disable pictures temporarily
-    unset( $this['primaryPicture_id'], $this['pictures_list']);
+    // Disable picture list (secondary) temporarily
+    unset( $this['pictures_list'] );
 
     $years = range(date('Y'), date('Y') + 3);
     $this->widgetSchema['startDate'] = new sfWidgetFormDate(array(
