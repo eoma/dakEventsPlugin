@@ -358,7 +358,7 @@ class dakApiActions extends sfActions
       } else {
         // This specific query will ensure it only picks events that
         // has already happened
-        $q->andWhere('e.startDate <= ? OR e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));        
+        $q->andWhere('e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('H:i:s')));        
       }
 	} else {
       // Future events
