@@ -24,6 +24,7 @@ abstract class PlugindakEventTable extends Doctrine_Table
         $q->leftJoin($rootAlias . '.commonLocation l')
           ->leftJoin($rootAlias . '.arranger a')
           ->leftJoin($rootAlias . '.categories c')
+          ->leftJoin($rootAlias . '.primaryPicture pp')
           ->leftJoin($rootAlias . '.festival f');
 
         return $q;
@@ -34,7 +35,7 @@ abstract class PlugindakEventTable extends Doctrine_Table
 
         $rootAlias = $q->getRootAlias();
 
-        $q->select( $rootAlias . '.*, l.name, a.name, c.name, f.title, f.startDate, f.startTime');
+        $q->select( $rootAlias . '.*, l.name, a.name, c.name, f.title, f.startDate, f.startTime, pp.filename, pp.description');
 
         return $q;
     }
