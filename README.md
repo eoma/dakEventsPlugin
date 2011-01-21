@@ -42,11 +42,15 @@ It also requires you to use:
 *   [sfDoctrineNestedSetPlugin][]
 *   [sfCKEditorPlugin][] (depends on CKEditor, user flag --stability=beta)
 *   [HTMLPurifier][]
+*   [sfImageTransformPlugin][]
+*   [sfImageTransformExtraPlugin][]
 
   [sfDoctrineGuardPlugin]: http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin
   [sfDoctrineNestedSetPlugin]: http://www.symfony-project.org/plugins/sfDoctrineNestedSetPlugin
   [sfCKEditorPlugin]: http://www.symfony-project.org/plugins/sfCKEditorPlugin
   [HTMLPurifier]: http://htmlpurifier.org
+  [sfImageTransformPlugin]: http://www.symfony-project.org/plugins/sfImageTransformPlugin
+  [sfImageTransformExtraPlugin]: http://www.symfony-project.org/plugins/sfImageTransformExtraPlugin
 
 Install them from stock using symfony's
 
