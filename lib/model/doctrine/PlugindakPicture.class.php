@@ -12,4 +12,14 @@
  */
 abstract class PlugindakPicture extends BasedakPicture
 {
+
+  /**
+   * Will delete the picture when the corresponding
+   * record is deleted
+   */
+  public function postDelete ($event)
+  {
+    @unlink(sfConfig::get('sf_upload_dir').'/pictures/'.$this->filename);
+  }
+
 }
