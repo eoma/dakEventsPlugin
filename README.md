@@ -1,8 +1,8 @@
 dakEventsPlugin - event management for symfony
 ==============================================
 
-Overview
---------
+## <a name="overview">Overview</a> ##
+
 
 dakEventsPlugin is a fullfledged multi-user event management software
 for the [Symfony framework] [sf] v. 1.4.
@@ -15,7 +15,7 @@ can pull out events from specific arrangers, locations, festivals and/or categor
   [sf]: http://www.symfony-project.org/
   [sfdoc]: http://www.symfony-project.org/
 
-About
+## <a name="about">About</a> ##
 -----
 
 This plugin is a pluginification of the test project
@@ -23,10 +23,9 @@ This plugin is a pluginification of the test project
 
 What is kvarteret? See [kvarteret.no](http://kvarteret.no/)
 
-Installation
-------------
+## <a name="installation">Installation</a> ##
 
-### Dependencies ###
+### <a name="dependencies">Dependencies</a> ###
 
 In addition to symfony 1.4, this project forces you to use 
 [Doctrine 1.2] [dt] as ORM for symfony (if you don't know what 
@@ -81,7 +80,7 @@ If the autoload.yml file doesn't exist, create it and put in
 
   [dt]: http://www.doctrine-project.org/
 
-### Plugin installation ###
+### <a name="plugin-installation">Plugin installation</a> ###
 
 Currently you have to use the [git version on github][gh].
 If you either use the download option or the git version, 
@@ -104,7 +103,7 @@ although not recommended as it gives everyone write permission).
 
   [gh]: https://github.com/eoma/dakEventsPlugin/
 
-### Setup in a project ###
+### <a name="project-setup">Setup in a project</a> ###
 
 #### <a name="project-frontend">Frontend</a> ####
 
@@ -127,18 +126,16 @@ They can be referenced through the path name dak_event, dak_api, dak_festival
 and so forth. Have a look at 
 [config/routing.yml](https://github.com/eoma/dakEventsPlugin/tree/master/config/routing.yml)
 
-See [backend](#project-backend) for how to enable these modules.
-
 Add each of these to the enabled_modules for the all environment in the frontend application's
 settings.yml
 
       #Enabled modules
       enabled_modules:
-      - dakEventAdmin
-      - dakFestivalAdmin
-      - dakArrangerAdmin
-      - dakCategoryAdmin
-      - dakLocationAdmin
+      - dakEvent
+      - dakFestival
+      - dakArranger
+      - dakCategory
+      - dakLocation
       - sfImageTransformator
 
 If you want to use internationalisation (i18n) you can set, in frontend's config/settings.yml:
@@ -157,7 +154,7 @@ If you want to use internationalisation (i18n) you can set, in frontend's config
 
 Change culture to your own taste. (eg. no for norwegian, fr for french, etc.)
 
-#### Backend ####
+#### <a name="project-backend">Backend</a> ####
 
 Recommended modules for use in backend application:
 
