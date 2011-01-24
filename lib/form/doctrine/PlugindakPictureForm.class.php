@@ -20,12 +20,12 @@ class PlugindakPictureForm extends BasedakPictureForm
     unset($this['events_list']);
 
     $this->validatorSchema['filename']->setOption('mime_types', 'web_images');
-    $this->validatorSchema['filename']->setOption('path', sfConfig::get('sf_upload_dir') . '/pictures');
+    $this->validatorSchema['filename']->setOption('path', sfConfig::get('sf_upload_dir') . '/dakpicture');
 
     sfApplicationConfiguration::getActive()->loadHelpers(array('Url'));
 
     $this->setWidget('filename', new sfWidgetFormInputFileEditable(array(
-      'file_src'    => public_path('') . basename(sfConfig::get('sf_upload_dir')) . '/pictures/'.$this->getObject()->getFilename(),
+      'file_src'    => public_path('') . basename(sfConfig::get('sf_upload_dir')) . '/dakpicture/'.$this->getObject()->getFilename(),
       'edit_mode'   => !$this->isNew(),
       'is_image'    => true,
       'with_delete' => false,

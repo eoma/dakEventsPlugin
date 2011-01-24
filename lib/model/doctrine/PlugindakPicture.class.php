@@ -19,7 +19,11 @@ abstract class PlugindakPicture extends BasedakPicture
    */
   public function postDelete ($event)
   {
-    @unlink(sfConfig::get('sf_upload_dir').'/pictures/'.$this->filename);
+    @unlink(sfConfig::get('sf_upload_dir').'/dakpicture/'.$this->filename);
   }
 
+  public function getFile()
+  {
+    return 'dakpicture/' . $this->getFilename();
+  }
 }
