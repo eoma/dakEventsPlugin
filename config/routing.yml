@@ -94,6 +94,20 @@ dak_location_show:
   requirements:
     sf_culture: (?:en|no)
 
+dak_thumb:
+  class: sfImageTransformRoute
+  url:   /thumbs/:type/:format/:path/:id.:sf_format
+  param: { module: sfImageTransformator, action: index, attribute: filename}
+  requirements:
+    format:    '[\w_-]+'
+    path:      '[\w/]+'
+    id:        '\d+(?:,\d+)?'
+    sf_format: 'gif|png|jpg'
+    sf_method: [ get ]
+  options:
+    image_source: Doctrine # or Propel
+    segment_separators: [ '/', '.', '-' ]
+
 # generic rules
 # please, remove them by adding more specific rules
 #default_index:
