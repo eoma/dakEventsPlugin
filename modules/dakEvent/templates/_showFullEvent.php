@@ -57,6 +57,10 @@ if (isset($inAdmin) && ($inAdmin == true)) {
 
 <div id="eventContent">
 
+  <?php if ($event['primaryPicture_id'] > 0): ?>
+    <?php include_partial('dakGlobal/picture', array('picture' => $event['primaryPicture'], 'format' => 'primaryPicture')) ?>
+  <?php endif ?>
+
   <p><?echo $event->getRaw('leadParagraph'); ?></p>
   <?echo $event->getRaw('description'); ?>
 

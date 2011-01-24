@@ -25,6 +25,9 @@ if (isset($inAdmin) && ($inAdmin == true)) {
     <?php foreach ($events as $event): ?>
     <tr class="<?php echo HtmlList::Alternate('odd','even'); ?>">
       <td>
+        <?php if($event['primaryPicture_id'] > 0) 
+          include_partial('dakGlobal/picture', array('picture' => $event['primaryPicture'], 'format' => 'list'));
+        ?>
         <?php echo link_to($event['title'], $rp['event'] . '_show?id=' . $event['id']) ?><br />
         <span>
           <?php 
