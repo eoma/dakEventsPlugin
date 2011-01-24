@@ -98,11 +98,15 @@ Then edit your config/ProjectConfiguration.class.php and add
 
 at the end of the setup method.
 
+You must then create the folder thumbs and uploads in the web/ directory and set them to
+be writable by the web server. (you can use chmod a+rwx web/thumbs and chmod a+rwx web/uploads,
+although not recommended as it gives everyone write permission).
+
   [gh]: https://github.com/eoma/dakEventsPlugin/
 
 ### Setup in a project ###
 
-#### Frontend #### <a if="project-frontend"/>
+#### <a name="project-frontend">Frontend</a> ####
 
 Recommended modules for use in a frontend application:
 
@@ -112,6 +116,7 @@ Recommended modules for use in a frontend application:
 *   dakArranger
 *   dakCategory
 *   dakLocation
+*   sfImageTransformator
 
 It's recommended that you enable every module as they link to each other.
 You cam omit the dakApi module, for the moment.
@@ -134,6 +139,7 @@ settings.yml
       - dakArrangerAdmin
       - dakCategoryAdmin
       - dakLocationAdmin
+      - sfImageTransformator
 
 If you want to use internationalisation (i18n) you can set, in frontend's config/settings.yml:
 
@@ -160,6 +166,7 @@ Recommended modules for use in backend application:
 *   dakArrangerAdmin
 *   dakCategoryAdmin
 *   dakLocationAdmin
+*   sfImageTransformator
 
 Additional (not complete) modules:
 
