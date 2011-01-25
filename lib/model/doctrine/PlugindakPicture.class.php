@@ -13,6 +13,13 @@
 abstract class PlugindakPicture extends BasedakPicture
 {
 
+  public function generateFilenameFilename (sfValidatedFile $file) {
+    $imgData = getimagesize($file->getTempName());
+	$this->setHeight($imgData[1]);
+    $this->setWidth($imgData[0]);
+    return parent::generateFilenameFilename($file);
+  }
+
   /**
    * Will delete the picture when the corresponding
    * record is deleted
