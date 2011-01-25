@@ -17,7 +17,7 @@ class PlugindakPictureForm extends BasedakPictureForm
   {
     parent::setup();
 
-    unset($this['events_list']);
+    unset($this['events_list'], $this['height'], $this['width']);
 
     $this->validatorSchema['filename']->setOption('mime_types', 'web_images');
     $this->validatorSchema['filename']->setOption('path', sfConfig::get('sf_upload_dir') . '/dakpicture');
