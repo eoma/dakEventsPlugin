@@ -35,7 +35,9 @@ abstract class PlugindakEventTable extends Doctrine_Table
 
         $rootAlias = $q->getRootAlias();
 
-        $q->select( $rootAlias . '.*, l.name, a.name, c.name, f.title, f.startDate, f.startTime, pp.filename, pp.description');
+        $q->select( $rootAlias . '.*, l.name, a.name, c.name, '
+                    . ' f.title, f.startDate, f.startTime, '
+                    . 'pp.filename, pp.description, pp.height, pp.width' );
 
         return $q;
     }
