@@ -15,6 +15,8 @@ dakPicture:
   columns:
     #source: { type: integer, notnull: true } # 0 -> upload, 1 for web
     #source_address: { type: string(2048) } # Depends upon whether source is set to web
+    width: { type: integer, notnull: true }
+    height: { type: integer, notnull: true }
 
 dakCategory:
   actAs: [Timestampable]
