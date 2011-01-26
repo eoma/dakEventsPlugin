@@ -92,5 +92,13 @@ class dakRouting
       'collection_actions'  => array('filter' => 'post', 'batch' => 'post'),
       'requirements'        => array(),
     )));
+    $event->getSubject()->prependRoute('dak_picture_admin_jsonsearch',
+      new sfRoute('picture/jsonsearch/*',
+        array(
+          'module' => 'dakPictureAdmin',
+          'action' => 'jsonSearch',
+        )
+      )
+    );
   }
 }
