@@ -22,9 +22,6 @@ class PlugindakEventForm extends BasedakEventForm
       $this['created_at'], $this['updated_at'], $this['user_id']
     );
 
-    // Disable picture list (secondary) temporarily
-    unset( $this['pictures_list'] );
-
     $years = range(date('Y'), date('Y') + 3);
     $this->widgetSchema['startDate'] = new sfWidgetFormDate(array(
       'format' => '%year%-%month%-%day%',
@@ -86,6 +83,8 @@ class PlugindakEventForm extends BasedakEventForm
 
     $this->widgetSchema['categories_list']->setOption('expanded', true);
     $this->validatorSchema['categories_list']->setOption('required', true);
+
+    $this->widgetSchema['pictures_list'] = new sfWidgetFormChoiceAutocomplete(array('choices' => array(), 'source' => '@dak_picture_admin_jsonsearch'), array());
 
     if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
       // Widget arranger_is of type sfWidgetFormDoctrineChoice, which supports queries.
