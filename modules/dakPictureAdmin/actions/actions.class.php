@@ -20,4 +20,58 @@ class dakPictureAdminActions extends autodakPictureAdminActions
     $this->configuration->setUser($this->getUser());
   }
 
+  public function executeJsonSearch (sfWebRequest $request) {
+    $description = trim($request->getParameter('term', ''));
+
+    if ($description != '') {
+      $description = '%' . $description . '%';
+    }
+
+    $q = Doctrine_Core::getTable('dakPicture')->createQuery('p');
+    $q->select('p.id, p.description, p.height, p.width');
+    $q->where('p.description LIKE ?', $description);
+    $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+
+    $q->limit(20);
+
+    $result = $q->execute();
+
+    $this->getContext()->getConfiguration()->loadHelpers('Url', 'Image');
+
+    $thumbRouteArgs = array(
+      'type' => 'dakPicture',
+      'format' => 'list'
+    );
+
+    foreach ($result as &$r) {
+		$thumbRouteArgs['id'] = $r['id'];
+		$r['thumbUrl'] = url_for('dak_thumb', $thumbRouteArgs);
+		$thumbSizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $r['width'], $r['height']);
+		$r['thumbHeight'] = $thumbSizes['height'];
+		$r['thumbWidth'] = $thumbSizes['width'];
+	}
+
+    return $this->returnJson($result);
+  }
+
+  public function returnJson($data) {
+    $this->data = $data;
+
+    if (sfConfig::get('sf_environment') == 'dev' && !$this->getRequest()->isXmlHttpRequest()) {
+      $this->getResponse()->setHttpHeader('Content-type','text/plain');
+      return $this->renderText(var_dump($data));
+    } else {
+      $this->getResponse()->setHttpHeader('Content-type','application/json');
+
+      $string = '';
+
+      if ( isset( $_GET['callback'] ) ) {
+        $string = $_GET['callback'] . '(' . json_encode($data) . ')';
+      } else {
+        $string = json_encode($data);
+      }
+      return $this->renderText($string);
+    }
+  }
+
 }
