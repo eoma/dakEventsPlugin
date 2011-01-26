@@ -31,23 +31,20 @@ class ImageHelper
       if (in_array($first['transformation'], array('resize', 'thumbnail')) && 
           ($param['proportional'] == true)) {
 
-        if (($param['height'] / $param['width']) > ($origHeight / $origWidth)) {
-          $height = (int) round($param['width'] * $origHeight / $origWidth);
+        $transformRatio = $param['height'] / $param['width'];
+        $origRatio = $origHeight / $origWidth;
+
+        if ($origRatio > $transformRatio) {
+          // The transform image's width must be shrinked
+          $height = $param['height'];
+          $width = (int) round($param['width'] * $transformRatio / $origRatio);
+        } else if ($origRatio < $transformRatio) {
+          // The transform image's height must be shrinked
           $width = $param['width'];
-          
-          if ($height > $param['height']) {
-            $width = (int) round($param['width'] * $param['height'] / $height);
-            $height = $param['height'];
-          }
-          
+          $height = (int) round($param['height'] * $origRatio / $transformRatio);
         } else {
           $height = $param['height'];
-          $width = (int) round($param['height'] * $origWidth / $origHeight);
-          
-          if ($width > $param['width']) {
-            $height = (int) round($param['height'] * $param['width'] / $width);
-            $width = $param['width'];
-          }
+          $width = $param['width'];
         }
       }
     }
