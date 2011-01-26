@@ -445,8 +445,8 @@ class dakApiActions extends sfActions
     $this->data = $data;
 
     if (sfConfig::get('sf_environment') == 'dev' && !$this->getRequest()->isXmlHttpRequest()) {
-      $this->setLayout('json_debug'); 
-      $this->setTemplate('json_debug', 'api');
+      $this->getResponse()->setHttpHeader('Content-type','text/plain');
+      return $this->renderText(var_dump($data));
     } else {
       $this->getResponse()->setHttpHeader('Content-type','application/json');
 
