@@ -49,6 +49,7 @@ class dakPictureAdminActions extends autodakPictureAdminActions
 		$thumbSizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $r['width'], $r['height']);
 		$r['thumbHeight'] = $thumbSizes['height'];
 		$r['thumbWidth'] = $thumbSizes['width'];
+		$r['value'] = '<img src="' . $r['thumbUrl'] . '" height="' . $r['thumbHeight'] . '" width="' . $r['thumbWidth'] . '" alt="' . $r['description'] . '" />';
 	}
 
     return $this->returnJson($result);
