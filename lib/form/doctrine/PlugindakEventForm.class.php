@@ -84,7 +84,32 @@ class PlugindakEventForm extends BasedakEventForm
     $this->widgetSchema['categories_list']->setOption('expanded', true);
     $this->validatorSchema['categories_list']->setOption('required', true);
 
-    $this->widgetSchema['pictures_list'] = new sfWidgetFormChoiceAutocomplete(array('choices' => array(), 'source' => '@dak_picture_admin_jsonsearch'), array());
+    $pictureChoices = array();
+
+    if (!$this->isNew()) {
+      $pictureChoicesTemp = $this->getObject()->getPictures();
+
+      if (count($pictureChoicesTemp) > 0) {
+        foreach ($pictureChoicesTemp as $p) {
+          $pictureChoices[$p['id']] = $p;
+        }
+      }
+    }
+
+    $this->widgetSchema['pictures_list'] = new sfWidgetFormChoiceAutocomplete(
+      array(
+        'choices' => $pictureChoices,
+        'class' => 'dakPictureAutocomplete',
+        'source' => '@dak_picture_admin_jsonsearch',
+        'selectTemplate' => dakPictureChoiceAutocomplete::jQueryUISelectTemplate(true),
+        'resultTemplate' => dakPictureChoiceAutocomplete::jQueryUIResultTemplate(),
+        'focusField' => 'description',
+        'list_options' => array(
+          'renderer_class' => 'dakPictureChoiceAutocomplete',
+         ),
+      ),
+      array()
+    );
 
     if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
       // Widget arranger_is of type sfWidgetFormDoctrineChoice, which supports queries.
