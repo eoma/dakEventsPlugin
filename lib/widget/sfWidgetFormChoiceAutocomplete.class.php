@@ -49,6 +49,12 @@ class sfWidgetFormChoiceAutocomplete extends sfWidgetForm
 </div>
 EOF
 );
+
+    $this->addOption('class', 'USJjQueryUIAutocomplete');
+    $this->addOption('selectTemplate', 'ui.item.description + "<br />" + ui.item.value');
+    $this->addOption('resultTemplate', 'item.description + "<br />" item.value');
+    $this->addOption('focusField', 'value'); // Eg. the field in the json reply to use as place holder in the search field
+
   }
 
   /**
@@ -93,62 +99,69 @@ EOF
     $associatedWidget = new sfWidgetFormChoice(array_merge($this->getOption('list_options'),array('choices' => $associated, 'multiple' => true, 'expanded' => true)));
 	
     return strtr($this->getOption('template'),array(
-	'%class%' => 'USJjQueryUIAutocomplete', 
-	'%id%' => $this->generateId($name), 
-	'%list%' => $associatedWidget->render($name,$value), 
+	'%class%' => $this->getOption('class'),
+	'%id%' => $this->generateId($name),
+	'%list%' => $associatedWidget->render($name,$value),
 	'%autocomplete%' => $this->renderTag('input', array('type' => 'text', 'name' => 'autocomplete_'.$name)) . 
       sprintf(<<<EOF
-	<script type="text/javascript">
-	  jQuery(document).ready(function() {
-			
-  	    jQuery('#%s').focus(function(){ $(this).val(''); }).trigger('focus');
-	    jQuery('#%s').blur(function(){ $(this).val('%s'); }).trigger('blur');
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    jQuery('#%1\$s').focus(function(){ $(this).val(''); }).trigger('focus');
+    jQuery('#%1\$s').blur(function(){ $(this).val('%2\$s'); }).trigger('blur');
 					
-	    if (!$('div#%s_list ul.checkbox_list').length) {
-	      $('div#%s_list').append('<ul class="checkbox_list"></ul>');
-	    }
+    if (!$('div#%3\$s_list ul.checkbox_list').length) {
+      $('div#%3\$s_list').append('<ul class="checkbox_list"></ul>');
+    }
 					
-	    jQuery('#%s').autocomplete({
-	     source: %s,
-	     select: function(event, ui) {
-	       if (!$('#%s_'+ui.item.id).length) {
-                 var ul = $('div#%s_list ul.checkbox_list');
-		 $('<li><input type="checkbox" checked="checked" id="%s_'+ui.item.id+'" value="'+ui.item.id+'" name="%s"> <label for="%s_'+ui.item.id+'">'+ui.item.value+'</label></li>').prependTo(ul);
-	       }
-	       $(this).trigger('blur');
-	    } 
-	});
+    jQuery('#%1\$s').autocomplete({
+      source: %4\$s,
+      focus: function( event, ui ) {
+        $( "#%1\$s" ).val( ui.item.%8\$s );
+        return false;
+      },
+      select: function(event, ui) {
+        if (!$('#%3\$s_'+ui.item.id).length) {
+          var ul = $('div#%3\$s_list ul.checkbox_list');
+          $('<li><input type="checkbox" checked="checked" id="%3\$s_'+ui.item.id+'" value="'+ui.item.id+'" name="%5\$s"> <label for="%3\$s_'+ui.item.id+'">'+%6\$s+'</label></li>').prependTo(ul);
+          $( '#%1\$s' ).val( ui.item.%8\$s );
+        }
+        $(this).trigger('blur');
+        return false;
+      } 
+    })
+    .data( "autocomplete")._renderItem = function (ul, item) {
+      return $( "<li></li>" )
+        .data( "item.autocomplete", item )
+        .append( "<a>" + %7\$s + "</a>" )
+        .appendTo( ul );
+    };
 					
-	jQuery('div#%s_list').change(function(e){
-	  var elt = $(e.target);
-	  if ($(elt).is(':not(:checked)')) {
-	    $(elt).parent('li').animate({'backgroundColor':'#fb6c6c'},300); 
-	  }
-	  setTimeout(function(){
-           if ($(elt).is(':not(:checked)')) {
-	     $(elt).parent('li').slideUp(300,function() { $(this).remove() });
-	   } else {
-	     $(elt).parent('li').css({'backgroundColor':'#fff'});
-	   }
-	 },3000);
-	});
-      });			
+    jQuery('div#%3\$s_list').change(function(e){
+      var elt = $(e.target);
+      if ($(elt).is(':not(:checked)')) {
+        $(elt).parent('li').animate({'backgroundColor':'#fb6c6c'},300); 
+      }
+      setTimeout(function(){
+        if ($(elt).is(':not(:checked)')) {
+          $(elt).parent('li').slideUp(300,function() { $(this).remove() });
+        } else {
+          $(elt).parent('li').css({'backgroundColor':'#fff'});
+        }
+      },3000);
+    });
+  });			
 </script>
 EOF
  ,
-	$this->generateId('autocomplete_'.$name),
-	$this->generateId('autocomplete_'.$name),
-	$this->getOption('help'),
-	$this->generateId($name),
-	$this->generateId($name),
-        $this->generateId('autocomplete_'.$name),
-	'"' . $this->generateSource() . '"',
-	$this->generateId($name),
-	$this->generateId($name),
-	$this->generateId($name),
-	$name . '[]',
-	$this->generateId($name),
-	$this->generateId($name)
+        
+        $this->generateId('autocomplete_' . $name),
+        $this->getOption('help'),
+        $this->generateId($name),
+        '"' . $this->generateSource() . '"',
+        $name . '[]',
+        $this->getOption('selectTemplate'),
+        $this->getOption('resultTemplate'),
+        $this->getOption('focusField')
       )
     ));
   }
