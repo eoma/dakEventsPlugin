@@ -43,14 +43,21 @@ class dakPictureAdminActions extends autodakPictureAdminActions
       'format' => 'list'
     );
 
+    if (sfConfig::get('sf_no_script_name')) {
+      $urlSearch = $this->getRequest()->getRelativeUrlRoot();
+    } else {
+      $urlSearch = $this->getRequest()->getScriptName();
+    }
+    $urlReplace = sfConfig::get('app_applicationLinks_frontend');
+
     foreach ($result as &$r) {
-		$thumbRouteArgs['id'] = $r['id'];
-		$r['thumbUrl'] = url_for('dak_thumb', $thumbRouteArgs);
-		$thumbSizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $r['width'], $r['height']);
-		$r['thumbHeight'] = $thumbSizes['height'];
-		$r['thumbWidth'] = $thumbSizes['width'];
-		$r['value'] = '<img src="' . $r['thumbUrl'] . '" height="' . $r['thumbHeight'] . '" width="' . $r['thumbWidth'] . '" alt="' . $r['description'] . '" />';
-	}
+      $thumbRouteArgs['id'] = $r['id'];
+      $r['thumbUrl'] = str_replace($urlSearch, $urlReplace, url_for('dak_thumb', $thumbRouteArgs));
+
+      $thumbSizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $r['width'], $r['height']);
+      $r['thumbHeight'] = $thumbSizes['height'];
+      $r['thumbWidth'] = $thumbSizes['width'];
+    }
 
     return $this->returnJson($result);
   }
