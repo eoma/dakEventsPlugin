@@ -3,6 +3,9 @@
 class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
 {
 
+  protected static $frontendLink = null;
+  protected static $relativeUrlRoot = null;
+
   public static function jQueryUISelectTemplate ($multiple = false) {
     if ($multiple) {
       return "'<span>' + ui.item.description + '</span><img src=\"' + ui.item.thumbUrl + '\" width=\"' + ui.item.thumbWidth + '\" height=\"' + ui.item.thumbHeight +'\" />'";
@@ -42,10 +45,10 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
     //foreach ($choices as ‭$k => $o) {
     $len = count($choices);
     $keys = array_keys($choices);
+    
     for ( $i = 0; $i < $len; $i++) {
       $k = $keys[$i];
       $o = $choices[$k];
-
 
       $output = '<li>';
       $output .= '<input type="checkbox" checked="checked" id="' . $this->generateId($name) . '_' . $o['id'] .'" value="' . $o['id'] . '" name="'. $name .'">';
@@ -55,15 +58,15 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
 
       $sizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $o['width'], $o['height']);
       $thumbRouteArgs['id'] = $o['id'];
-      
+      $imgSrc = str_replace(self::$relativeUrlRoot, self::$frontendLink, url_for('dak_thumb', $thumbRouteArgs));
+
       $output .= '<span>' . $o['description'] . '</span>';
-      $output .= '<img src="' . url_for('dak_thumb', $thumbRouteArgs) . '" width="'. $sizes['width'] .'" height="'. $sizes['height'] .' alt="'. $o['description'] .'" />';
+      $output .= '<img src="' . $imgSrc . '" width="'. $sizes['width'] .'" height="'. $sizes['height'] .' alt="'. $o['description'] .'" />';
 
       // End custom markup
       
       $output .= '</label>';
       $output .= '</li>';
-
 
       $outputs[] = $output;
     }
@@ -88,6 +91,18 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
     parent::configure($options, $attributes);
 
     $this->addOption('multiple', false);
+    
+    if (is_null(self::$frontendLink)) {
+      self::$frontendLink = sfConfig::get('app_applicationLinks_frontend');
+    }
+    
+    if (is_null(self::$relativeUrlRoot)) {
+      if (sfConfig::get('sf_no_script_name')) {
+        self::$relativeUrlRoot = sfContext::getInstance()->getRequest()->getRelativeUrlRoot();
+      } else {
+        self::$relativeUrlRoot = sfContext::getInstance()->getRequest()->getScriptName();
+      }
+    }
   }
 
   /**
