@@ -30,6 +30,13 @@ class dakPictureAdminActions extends autodakPictureAdminActions
 
     $q = Doctrine_Core::getTable('dakPicture')->createQuery('p');
     PluginTagTable::getObjectTaggedWithQuery('dakPicture', $term, $q);
+
+    $where = $q->getDqlPart('where');
+    if ($where[0] == 'false') { // No elements with the (possible) tags have been found
+      $q = null;
+      $q = Doctrine_Core::getTable('dakPicture')->createQuery('p');
+    }
+
     $q->select('p.id, p.description, p.height, p.width');
     $q->orWhere('p.description LIKE ?', $description);
     $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
