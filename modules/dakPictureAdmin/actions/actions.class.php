@@ -36,23 +36,16 @@ class dakPictureAdminActions extends autodakPictureAdminActions
 
     $result = $q->execute();
 
-    $this->getContext()->getConfiguration()->loadHelpers('Url', 'Image');
+    $this->getContext()->getConfiguration()->loadHelpers('Url', 'UrlExtra', 'Image');
 
     $thumbRouteArgs = array(
       'type' => 'dakPicture',
       'format' => 'list'
     );
 
-    if (sfConfig::get('sf_no_script_name')) {
-      $urlSearch = $this->getRequest()->getRelativeUrlRoot();
-    } else {
-      $urlSearch = $this->getRequest()->getScriptName();
-    }
-    $urlReplace = sfConfig::get('app_applicationLinks_frontend');
-
     foreach ($result as &$r) {
       $thumbRouteArgs['id'] = $r['id'];
-      $r['thumbUrl'] = str_replace($urlSearch, $urlReplace, url_for('dak_thumb', $thumbRouteArgs));
+      $r['thumbUrl'] = UrlExtraHelper::url_for_app('frontend', 'dak_thumb', $thumbRouteArgs);
 
       $thumbSizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $r['width'], $r['height']);
       $r['thumbHeight'] = $thumbSizes['height'];
