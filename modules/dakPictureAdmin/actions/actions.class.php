@@ -21,15 +21,17 @@ class dakPictureAdminActions extends autodakPictureAdminActions
   }
 
   public function executeJsonSearch (sfWebRequest $request) {
-    $description = trim($request->getParameter('term', ''));
+    $term = trim($request->getParameter('term', ''));
 
-    if ($description != '') {
-      $description = '%' . $description . '%';
+    $description = '';
+    if ($term != '') {
+      $description = '%' . $term . '%';
     }
 
     $q = Doctrine_Core::getTable('dakPicture')->createQuery('p');
+    PluginTagTable::getObjectTaggedWithQuery('dakPicture', $term, $q);
     $q->select('p.id, p.description, p.height, p.width');
-    $q->where('p.description LIKE ?', $description);
+    $q->orWhere('p.description LIKE ?', $description);
     $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     $q->limit(20);
