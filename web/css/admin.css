@@ -27,3 +27,38 @@
   background: url(../images/greenbutton.png) right 68px;
   height: 34px;
 }
+
+#sf_admin_container .dakPictureAutocomplete_list ul.checkbox_list
+{
+  list-style: none;
+  margin: 1em;
+}
+
+#sf_admin_container .ui-menu 
+{
+  list-style:none !important;
+}
+
+.ui-autocomplete .ui-menu-item a,
+#sf_admin_container .dakPictureAutocomplete_list ul.checkbox_list li
+{
+  display: block;
+  width: 20em;
+  padding: 0.2em;
+  overflow: auto;
+}
+
+#sf_admin_container .dakPictureAutocomplete_list ul.checkbox_list label
+{
+  margin-left: 1em;
+}
+
+.ui-autocomplete .ui-menu-item a img,
+#sf_admin_container .dakPictureAutocomplete_list ul.checkbox_list label img
+{
+  border: 1px solid #000000;
+  padding: 1px;
+  margin: 0 0 0.2em 0.2em;
+  float: right;
+  clear: right;
+}
