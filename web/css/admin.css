@@ -62,3 +62,15 @@
   float: right;
   clear: right;
 }
+
+.dakRemoveTag .a-tag {
+  margin: 0.2em;
+}
+
+.dakRemoveTag span.icon {
+  display: inline-block;
+  background-image: url(../images/remove16x16.png);
+  background-position: left center;
+  width: 16px;
+  height: 16px;
+}
