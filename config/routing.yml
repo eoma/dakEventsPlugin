@@ -96,7 +96,7 @@ dak_location_show:
 
 dak_thumb:
   class: sfImageTransformRoute
-  url:   /thumbs/:type/:format/:path/:id.:sf_format
+  url:   /thumbs/:type/:path/:format/:id.:sf_format
   param: { module: sfImageTransformator, action: index, attribute: filename}
   requirements:
     format:    '[\w_-]+'
