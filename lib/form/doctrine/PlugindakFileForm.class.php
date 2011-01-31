@@ -26,6 +26,14 @@ abstract class PlugindakFileForm extends BasedakFileForm
   public function setup()
   {
     parent::setup();
+
+    $tagOptions = array(
+      'default' => implode(', ', $this->getObject()->getTags()),
+      'remove-link-class' => 'dakRemoveTag',
+    );
+
+    $this->widgetSchema['tags'] = new pkWidgetFormJQueryTaggable($tagOptions);
+    $this->validatorSchema['tags'] = new sfValidatorString();
   }
 
 }
