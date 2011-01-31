@@ -8,7 +8,7 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
 
   public static function jQueryUISelectTemplate ($multiple = false) {
     if ($multiple) {
-      return "'<span>' + ui.item.description + '</span><img src=\"' + ui.item.thumbUrl + '\" width=\"' + ui.item.thumbWidth + '\" height=\"' + ui.item.thumbHeight +'\" />'";
+      return "'<img src=\"' + ui.item.thumbUrl + '\" width=\"' + ui.item.thumbWidth + '\" height=\"' + ui.item.thumbHeight +'\" /><span>' + ui.item.description + '</span>'";
     } else {
 
     }
@@ -60,8 +60,8 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
       $thumbRouteArgs['id'] = $o['id'];
       $imgSrc = str_replace(self::$relativeUrlRoot, self::$frontendLink, url_for('dak_thumb', $thumbRouteArgs));
 
-      $output .= '<span>' . $o['description'] . '</span>';
       $output .= '<img src="' . $imgSrc . '" width="'. $sizes['width'] .'" height="'. $sizes['height'] .' alt="'. $o['description'] .'" />';
+      $output .= '<span>' . $o['description'] . '</span>';
 
       // End custom markup
       
