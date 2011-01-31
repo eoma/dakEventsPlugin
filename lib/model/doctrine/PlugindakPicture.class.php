@@ -27,6 +27,30 @@ abstract class PlugindakPicture extends BasedakPicture
   public function postDelete ($event)
   {
     @unlink(sfConfig::get('sf_upload_dir').'/dakpicture/'.$this->filename);
+
+    
+    // Remove all generated thumbnails
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+    $thumbEvent = new sfEvent($this, 'sf_image_transform.changed_source', array(
+     'sf_route' => 'dak_thumb',
+     'type'  => 'dakPicture',
+     'id'    => $this->id,
+    ));
+    $dispatcher->notify($thumbEvent);
+  }
+
+  public function postUpdate ($event)
+  {
+
+    // Remove all generated thumbnails
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+    $thumbEvent = new sfEvent($this, 'sf_image_transform.changed_source', array(
+     'sf_route' => 'dak_thumb',
+     'type'  => 'dakPicture',
+     'id'    => $this->id,
+    ));
+    $dispatcher->notify($thumbEvent);
+
   }
 
   public function getFile()
