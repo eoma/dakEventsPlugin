@@ -1,7 +1,7 @@
 ---
 
 dakFile:
-  actAs: [Timestampable]
+  actAs: [Timestampable, Taggable]
   columns:
     filename: { type: string(50), notnull: true }
     mime_type: { type: string(50), notnull: true }
