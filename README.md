@@ -16,7 +16,6 @@ can pull out events from specific arrangers, locations, festivals and/or categor
   [sfdoc]: http://www.symfony-project.org/
 
 ## <a name="about">About</a> ##
------
 
 This plugin is a pluginification of the test project
 [kvarteret_symfony_events](https://github.com/eoma/kvarteret_symfony_events)
@@ -39,10 +38,11 @@ It also requires you to use:
 
 *   [sfDoctrineGuardPlugin][]
 *   [sfDoctrineNestedSetPlugin][]
-*   [sfCKEditorPlugin][] (depends on CKEditor, user flag --stability=beta)
+*   [sfCKEditorPlugin][] (depends on CKEditor, use flag --stability=beta)
 *   [HTMLPurifier][]
 *   [sfImageTransformPlugin][]
 *   [sfImageTransformExtraPlugin][]
+*   [sfDoctrineActAsTaggablePlugin][]
 
   [sfDoctrineGuardPlugin]: http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin
   [sfDoctrineNestedSetPlugin]: http://www.symfony-project.org/plugins/sfDoctrineNestedSetPlugin
@@ -50,6 +50,7 @@ It also requires you to use:
   [HTMLPurifier]: http://htmlpurifier.org
   [sfImageTransformPlugin]: http://www.symfony-project.org/plugins/sfImageTransformPlugin
   [sfImageTransformExtraPlugin]: http://www.symfony-project.org/plugins/sfImageTransformExtraPlugin
+  [sfDoctrineActAsTaggablePlugin]: https://github.com/annismckenzie/sfDoctrineActAsTaggablePlugin
 
 Install them from stock using symfony's
 
