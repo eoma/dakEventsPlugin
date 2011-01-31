@@ -28,22 +28,46 @@ class dakPictureAdminActions extends autodakPictureAdminActions
       $description = '%' . $term . '%';
     }
 
-    $q = Doctrine_Core::getTable('dakPicture')->createQuery('p');
+    $q = Doctrine_Core::getTable('dakPicture')->createQuery();
     PluginTagTable::getObjectTaggedWithQuery('dakPicture', $term, $q);
+
+    $a = $q->getRootAlias();
 
     $where = $q->getDqlPart('where');
     if ($where[0] == 'false') { // No elements with the (possible) tags have been found
-      $q = null;
-      $q = Doctrine_Core::getTable('dakPicture')->createQuery('p');
+
+
+      $q->where($a .'.description LIKE ?', $description);
+    } else {
+      $a = $q->getRootAlias();
+      $q->orWhere($a .'.description LIKE ?', $description);
     }
 
-    $q->select('p.id, p.description, p.height, p.width');
-    $q->orWhere('p.description LIKE ?', $description);
+    $q->select( $a .'.id, '. $a .'.description, '. $a .'.height, '. $a .'.width');
+
     $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     $q->limit(20);
 
+    $where = $q->getDqlPart('where');
+
     $result = $q->execute();
+
+    if (count($result) > 0) {
+      $picTags = array();
+      foreach ($result as $p) { $picIds[] = $p['id']; }
+
+      $qTags = Doctrine_Core::getTable('Tagging')->createQuery('tt');
+
+      $qTags->leftJoin('tt.Tag t')
+            ->select('tt.taggable_id, t.name, t.id')
+            ->where('tt.taggable_model = ?', 'dakPicture')
+            ->andWhereIn('tt.taggable_id', $picIds)
+            ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+      $tags = array();
+
+      foreach ($qTags->execute() as $t) $tags[$t['taggable_id']][] = $t['Tag'];
+    }
 
     $this->getContext()->getConfiguration()->loadHelpers('Url', 'UrlExtra', 'Image');
 
@@ -59,6 +83,12 @@ class dakPictureAdminActions extends autodakPictureAdminActions
       $thumbSizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $r['width'], $r['height']);
       $r['thumbHeight'] = $thumbSizes['height'];
       $r['thumbWidth'] = $thumbSizes['width'];
+
+      if (isset($tags[$r['id']])) {
+        $r['Tags'] = $tags[$r['id']];
+      } else {
+        $r['Tags'] = array();
+      }
     }
 
     return $this->returnJson($result);
