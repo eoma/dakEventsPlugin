@@ -1,5 +1,5 @@
 <?php
-use_helper('Image');
+use_helper('Image', 'UrlExtra');
 
 if (!isset($format)) {
   $format = 'list';
@@ -17,4 +17,4 @@ $picArgs = array(
   'id' => $picture['id'],
 );
 
-echo image_tag(url_for('dak_thumb', $picArgs), $imgOptions);
+echo image_tag(UrlExtraHelper::url_for_app('frontend', 'dak_thumb', $picArgs), $imgOptions);
