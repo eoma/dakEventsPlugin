@@ -34,6 +34,7 @@ class sfWidgetFormChoiceAutocomplete extends sfWidgetForm
     $this->addRequiredOption('choices');
     $this->addRequiredOption('source');
 
+    $this->addOption('multiple', true);
     $this->addOption('list_options',array());
     $this->addOption('help','Search here...');
     $this->addOption('config', '{ }');
@@ -55,6 +56,50 @@ EOF
     $this->addOption('resultTemplate', 'item.description + "<br />" item.value');
     $this->addOption('focusField', 'value'); // Eg. the field in the json reply to use as place holder in the search field
 
+  }
+
+  protected function jQuerySelectMultiple ($name, $selectTemplate, $focusField) {
+    $function = <<<EOF
+      function(event, ui) {
+        if (!$('#%1\$s_'+ui.item.id).length) {
+          var ul = $('div#%1\$s_list ul.checkbox_list');
+          $('<li><input type="checkbox" checked="checked" id="%1\$s_'+ui.item.id+'" value="'+ui.item.id+'" name="%2\$s"> <label for="%1\$s_'+ui.item.id+'">'+%3\$s+'</label></li>').prependTo(ul);
+          $( '#%4\$s' ).val( ui.item.%5\$s );
+        }
+        $(this).trigger('blur');
+        return false;
+      }
+EOF;
+
+    return sprintf($function, 
+      $this->generateId($name),
+      $name.'[]',
+      $selectTemplate,
+      $this->generateId('autocomplete_' . $name), 
+      $focusField
+    );
+  }
+
+  protected function jQuerySelectSingle ($name, $selectTemplate, $focusField) {
+    $function = <<<EOF
+      function(event, ui) {
+        if (!$('#%1\$s_'+ui.item.id).length) {
+          var ul = $('div#%1\$s_list ul.checkbox_list');
+          $(ul).empty().append('<li><input type="hidden" id="%1\$s_'+ui.item.id+'" value="'+ui.item.id+'" name="%2\$s"> <label for="%1\$s_'+ui.item.id+'">'+%3\$s+'</label></li>');
+          $( '#%4\$s' ).val( ui.item.%5\$s );
+        }
+        $(this).trigger('blur');
+        return false;
+      }
+EOF;
+
+    return sprintf($function, 
+      $this->generateId($name),
+      $name,
+      $selectTemplate,
+      $this->generateId('autocomplete_' . $name), 
+      $focusField
+    );
   }
 
   /**
@@ -84,19 +129,40 @@ EOF
     
     $associated = array();
     $unassociated = array();
-    foreach ($choices as $key => $option)
-    {
-      if (in_array(strval($key), $value))
+
+    if (is_array($value)) {
+      foreach ($choices as $key => $option)
       {
-        $associated[$key] = $option;
+        if (in_array(strval($key), $value))
+        {
+          $associated[$key] = $option;
+        }
+        else
+        {
+          $unassociated[$key] = $option;
+        }
       }
-      else
+    } else {
+      foreach ($choices as $key => $option)
       {
-        $unassociated[$key] = $option;
+        if (strval($key) == $value)
+        {
+          $associated[$key] = $option;
+        }
+        else
+        {
+          $unassociated[$key] = $option;
+        }
       }
     }
 
-    $associatedWidget = new sfWidgetFormChoice(array_merge($this->getOption('list_options'),array('choices' => $associated, 'multiple' => true, 'expanded' => true)));
+    $associatedWidget = new sfWidgetFormChoice(array_merge($this->getOption('list_options'),array('choices' => $associated, 'multiple' => $this->getOption('multiple'), 'expanded' => true)));
+
+    if ($this->getOption('multiple')) {
+      $jQuerySelectFunction = $this->jQuerySelectMultiple($name, $this->getOption('selectTemplate'), $this->getOption('focusField'));
+    } else {
+      $jQuerySelectFunction = $this->jQuerySelectSingle($name, $this->getOption('selectTemplate'), $this->getOption('focusField'));
+    }
 	
     return strtr($this->getOption('template'),array(
 	'%class%' => $this->getOption('class'),
@@ -119,15 +185,7 @@ EOF
         $( "#%1\$s" ).val( ui.item.%8\$s );
         return false;
       },
-      select: function(event, ui) {
-        if (!$('#%3\$s_'+ui.item.id).length) {
-          var ul = $('div#%3\$s_list ul.checkbox_list');
-          $('<li><input type="checkbox" checked="checked" id="%3\$s_'+ui.item.id+'" value="'+ui.item.id+'" name="%5\$s"> <label for="%3\$s_'+ui.item.id+'">'+%6\$s+'</label></li>').prependTo(ul);
-          $( '#%1\$s' ).val( ui.item.%8\$s );
-        }
-        $(this).trigger('blur');
-        return false;
-      } 
+      select: %6\$s 
     })
     .data( "autocomplete")._renderItem = function (ul, item) {
       return $( "<li></li>" )
@@ -159,7 +217,7 @@ EOF
         $this->generateId($name),
         '"' . $this->generateSource() . '"',
         $name . '[]',
-        $this->getOption('selectTemplate'),
+        $jQuerySelectFunction,
         $this->getOption('resultTemplate'),
         $this->getOption('focusField')
       )

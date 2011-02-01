@@ -6,12 +6,8 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
   protected static $frontendLink = null;
   protected static $relativeUrlRoot = null;
 
-  public static function jQueryUISelectTemplate ($multiple = false) {
-    if ($multiple) {
-      return "'<img src=\"' + ui.item.thumbUrl + '\" width=\"' + ui.item.thumbWidth + '\" height=\"' + ui.item.thumbHeight +'\" /><span>' + ui.item.description + '</span>'";
-    } else {
-
-    }
+  public static function jQueryUISelectTemplate () {
+    return "'<img src=\"' + ui.item.thumbUrl + '\" width=\"' + ui.item.thumbWidth + '\" height=\"' + ui.item.thumbHeight +'\" /><span>' + ui.item.description + '</span>'";
   }
 
   public static function jQueryUIResultTemplate () {
@@ -20,7 +16,35 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
 
   protected function renderSingle ($name, $value = null, $attributes = array(), $errors = array())
   {
+    $choices = $this->getChoices();
 
+    if (count($choices) == 0) {
+      $output = $this->renderTag('input', array('type' => 'hidden', 'name' => $name, 'value' => ''));
+    } else {
+
+      $o = array_shift($choices);
+
+      $thumbRouteArgs = array(
+        'type' => 'dakPicture',
+        'format' => 'list',
+        'id' => $o['id'],
+      );
+
+      $output = $this->renderTag('input', array('type' => 'hidden', 'name' => $name, 'value' => $o['id'], 'id' => $this->generateId($name.'_'.$o['id'])));
+      $output .= '<label for="' . $this->generateId($name) . '_' . $o['id'] . '">';
+      // Begin custom markup
+
+      $sizes = ImageHelper::TransformSize($thumbRouteArgs['format'], $o['width'], $o['height']);
+      $imgSrc = str_replace(self::$relativeUrlRoot, self::$frontendLink, url_for('dak_thumb', $thumbRouteArgs));
+
+      $output .= '<img src="' . $imgSrc . '" width="'. $sizes['width'] .'" height="'. $sizes['height'] .'" alt="'. $o['description'] .'" />';
+      $output .= '<span>' . $o['description'] . '</span>';
+
+      // End custom markup
+      $output .= '</label>';
+    }
+
+    return '<ul class="checkbox_list"><li>' . $output . '</li></ul>';
   }
 
   protected function renderMultiple ($name, $value = null, $attributes = array(), $errors = array())
@@ -29,11 +53,7 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
 
     $outputs = array();
 
-    $choices = $this->getOption('choices');
-    if ($choices instanceof sfCallable)
-    {
-      $choices = $choices->call();
-    }
+    $choices = $this->getChoices();
 
     //return var_dump($choices);
 
@@ -51,7 +71,7 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
       $o = $choices[$k];
 
       $output = '<li>';
-      $output .= '<input type="checkbox" checked="checked" id="' . $this->generateId($name) . '_' . $o['id'] .'" value="' . $o['id'] . '" name="'. $name .'">';
+      $output .= '<input type="checkbox" checked="checked" id="' . $this->generateId($name) . '_' . $o['id'] .'" value="' . $o['id'] . '" name="'. $name .'" />';
       $output .= '<label for="' . $this->generateId($name) . '_' . $o['id'] . '">';
       
       // Start custom markup here
@@ -60,7 +80,7 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
       $thumbRouteArgs['id'] = $o['id'];
       $imgSrc = str_replace(self::$relativeUrlRoot, self::$frontendLink, url_for('dak_thumb', $thumbRouteArgs));
 
-      $output .= '<img src="' . $imgSrc . '" width="'. $sizes['width'] .'" height="'. $sizes['height'] .' alt="'. $o['description'] .'" />';
+      $output .= '<img src="' . $imgSrc . '" width="'. $sizes['width'] .'" height="'. $sizes['height'] .'" alt="'. $o['description'] .'" />';
       $output .= '<span>' . $o['description'] . '</span>';
 
       // End custom markup
@@ -119,7 +139,6 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-
     if (isset($attributes['multiple'])) {
       return $this->renderMultiple($name, $value, $attributes, $errors);
     } else {

@@ -101,7 +101,29 @@ class PlugindakEventForm extends BasedakEventForm
         'choices' => $pictureChoices,
         'class' => 'dakPictureAutocomplete',
         'source' => '@dak_picture_admin_jsonsearch',
-        'selectTemplate' => dakPictureChoiceAutocomplete::jQueryUISelectTemplate(true),
+        'selectTemplate' => dakPictureChoiceAutocomplete::jQueryUISelectTemplate(),
+        'resultTemplate' => dakPictureChoiceAutocomplete::jQueryUIResultTemplate(),
+        'focusField' => 'description',
+        'list_options' => array(
+          'renderer_class' => 'dakPictureChoiceAutocomplete',
+         ),
+      ),
+      array()
+    );
+
+    $primaryPicChoice = array();
+    if (!$this->isNew() && $this->getObject()->relatedExists('primaryPicture')) {
+      $primaryPicChoiceTemp = $this->getObject()->getPrimaryPicture();
+      $primaryPicChoice[$primaryPicChoiceTemp->getPrimaryKey()] = $primaryPicChoiceTemp;
+    }
+
+    $this->widgetSchema['primaryPicture_id'] = new sfWidgetFormChoiceAutocomplete(
+      array(
+        'choices' => $primaryPicChoice,
+        'multiple' => false,
+        'class' => 'dakPictureAutocomplete',
+        'source' => '@dak_picture_admin_jsonsearch',
+        'selectTemplate' => dakPictureChoiceAutocomplete::jQueryUISelectTemplate(),
         'resultTemplate' => dakPictureChoiceAutocomplete::jQueryUIResultTemplate(),
         'focusField' => 'description',
         'list_options' => array(
