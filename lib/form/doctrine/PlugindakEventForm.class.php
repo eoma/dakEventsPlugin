@@ -139,7 +139,18 @@ class PlugindakEventForm extends BasedakEventForm
       // the arrangers the user is limited to.
       $user = $this->getOption('currentUser')->getGuardUser();
 
-      $this->widgetSchema['arranger_id']->setOption('query', 
+      $arrangerIds = $this->getOption('currentUser')->getArrangerIds();
+
+      if (count($arrangerIds) == 1) {
+        $this->widgetSchema['arranger_id'] = new sfWidgetFormInputHidden();
+        $this->setDefault('arranger_id', $arrangerIds[0]);
+      } else {
+        $this->widgetSchema['arranger_id']->setOption('query', 
+          Doctrine_Core::getTable('dakArranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
+        );
+      }
+
+      $this->validatorSchema['arranger_id']->setOption('query', 
         Doctrine_Core::getTable('dakArranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
       );
 
