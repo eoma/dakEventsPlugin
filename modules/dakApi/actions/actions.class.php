@@ -183,7 +183,7 @@ class dakApiActions extends sfActions
         ->offset($offset)
         ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 	
-      $event = $q->execute();
+      $event = $this->prepareEventPictures($q->execute());
 
       $totalCount = $q->count();
       $count = count($event);
@@ -260,7 +260,7 @@ class dakApiActions extends sfActions
       ->offset($offset)
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-    $events = $q->execute();
+    $events = $this->prepareEventPictures($q->execute());
 
     $totalCount = $q->count();
     $count = count($events);
@@ -411,7 +411,7 @@ class dakApiActions extends sfActions
       $q->whereIn('e.id', $eventIds);
       $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-      $events = $q->execute();
+      $events = $this->prepareEventPictures($q->execute());
     } else {
       $events = array();
     }
@@ -439,6 +439,46 @@ class dakApiActions extends sfActions
         }
       }
     }
+  }
+
+  protected function prepareEventPictures ($events) {
+    $transformRouteArgs = array(
+      'format' => 'primaryPicture',
+      'type' => 'dakPicture',
+    );
+
+    $this->getContext()->getConfiguration()->loadHelpers('Url', 'Image');
+    foreach ($events as &$e) {
+      if (!empty($e['primaryPicture']['id'])) {
+        $e['primaryPicture']['url'] = public_path('uploads/dakpicture', true) . '/' . $e['primaryPicture']['filename'];
+
+        $transformRouteArgs['id'] = $e['primaryPicture']['id'];
+        $thumbSizes = ImageHelper::TransformSize($transformRouteArgs['format'], $e['primaryPicture']['width'], $e['primaryPicture']['height']);
+
+        $e['primaryPicture']['thumb'] = array(
+          'url' => url_for('dak_thumb', $transformRouteArgs, true),
+          'width' => $thumbSizes['width'],
+          'height' => $thumbSizes['height'],
+        );
+      }
+
+      if (!empty($e['pictures'])) {
+        foreach ($e['pictures'] as &$p) {
+          $p['url'] = public_path('uploads/dakpicture', true) . '/' . $p['filename'];
+
+          $transformRouteArgs['id'] = $p['id'];
+          $thumbSizes = ImageHelper::TransformSize($transformRouteArgs['format'], $p['width'], $p['height']);
+
+          $p['thumb'] = array(
+            'url' => url_for('dak_thumb', $transformRouteArgs, true),
+            'width' => $thumbSizes['width'],
+            'height' => $thumbSizes['height'],
+          );
+	}
+      }
+    }
+
+    return $events;
   }
 
   public function returnJson($data) {
