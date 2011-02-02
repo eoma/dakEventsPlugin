@@ -39,11 +39,11 @@ body {
   margin-right: auto;
 }
 
-#eventList tr.odd {
+tr.odd {
   background-color: #c9c5db;
 }
 
-#eventList tr.even {
+tr.even {
   background-color: #a6a3b5;
 }
 
