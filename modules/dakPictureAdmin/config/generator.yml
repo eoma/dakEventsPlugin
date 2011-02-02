@@ -13,7 +13,12 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        filename:
+          label: Upload a file
+          help: "Find a picture of type jpeg, png or gif to upload. Max <?php echo ini_get('upload_max_filesize') ?>B"
+        tags:
+          help: Set some tags making it easy to categorize and look up for later use.
       list:
         max_per_page: 40
         sort: [created_at, desc]
