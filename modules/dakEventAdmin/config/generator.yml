@@ -33,7 +33,7 @@ generator:
         layout: stacked
         display: [=title, startDate, updated_at]
         params: |
-          %%is_accepted%% %%_linkToShowEvent%%<br />At %%location%% %%_mergedStartDateTime%% by %%arranger%%.<br />
+          %%is_accepted%% %%_linkToShowEvent%%<br />At %%location%% %%_mergedStartDateTime%% by %%arranger%%. %%_is_public%%<br />
           %%_eventHasFestival%%
           <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
         table_method: defaultJoinsAndRequirements # defaultJoinsAndRequirements will make it impossible to get event lists vefore current date
