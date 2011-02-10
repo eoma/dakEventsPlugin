@@ -63,6 +63,44 @@
           <startDate>2011-01-22</startDate>
           <startTime>22:00:00</startTime>
         </festival>
+        <primaryPicture>
+          <id>1</id>
+          <description>yellow</description>
+          <url>http://someaddress/uploads/dakpicture/9a4150a92b1e11c084b2383c1fcae9a0230715e7.png</url>
+          <height>400</height>
+          <width>400</width>
+          <thumb>
+            <url>http://someaddress/thumbs/dakPicture/01/00/00/primaryPicture/1.jpg</url>
+            <height>200</height>
+            <width>200</width>
+          </thumb>
+        </primaryPicture>
+        <pictures>
+          <picture>
+            <id>2</id>
+            <description>blue</description>
+            <url>http://someaddress/uploads/dakpicture/4312dca907271019a69185702b49075c9d6feb6f.png</url>
+            <height>400</height>
+            <width>200</width>
+            <thumb>
+              <url>http://someaddress/thumbs/dakPicture/02/00/00/primaryPicture/2.jpg</url>
+              <height>200</height>
+              <width>200</width>
+            </thumb>
+          </picture>
+          <picture>
+            <id>3</id>
+            <description>reddish</description>
+            <url>http://someaddress/uploads/dakpicture/5e56740accaab51236f67b4d9875b135b44ea5f0.png</url>
+            <height>200</height>
+            <width>400</width>
+            <thumb>
+              <url>http://someaddress/thumbs/dakPicture/03/00/00/primaryPicture/3.jpg</url>
+              <height>175</height>
+              <width>175</width>
+            </thumb>
+          </picture>
+        </pictures>
       </event>
     </events>
   </data>
