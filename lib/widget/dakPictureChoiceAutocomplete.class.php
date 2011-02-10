@@ -30,7 +30,7 @@ class dakPictureChoiceAutocomplete extends sfWidgetFormChoiceBase
         'id' => $o['id'],
       );
 
-      $output = $this->renderTag('input', array('type' => 'hidden', 'name' => $name, 'value' => $o['id'], 'id' => $this->generateId($name.'_'.$o['id'])));
+      $output = $this->renderTag('input', array('type' => 'checkbox', 'checked' => 'checked', 'name' => $name, 'value' => $o['id'], 'id' => $this->generateId($name.'_'.$o['id'])));
       $output .= '<label for="' . $this->generateId($name) . '_' . $o['id'] . '">';
       // Begin custom markup
 

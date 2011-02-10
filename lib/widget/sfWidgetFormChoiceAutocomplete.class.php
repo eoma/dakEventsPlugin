@@ -85,7 +85,7 @@ EOF;
       function(event, ui) {
         if (!$('#%1\$s_'+ui.item.id).length) {
           var ul = $('div#%1\$s_list ul.checkbox_list');
-          $(ul).empty().append('<li><input type="hidden" id="%1\$s_'+ui.item.id+'" value="'+ui.item.id+'" name="%2\$s"> <label for="%1\$s_'+ui.item.id+'">'+%3\$s+'</label></li>');
+          $(ul).empty().append('<li><input type="checkbox" checked="checked" id="%1\$s_'+ui.item.id+'" value="'+ui.item.id+'" name="%2\$s"> <label for="%1\$s_'+ui.item.id+'">'+%3\$s+'</label></li>');
           $( '#%4\$s' ).val( ui.item.%5\$s );
         }
         $(this).trigger('blur');
