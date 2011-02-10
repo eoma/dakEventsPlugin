@@ -2,12 +2,12 @@ all:
   .settings:
     formats:
       list:
-        quality: 90
+        quality: 100
         mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: resize, param: { width: 130, height: 130, proportional: true } }
       primaryPicture:
-        quality: 90
+        quality: 100
         mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: resize, param: { width: 350, height: 200, proportional: true } }
