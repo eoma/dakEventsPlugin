@@ -25,18 +25,21 @@ class myHTMLPurifier extends HTMLPurifier {
 		// documentation: http://stackoverflow.com/questions/1320524/how-to-allow-certain-html-tags-in-a-form-field-in-symfony-1-2/1321794#1321794
 
 		$config->set('HTML.DefinitionID', 'commonHtml');
-		$config->set('HTML.DefinitionRev', 1);
+		$config->set('HTML.DefinitionRev', 2);
 
 		// clean empty tags
 		$config->set('AutoFormat.RemoveEmpty', true);
 		//$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', true);
 		//$config->set('AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions', array());
+		
+		// Allow autolinking
+		$config->set('AutoFormat.Linkify', true);
 
 		// these are allowed html tags, means white list
 		$config->set('HTML.AllowedElements', 'a,strong,em,p,span,img,li,ul,ol,blockquote');
 
 		// these are allowed html attributes, coool!
-		$config->set('HTML.AllowedAttributes', 'a.href,a.title,span.style,span.class,span.id,p.style,img.src,img.style,img.alt,img.title,img.width,img.height');
+		$config->set('HTML.AllowedAttributes', 'a.href,a.title,span.style,span.class,img.src,img.style,img.alt,img.title,img.width,img.height');
 
 		return $this->purify($value, $config);
 	}
