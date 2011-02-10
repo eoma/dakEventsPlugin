@@ -39,4 +39,36 @@
       <startTime><?php echo $event['festival']['startTime'] ?></startTime>
     </festival>
     <?php endif ?>
+    <?php if (!empty($event['primaryPicture'])): ?>
+    <primaryPicture>
+      <id><?php echo $event['primaryPicture']['id'] ?></id>
+      <description><?php echo $event['primaryPicture']['description'] ?></description>
+      <url><?php echo $event['primaryPicture']['url'] ?></url>
+      <height><?php echo $event['primaryPicture']['height'] ?></height>
+      <width><?php echo $event['primaryPicture']['width'] ?></width>
+      <thumb>
+        <url><?php echo $event['primaryPicture']['thumb']['url'] ?></url>
+        <height><?php echo $event['primaryPicture']['thumb']['height'] ?></height>
+        <width><?php echo $event['primaryPicture']['thumb']['height'] ?></width>
+      </thumb>
+    </primaryPicture>
+    <?php endif ?>
+    <?php if (!empty($event['pictures'])): ?>
+    <pictures>
+      <?php foreach ($event['pictures'] as $p): ?>
+      <picture>
+        <id><?php echo $p['id'] ?></id>
+        <description><?php echo $p['description'] ?></description>
+        <url><?php echo $p['url'] ?></url>
+        <height><?php echo $p['height'] ?></height>
+        <width><?php echo $p['width'] ?></width>
+        <thumb>
+          <url><?php echo $p['thumb']['url'] ?></url>
+          <height><?php echo $p['thumb']['height'] ?></height>
+          <width><?php echo $p['thumb']['height'] ?></width>
+        </thumb>
+      </picture>
+      <?php endforeach ?>
+    </pictures>
+    <?php endif ?>
   </event>
