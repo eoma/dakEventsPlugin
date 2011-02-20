@@ -1,6 +1,7 @@
   <festival>
     <id><?php echo $festival['id'] ?></id>
     <title><?php echo $festival['title'] ?></title>
+    <url><?php echo $festival['url'] ?></url>
     <leadParagraph><?php echo $festival['leadParagraph'] ?></leadParagraph>
     <description><?php echo $festival['description'] ?></description>
     <startDate><?php echo $festival['startDate'] ?></startDate>

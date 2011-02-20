@@ -4,6 +4,7 @@
   <event>
     <id><?php echo $event['id'] ?></id>
     <title><?php echo $event['title'] ?></title>
+    <url><?php echo $event['url'] ?></url>
     <leadParagraph><?php echo $event['leadParagraph'] ?></leadParagraph>
     <description><?php echo $event['description'] ?></description>
     <startDate><?php echo $event['startDate'] ?></startDate>
@@ -38,6 +39,7 @@
     <festival>
       <id><?php echo $event['festival']['id'] ?></id>
       <title><?php echo $event['festival']['title'] ?></title>
+      <url><?php echo $event['festival']['url'] ?></url>
       <startDate><?php echo $event['festival']['startDate'] ?></startDate>
       <startTime><?php echo $event['festival']['startTime'] ?></startTime>
     </festival>
