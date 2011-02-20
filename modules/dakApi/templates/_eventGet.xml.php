@@ -55,7 +55,7 @@
       </thumb>
     </primaryPicture>
     <?php endif ?>
-    <?php if (!empty($event['pictures'])): ?>
+    <?php if (count($event['pictures']) > 0): ?>
     <pictures>
       <?php foreach ($event['pictures'] as $p): ?>
       <picture>
