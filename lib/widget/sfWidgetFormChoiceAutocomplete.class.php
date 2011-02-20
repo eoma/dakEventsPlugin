@@ -52,12 +52,25 @@ EOF
 );
 
     $this->addOption('class', 'USJjQueryUIAutocomplete');
+
+    // How it should be presented in the chosen list, only content markup, no input markup
     $this->addOption('selectTemplate', 'ui.item.description + "<br />" + ui.item.value');
+
+    // How it should be presented in the dropdown list
     $this->addOption('resultTemplate', 'item.description + "<br />" item.value');
-    $this->addOption('focusField', 'value'); // Eg. the field in the json reply to use as place holder in the search field
+
+    // Eg. the field in the json reply to use as place holder in the search field
+    $this->addOption('focusField', 'value'); 
 
   }
 
+  /**
+   * Returns javascript function for treating the selected elements
+   *
+   * $name string name of the current selected autocomplete elements
+   * $selectTemplate string how the selected element should be marked up
+   * $forcusfield string which value from the search result should be shown in the search field
+   */
   protected function jQuerySelectMultiple ($name, $selectTemplate, $focusField) {
     $function = <<<EOF
       function(event, ui) {
@@ -80,6 +93,13 @@ EOF;
     );
   }
 
+  /**
+   * Returns javascript function for treating the selected elements
+   *
+   * $name string name of the current selected autocomplete elements
+   * $selectTemplate string how the selected element should be marked up
+   * $forcusfield string which value from the search result should be shown in the search field
+   */
   protected function jQuerySelectSingle ($name, $selectTemplate, $focusField) {
     $function = <<<EOF
       function(event, ui) {
