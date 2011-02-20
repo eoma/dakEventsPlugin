@@ -184,6 +184,10 @@ class dakApiActions extends sfActions
         ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 	
       $event = $this->prepareEventPictures($q->execute());
+      $event[0]['url'] = $this->getUrl($event[0]['id']);
+      if ($event[0]['festival_id'] > 0) {
+        $event[0]['festival']['url'] = $this->getUrl($event[0]['festival_id'], 'festival');
+      }
 
       $totalCount = $q->count();
       $count = count($event);
@@ -220,6 +224,8 @@ class dakApiActions extends sfActions
         ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 	
       $festival = $q->execute();
+      
+      $festival[0]['url'] = $this->getUrl($festival[0]['id'], 'festival');
 
       $totalCount = $q->count();
       $count = count($festival);
@@ -261,6 +267,14 @@ class dakApiActions extends sfActions
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     $events = $this->prepareEventPictures($q->execute());
+
+    foreach ($events as &$e) {
+      $e['url'] = $this->getUrl($e['id']);
+      
+      if ($e['festival_id'] > 0) {
+        $e['festival']['url'] = $this->getUrl($e['festival_id'], 'festival');
+      }
+    }
 
     $totalCount = $q->count();
     $count = count($events);
@@ -412,6 +426,14 @@ class dakApiActions extends sfActions
       $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
       $events = $this->prepareEventPictures($q->execute());
+ 
+      foreach ($events as &$e) {
+        $e['url'] = $this->getUrl($e['id']);
+        
+        if ($e['festival_id'] > 0) {
+         $e['festival']['url'] = $this->getUrl($e['festival_id'], 'festival');
+        }
+      }
     } else {
       $events = array();
     }
@@ -479,6 +501,18 @@ class dakApiActions extends sfActions
     }
 
     return $events;
+  }
+
+  /**
+   * This function will return the url to the element type corresponding
+   * with the given id
+   * 
+   * @param $id integer
+   * @return string url
+   */
+  protected function getUrl($id, $type = 'event') {
+    $this->getContext()->getConfiguration()->loadHelpers('Url');
+    return url_for('@dak_' . $type . '_show?id=' . $id, true);
   }
 
   public function returnJson($data) {
