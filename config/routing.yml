@@ -102,7 +102,7 @@ dak_thumb:
     format:    '[\w_-]+'
     path:      '[\w/]+'
     id:        '\d+(?:,\d+)?'
-    sf_format: 'gif|png|jpg'
+    sf_format: 'gif|png|jpg|jpeg'
     sf_method: [ get ]
   options:
     image_source: Doctrine # or Propel
