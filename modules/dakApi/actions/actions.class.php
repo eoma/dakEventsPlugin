@@ -477,6 +477,15 @@ class dakApiActions extends sfActions
         $transformRouteArgs['id'] = $e['primaryPicture']['id'];
         $thumbSizes = ImageHelper::TransformSize($transformRouteArgs['format'], $e['primaryPicture']['width'], $e['primaryPicture']['height']);
 
+        // Extract image extension right after the string 'image/' (6 character length)
+        $extension = substr($e['primaryPicture']['mime_type'], 6);
+
+        if (in_array($extension, array('png', 'gif', 'jpg', 'jpeg'))) {
+          $transformRouteArgs['sf_format'] = $extension;
+        } else {
+          $transformRouteArgs['sf_format'] = 'jpg';
+        }
+
         $e['primaryPicture']['thumb'] = array(
           'url' => url_for('dak_thumb', $transformRouteArgs, true),
           'width' => $thumbSizes['width'],
@@ -490,6 +499,15 @@ class dakApiActions extends sfActions
 
           $transformRouteArgs['id'] = $p['id'];
           $thumbSizes = ImageHelper::TransformSize($transformRouteArgs['format'], $p['width'], $p['height']);
+
+         // Extract image extension right after the string 'image/' (6 character length)
+          $extension = substr($e['primaryPicture']['mime_type'], 6);
+
+          if (in_array($extension, array('png', 'gif', 'jpg', 'jpeg'))) {
+            $transformRouteArgs['sf_format'] = $extension;
+          } else {
+            $transformRouteArgs['sf_format'] = 'jpg';
+          }
 
           $p['thumb'] = array(
             'url' => url_for('dak_thumb', $transformRouteArgs, true),
