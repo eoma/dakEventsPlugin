@@ -73,7 +73,7 @@ class PlugindakEventForm extends BasedakEventForm
 
     $this->widgetSchema['leadParagraph'] = new sfWidgetFormCKEditor();
     $editor = $this->widgetSchema['leadParagraph']->getEditor();
-    $editor->config['toolbar'] = dakEventsCommon::CKEditorToolbarBasic();
+    $editor->config['toolbar'] = dakEventsCommon::CKEditorToolbarBlock();
     $editor->config['entities'] = false;
 
     $this->widgetSchema['description'] = new sfWidgetFormCKEditor();
