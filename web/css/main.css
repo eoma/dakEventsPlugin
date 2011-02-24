@@ -1,49 +1,14 @@
-body {
-  background-color: #48474f;
-}
-
-#header {
-  min-height: 5em;
-  background-color: #83808f;
-  width: 60em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-#menu {
-  color: #fff;
-  height: 1em;
-  padding-top: 2em;
-  padding-bottom: 2em;
-}
-
-#menu ul li a {
-  color: #fff;
-  font-weight: bold;
-}
-
-#content, #footer {
-  width: 60em;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #bdbacf;
-  padding: 1em;
-}
-
 #eventList {
   width: 50em;
   margin-left: auto;
   margin-right: auto;
 }
 
-tr.odd {
+.odd {
   background-color: #c9c5db;
 }
 
-tr.even {
+.even {
   background-color: #a6a3b5;
 }
 
@@ -58,16 +23,4 @@ tr.even {
 
 #eventContent p {
   margin-bottom: 1em;
-}
-
-h1 {
-  font-size: 2em;
-}
-
-h2 {
-  font-size: 1.75em;
-}
-
-strong, b {
-  font-weight: bold;
 }
