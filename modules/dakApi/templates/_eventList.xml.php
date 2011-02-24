@@ -54,7 +54,7 @@
       <thumb>
         <url><?php echo $event['primaryPicture']['thumb']['url'] ?></url>
         <height><?php echo $event['primaryPicture']['thumb']['height'] ?></height>
-        <width><?php echo $event['primaryPicture']['thumb']['height'] ?></width>
+        <width><?php echo $event['primaryPicture']['thumb']['width'] ?></width>
       </thumb>
     </primaryPicture>
     <?php endif ?>
@@ -70,7 +70,7 @@
         <thumb>
           <url><?php echo $p['thumb']['url'] ?></url>
           <height><?php echo $p['thumb']['height'] ?></height>
-          <width><?php echo $p['thumb']['height'] ?></width>
+          <width><?php echo $p['thumb']['width'] ?></width>
         </thumb>
       </picture>
       <?php endforeach ?>
