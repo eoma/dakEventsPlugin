@@ -48,6 +48,6 @@ abstract class PlugindakEvent extends BasedakEvent
   public function setLeadParagraph ($value) {
     $this->myHTMLPurifierInstance();
 
-    $this->_set('leadParagraph', trim($this->purifier->noHtml($value)));
+    $this->_set('leadParagraph', trim($this->purifier->blockHtml($value)));
   }
 }
