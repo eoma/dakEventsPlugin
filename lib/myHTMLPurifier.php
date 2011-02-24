@@ -65,6 +65,31 @@ class myHTMLPurifier extends HTMLPurifier {
 	}
 
 	/**
+	 * Will strip away all elements except a,b,strong,i,em elements
+	 * Usefull for blocks that's supposed to be only one paragraph
+	 */
+	public function blockHtml ($value) {
+		$config = $this->createConfig();
+
+		$config->set('HTML.DefinitionID', 'blockHtml');
+		$config->set('HTML.DefinitionRev', 1);
+
+		// clean empty tags
+		$config->set('AutoFormat.RemoveEmpty', true);
+		$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', true);
+		//$config->set('AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions', array());
+
+		// Allow autolinking
+		$config->set('AutoFormat.Linkify', true);
+
+		// these are allowed html tags, means white list
+		$config->set('HTML.AllowedElements', 'a,b,strong,i,em');
+		$config->set('HTML.AllowedAttributes', 'a.href');
+
+		return $this->purify($value, $config);
+	}
+
+	/**
 	 * Will strip away all htmltags
 	 */
 	public function noHtml ($value) {
