@@ -43,6 +43,7 @@ It also requires you to use:
 *   [sfImageTransformPlugin][]
 *   [sfImageTransformExtraPlugin][]
 *   [sfDoctrineActAsTaggablePlugin][]
+*   [sfiCalCreatorPlugin][]
 
   [sfDoctrineGuardPlugin]: http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin
   [sfDoctrineNestedSetPlugin]: http://www.symfony-project.org/plugins/sfDoctrineNestedSetPlugin
@@ -51,6 +52,7 @@ It also requires you to use:
   [sfImageTransformPlugin]: http://www.symfony-project.org/plugins/sfImageTransformPlugin
   [sfImageTransformExtraPlugin]: http://www.symfony-project.org/plugins/sfImageTransformExtraPlugin
   [sfDoctrineActAsTaggablePlugin]: https://github.com/annismckenzie/sfDoctrineActAsTaggablePlugin
+  [sfiCalCreatorPlugin]: http://www.symfony-project.org/plugins/sfiCalCreatorPlugin
 
 Install them from stock using symfony's
 
