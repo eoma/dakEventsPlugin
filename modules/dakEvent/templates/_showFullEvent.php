@@ -51,6 +51,10 @@ if (isset($inAdmin) && ($inAdmin == true)) {
       <?php echo __('Part of') . ' ' . link_to($event['festival']['title'] . ' ' . format_date($event['festival']['startDate']), $rp['festival'] .  '_show?id=' . $event['festival_id']); ?>
       <br />
     <?php endif ?>
+    
+    <?php if (!isset($inAdmin) || !$inAdmin): ?>
+    <?php echo link_to('Add event to your calendar', '@dak_api_ical_actions?action=event&id=' . $event['id']) ?><br />
+    <?php endif ?>
     <small><?php echo __('Created at %1%. Updated at %2%.', array('%1%' => format_datetime($event['created_at']), '%2%' => format_datetime($event['updated_at']))) ?></small>
   </span>
 </div>

@@ -49,6 +49,9 @@ if (isset($inAdmin) && ($inAdmin == true)) {
     }
     ?>
     <br />
+    <?php if (!isset($inAdmin) || !$inAdmin): ?>
+    <?php echo link_to('Add these festival events to your calendar', '@dak_api_filteredEvents?sf_format=ical', array('query_string' => 'festival_id=' . $festival['id'])) ?><br />
+    <?php endif ?>
     <small><?php echo __('Created at %1%. Updated at %2%.', array('%1%' => format_datetime($festival['created_at']), '%2%' => format_datetime($festival['updated_at']))) ?></small>
   </p>
 </div>

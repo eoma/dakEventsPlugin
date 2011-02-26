@@ -12,6 +12,18 @@
 
 <h2 id="events"><?php echo __('Events scheduled for %1%', array('%1%' => $arranger['name'])) ?></h2>
 
+<p>
+<?php echo link_to(
+        __('Add events for this arranger to your calendar'),
+        '@dak_api_filteredEvents?sf_format=ical',
+        array(
+          'query_string' => 'arranger_id=' . $arranger['id'],
+          'absolute' => true,
+        )
+      );
+?>
+</p>
+
 <?php include_partial('dakEvent/listShortDescription', array('events' => $pager->getResults())) ?>
 
 <?php if ($pager->haveToPaginate()): ?>
