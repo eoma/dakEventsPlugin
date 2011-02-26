@@ -1,0 +1,36 @@
+BEGIN:VCALENDAR
+PRODID:-//10.0.0.1//NONSGML iCalcreator 2.6//
+VERSION:2.0
+BEGIN:VEVENT
+UID:20110226T123214CET-2196wNGv1C@10.0.0.1
+DTSTAMP:20110201T172821Z
+DESCRIPTION:Lorem ipsum dolor sit amet\, consectetur adipiscing elit. Curab
+ itur rutrum congue sollicitudin. Pellentesque aliquet mi eget massa sodale
+ s faucibus. Pellentesque adipiscing ultricies mi\, vel rhoncus massa sempe
+ r nec. Cum sociis natoque penatibus et magnis dis parturient montes\, nasc
+ etur ridiculus mus. Ut convallis\, metus eu elementum aliquet\, leo neque 
+ volutpat arcu\, eget ultrices justo libero in arcu. Nunc vestibulum augue 
+ ut mi porta faucibus condimentum justo hendrerit.
+DTSTART:20110228T155401
+DTEND:20110228T191759
+LAST-MODIFIED:20110201T172821Z
+LOCATION:Speilsalen
+SUMMARY:concert in the future event 38
+END:VEVENT
+BEGIN:VEVENT
+UID:20110226T123200CET-3107cxXxn2@10.0.0.1
+DTSTAMP:20110201T172822Z
+DESCRIPTION:Lorem ipsum dolor sit amet\, consectetur adipiscing elit. Curab
+ itur rutrum congue sollicitudin. Pellentesque aliquet mi eget massa sodale
+ s faucibus. Pellentesque adipiscing ultricies mi\, vel rhoncus massa sempe
+ r nec. Cum sociis natoque penatibus et magnis dis parturient montes\, nasc
+ etur ridiculus mus. Ut convallis\, metus eu elementum aliquet\, leo neque 
+ volutpat arcu\, eget ultrices justo libero in arcu. Nunc vestibulum augue 
+ ut mi porta faucibus condimentum justo hendrerit.
+DTSTART:20110423T134900
+DTEND:20110424T083254
+LAST-MODIFIED:20110201T172822Z
+LOCATION:Storelogen
+SUMMARY:concert in the future event 58
+END:VEVENT
+END:VCALENDAR

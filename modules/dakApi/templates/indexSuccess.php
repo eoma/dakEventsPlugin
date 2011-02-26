@@ -19,7 +19,7 @@
 The DAK Event Calendar API makes it possible to create services
 that fit your specific needs, ie. a mobile application that displays
 upcoming or previous events for your favorite arranger(s)/category(-ies)/location(s)
-or all three.
+or all three. It can also create output iCalendar-supported calendars and events.
 </p>
 
 <p>It is an open source project, you can find it at <a href="https://github.com/eoma/dakEventsPlugin">github.com</a>.</p>
@@ -32,7 +32,7 @@ or all three.
 http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?param1=value1&amp;param2=value2&amp;...
 </code>
 
-<p>(replace <tt>http://eventserver</tt> with eg. <tt><?php echo public_path('', true) ?></tt>). This format is valid the following actions:</p>
+<p>(replace <tt>http://eventserver</tt> with eg. <tt><?php echo public_path('', true) ?></tt>). This format is valid for the following actions:</p>
 
 <ul>
   <li>arranger (action)
@@ -134,7 +134,8 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
 <h2 id="responseFormat">Response format</h2>
 
 <p>
-We supply two response formats: <tt>json</tt> and <tt>xml</tt>.
+We supply two response formats for general-purpose api requests: <tt>json</tt> and <tt>xml</tt>. 
+We supply <tt>atom</tt> for upcoming and filtered events and <tt>ical</tt> (iCalendar) for upcoming and filtered events and also single events or festivals.
 </p>
 
 <p>For <tt>json</tt>, a typical response for upcoming events might look like (formatted through <a href="http://jsonlint.com">jsonlint.com</a>)</p>
@@ -143,10 +144,16 @@ We supply two response formats: <tt>json</tt> and <tt>xml</tt>.
 <?php echo esc_entities(file_get_contents(dirname(__FILE__) . '/apiSamples/upcomingEvents.json')) ?>
 </pre>
 
-<p>For <tt>xml</tt> it moght look like </p>
+<p>For <tt>xml</tt> it might look like </p>
 
 <pre>
 <?php echo esc_entities(file_get_contents(dirname(__FILE__) . '/apiSamples/upcomingEvents.xml')) ?>
+</pre>
+
+<p>For <tt>ical</tt> it might look like</p>
+
+<pre>
+<?php echo esc_entities(file_get_contents(dirname(__FILE__) . '/apiSamples/upcomingEvents.ical')) ?>
 </pre>
 
 <h2 id="externalPlugins">External plugins</h2>
