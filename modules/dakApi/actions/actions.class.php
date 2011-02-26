@@ -203,6 +203,11 @@ class dakApiActions extends sfActions
 
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
+    } else if ($request->getRequestFormat() == 'ical') {
+      $cal = new myICalendar();
+      $cal->createICalEvent($event[0]);
+      $cal->returnCalendar();
+      return sfView::NONE;
     } else {
       $this->data = $data;
     }
@@ -241,6 +246,11 @@ class dakApiActions extends sfActions
 
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
+    } else if ($request->getRequestFormat() == 'ical') {
+      $cal = new myICalendar();
+      $cal->createICalEvent($festival[0]);
+      $cal->returnCalendar();
+      return sfView::NONE;
     } else {
       $this->data = $data;
     }
@@ -289,6 +299,15 @@ class dakApiActions extends sfActions
 
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
+    } else if ($request->getRequestFormat() == 'ical') {
+      $cal = new myICalendar();
+      
+      foreach ($events as $e) {
+        $cal->createICalEvent($e);
+      }
+
+      $cal->returnCalendar();
+      return sfView::NONE;
     } else {
       $this->data = $data;
       $this->latestUpdate = 0;
@@ -450,6 +469,15 @@ class dakApiActions extends sfActions
 
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
+    } else if ($request->getRequestFormat() == 'ical') {
+      $cal = new myICalendar();
+      
+      foreach ($events as $e) {
+        $cal->createICalEvent($e);
+      }
+
+      $cal->returnCalendar();
+      return sfView::NONE;
     } else {
       $this->data = $data;
       $this->latestUpdate = 0;
