@@ -185,6 +185,7 @@ class dakApiActions extends sfActions
 	
       $event = $this->prepareEventPictures($q->execute());
       $event[0]['url'] = $this->getUrl($event[0]['id']);
+      $event[0]['ical'] = url_for('@dak_api_ical_actions?action=event&id=' . $event[0]['id']);
       if ($event[0]['festival_id'] > 0) {
         $event[0]['festival']['url'] = $this->getUrl($event[0]['festival_id'], 'festival');
       }
@@ -231,6 +232,7 @@ class dakApiActions extends sfActions
       $festival = $q->execute();
       
       $festival[0]['url'] = $this->getUrl($festival[0]['id'], 'festival');
+      $festival[0]['ical'] = url_for('@dak_api_ical_actions?action=festival&id=' . $festival[0]['id']);
 
       $totalCount = $q->count();
       $count = count($festival);
@@ -280,6 +282,7 @@ class dakApiActions extends sfActions
 
     foreach ($events as &$e) {
       $e['url'] = $this->getUrl($e['id']);
+      $e['ical'] = url_for('@dak_api_ical_actions?action=event&id=' . $e['id']);
       
       if ($e['festival_id'] > 0) {
         $e['festival']['url'] = $this->getUrl($e['festival_id'], 'festival');
@@ -448,6 +451,7 @@ class dakApiActions extends sfActions
  
       foreach ($events as &$e) {
         $e['url'] = $this->getUrl($e['id']);
+        $e['ical'] = url_for('@dak_api_ical_actions?action=event&id=' . $e['id']);
         
         if ($e['festival_id'] > 0) {
          $e['festival']['url'] = $this->getUrl($e['festival_id'], 'festival');

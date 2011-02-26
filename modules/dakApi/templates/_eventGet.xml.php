@@ -2,6 +2,7 @@
     <id><?php echo $event['id'] ?></id>
     <title><?php echo $event['title'] ?></title>
     <url><?php echo $event['url'] ?></url>
+    <ical><?php echo $event['ical'] ?></ical>
     <leadParagraph><?php echo $event['leadParagraph'] ?></leadParagraph>
     <description><?php echo $event['description'] ?></description>
     <startDate><?php echo $event['startDate'] ?></startDate>

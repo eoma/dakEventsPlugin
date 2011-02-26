@@ -26,6 +26,10 @@
           <p>
             <?php echo $e->getRaw('leadParagraph') ?>
           </p>
+          
+          <p>
+            <small><a href="<?php echo $e['ical'] ?>"><?php echo __('Add event to your calendar (iCalendar format)') ?></a></small>
+          </p>
         </div>
       </summary>
     </entry>
