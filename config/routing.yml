@@ -16,13 +16,20 @@ dak_api_upcomingEvents:
   url: /api/:sf_format/upcomingEvents/*
   param: { module: dakApi , action: upcomingEvents, sf_format: json }
   requirements:
-    sf_format: (?:json|xml|atom)
+    sf_format: (?:json|xml|atom|ical)
 
 dak_api_filteredEvents:
   url: /api/:sf_format/filteredEvents/*
   param: { module: dakApi, action: filteredEvents, sf_format: json }
   requirements:
-    sf_format: (?:json|xml|atom)
+    sf_format: (?:json|xml|atom|ical)
+
+dak_api_ical_actions:
+  url: /api/ical/:action/get/*
+  param: { module: dakApi, sf_format: ical }
+  requirements:
+    action: (?:event|festival)
+    id: '\d+(?:,\d+)?'
 
 dak_api_actions:
   url: /api/:sf_format/:action/:subaction/*
