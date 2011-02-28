@@ -272,8 +272,26 @@ class dakApiActions extends sfActions
     Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
     // This specific query will ensure it only picks events currently
     // happening or will happen
-    $q->where('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')))
-      ->andWhere('e.is_public = ?', true)
+
+    // This query ensures that only upcoming or currently ongoing events will be selected.
+    $q->where('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)',
+      array(
+        date('Y-m-d'),
+        date('Y-m-d'),
+        date('Y-m-d'),
+        date('H:i:s'),
+      )
+    );
+
+    $dayspan = intval($request->getParameter('dayspan', -1));
+
+    if ($dayspan >= 0) {
+      // Dayspan lets you specify how many days forward it should pick events,
+      // starting from 0 (today)
+      $q->andWhere('e.startDate <= ?', date('Y-m-d', time() + 86400 * $dayspan));
+    }
+
+    $q->andWhere('e.is_public = ?', true)
       ->limit($limit)
       ->offset($offset)
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
@@ -378,6 +396,9 @@ class dakApiActions extends sfActions
       $q->andWhereIn('e.festival_id', $festival_id);
     }
 
+
+    $dayspan = intval($request->getParameter('dayspan', -1));
+
     if ($history == 'past') {
       $this->extraArguments .= '&history=past';
 
@@ -396,7 +417,13 @@ class dakApiActions extends sfActions
         // has already happened
         $q->andWhere('e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('H:i:s')));        
       }
-	} else {
+
+      if ($dayspan >= 0) {
+        // Dayspan lets you specify how many days back it should pick events,
+        // starting from 0 (today)
+        $q->andWhere('e.endDate >= ?', date('Y-m-d', time() - 86400 * $dayspan));
+      }
+    } else {
       // Future events
       if ($request->hasParameter('startDate')) {
         $this->extraArguments .= '&startDate=' . $request->getParameter('startDate');
@@ -406,6 +433,12 @@ class dakApiActions extends sfActions
         // This specific query will ensure it only picks events currently
         // happening or will happen
         $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+      }
+
+      if ($dayspan >= 0) {
+        // Dayspan lets you specify how many days forward it should pick events,
+        // starting from 0 (today)
+        $q->andWhere('e.startDate <= ?', date('Y-m-d', time() + 86400 * $dayspan));
       }
 
       if ($request->hasParameter('endDate')) {
