@@ -112,6 +112,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
     <ul>
       <li>limit</limit>
       <li>offset</limit>
+      <li>dayspan</li>
     </ul>
   </li>
   <li>filteredEvents
@@ -125,6 +126,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>endDate (yyyy-mm-dd format, current date is default if history=past)</li>
       <li>limit</li>
       <li>offset</li>
+      <li>dayspan</li>
     </ul>
   </li>
 </ul>
