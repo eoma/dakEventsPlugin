@@ -21,7 +21,7 @@ generator:
           credentials: [admin]
       fields:  ~
       list:
-        max_per_page: 10
+        max_per_page: 25
         title: Locations
         display: [=name]
         # It's not possible to sort by name by the very nature of nested sets
