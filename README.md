@@ -44,6 +44,7 @@ It also requires you to use:
 *   [sfImageTransformExtraPlugin][]
 *   [sfDoctrineActAsTaggablePlugin][]
 *   [sfiCalCreatorPlugin][]
+*   [FullCalendar][]
 
   [sfDoctrineGuardPlugin]: http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin
   [sfDoctrineNestedSetPlugin]: http://www.symfony-project.org/plugins/sfDoctrineNestedSetPlugin
@@ -53,6 +54,7 @@ It also requires you to use:
   [sfImageTransformExtraPlugin]: http://www.symfony-project.org/plugins/sfImageTransformExtraPlugin
   [sfDoctrineActAsTaggablePlugin]: https://github.com/annismckenzie/sfDoctrineActAsTaggablePlugin
   [sfiCalCreatorPlugin]: http://www.symfony-project.org/plugins/sfiCalCreatorPlugin
+  [FullCalendar]: http://arshaw.com/fullcalendar/
 
 Install them from stock using symfony's
 
@@ -63,6 +65,10 @@ before you install this plugin.
 
 HTMLPurifier should be installed in the projects lib/vendor/ directory under
 the name htmlpurifier.
+
+FullCalendar should be installed in the web-directory, create a folder called fullcalendar in both js/ and css/. Put fullcalendar.js and fullcalendar.min.js in js/fullcalendar/ and fullcalendar.css in css/fullcalendar/
+
+You should remark that FullCalendar depends on jQuery and that you should set jQuery to load in your layout.php in both backend and frontend.
 
 After that, add the following section to your project's config/autoload.yml.
 
