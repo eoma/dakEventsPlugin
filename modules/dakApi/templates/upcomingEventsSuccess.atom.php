@@ -1,6 +1,6 @@
 <?php use_helper('Date') ?>
 <?php echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" ?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns:gd="http://schemas.google.com/g/2005" xmlns="http://www.w3.org/2005/Atom">
 
 <title><?php echo __('Event calendar') ?></title>
 <subtitle><?php echo __('Upcoming events') ?></subtitle>
