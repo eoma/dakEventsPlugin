@@ -1,5 +1,6 @@
 <?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', $category['name'] . ' - ' . __('Category')) ?>
+<?php slot('feeds', auto_discovery_link_tag('atom', '@dak_api_filteredEvents?sf_format=atom&category_id=' . $category['id'], array('title' => __('Events for %1%', $category['name'])))) ?>
 
 <h1><?php echo $category['name'] ?></h1>
 

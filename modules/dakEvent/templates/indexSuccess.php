@@ -1,5 +1,6 @@
 <?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', __('Event list')) ?>
+<?php slot('feeds', auto_discovery_link_tag('atom', '@dak_api_upcomingEvents?sf_format=atom', array('title' => __('Upcoming events')))) ?>
 <h1><?php echo __('Event list') ?></h1>
 
 <p>

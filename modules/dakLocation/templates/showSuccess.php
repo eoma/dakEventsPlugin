@@ -1,6 +1,7 @@
 <?php use_helper('Date') ?>
 <?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', $location['name'] . ' - ' . __('Location')) ?>
+<?php slot('feeds', auto_discovery_link_tag('atom', '@dak_api_filteredEvents?sf_format=atom&location_id=' . $festival['id'], array('title' => __('Events for %1%', $location['name'])))) ?>
 
 <h1><?php echo $location['name'] ?></h1>
 
