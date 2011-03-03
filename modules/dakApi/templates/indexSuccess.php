@@ -121,6 +121,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>arranger_id (csv)</li>
       <li>category_id (csv)</li>
       <li>festival_id (csv)</li>
+      <li>event_id (csv)</li>
       <li>history (past or future, future is default)</li>
       <li>startDate (yyyy-mm-dd format, current date is default if history=future)</li>
       <li>endDate (yyyy-mm-dd format, current date is default if history=past)</li>

@@ -368,6 +368,13 @@ class dakApiActions extends sfActions
     // Probably wrong way to do it.
     $this->extraArguments = '';
 
+    if ($request->hasParameter('event_id')) {
+      $this->extraArguments .= '&event_id=' . $request->getParameter('event_id');
+      $event_id = explode(',', $request->getParameter('event_id'));
+      $event_id = array_map(create_function('$value', 'return (int)$value;'), $event_id);
+      $q->andWhereIn('e.id', $event_id);
+    }
+
     if ($request->hasParameter('location_id')) {
       $this->extraArguments .= '&location_id=' . $request->getParameter('location_id');
       $location_id = explode(',', $request->getParameter('location_id'));
