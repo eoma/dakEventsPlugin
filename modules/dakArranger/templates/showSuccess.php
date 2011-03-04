@@ -1,7 +1,11 @@
 <?php include_partial('dakGlobal/assets') ?>
 <?php use_helper('Date') ?>
 <?php slot('title', $arranger['name'] . ' - ' . __('Arranger')) ?>
-<?php slot('feeds', auto_discovery_link_tag('atom', '@dak_api_filteredEvents?sf_format=atom&arranger_id=' . $arranger['id'], array('title' => __('Events for %1%', $arranger['name'])))) ?>
+<?php slot('feeds',
+  auto_discovery_link_tag('atom', '@dak_api_filteredEvents?sf_format=atom&arranger_id=' . $arranger['id'],
+    array('title' => __('Events for %1%', array('%1%' => $arranger['name'])))
+  )
+) ?>
 
 <h1><?php echo $arranger['name'] ?></h1>
 
