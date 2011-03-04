@@ -497,6 +497,7 @@ class dakApiActions extends sfActions
          $e['festival']['url'] = $this->getUrl($e['festival_id'], 'festival');
         }
       }
+      unset($e); // ALWAYS unset variable $value when using foreach ($arr => &$value)
     } else {
       $events = array();
     }
