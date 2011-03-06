@@ -64,7 +64,7 @@
 
 			events: function (start, end, callback) {
 				$.ajax({
-					url: '<?php echo url_for($url) . "?" . $extraUrlQuery ?>',
+					url: '<?php echo url_for($url, true) . "?" . $extraUrlQuery ?>',
 					dataType: 'json',
 					data: {
 						startDate: formatDate(start),
