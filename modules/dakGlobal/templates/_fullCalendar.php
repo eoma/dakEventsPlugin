@@ -38,6 +38,9 @@
 				day: 'dddd dd.MM',
 			},
 			axisFormat: 'HH:mm',
+			firstHour: 12,
+			defaultView: 'agendaWeek',
+			firstDay: 1,
 
 			loading: function (isLoading) {
 				if (isLoading) {
