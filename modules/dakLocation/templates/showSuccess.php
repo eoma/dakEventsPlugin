@@ -29,6 +29,6 @@
   <?php include_partial('dakGlobal/pager', array('route' => '@dak_location_show?id=' . $location['id'], 'pager' => $pager)) ?>
 <?php endif ?>
 </div>
-<div id="calendarView">
+<div id="calendarView" style="display: none">
   <?php include_partial('dakGlobal/fullCalendar', array('url' => '@dak_api_filteredEvents', 'extraUrlQuery' => 'location_id=' . $location['id'])) ?>
 </div>
