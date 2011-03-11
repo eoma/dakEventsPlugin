@@ -30,11 +30,11 @@ if (isset($inAdmin) && ($inAdmin == true)) {
         ?>
         <?php echo link_to($event['title'], $rp['event'] . '_show?id=' . $event['id']) ?><br />
         <span>
-          <?php 
-          if (strlen($event['leadParagraph']) > 100) { 
-            echo substr($event['leadParagraph'], 0, 97) . '...';
+          <?php
+          if (strlen(strip_tags($event->getRaw('leadParagraph'))) > 100) { 
+            echo substr(strip_tags($event->getRaw('leadParagraph')), 0, 97) . '...';
           } else {
-            echo $event['leadParagraph'];
+            echo strip_tags($event->getRaw('leadParagraph'));
           }
           ?>
         </span><br />
