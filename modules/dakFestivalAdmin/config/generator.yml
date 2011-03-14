@@ -30,6 +30,7 @@ generator:
         params: |
           %%_linkToShowFestival%%<br />At %%location%% %%_mergedStartDateTime%% by %%_renderedFestivalArrangers%%.<br />
           <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
+        table_method: defaultJoinsAndRequirements
       filter:  ~
       form:    ~
       edit:    ~
