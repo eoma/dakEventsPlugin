@@ -51,6 +51,11 @@ class PlugindakEventForm extends BasedakEventForm
       'add_empty' => true,
     )));
 
+    $this->widgetSchema['festival_id']->setOption('query',
+      // Limit the number of festivals returned to the ones that ended yesterday or further into the future
+      Doctrine_Core::getTable('dakFestival')->createQuery('f')->select('f.*')->where('f.endDate >= ?', date('Y-m-d', time() - 86400))
+    );
+
     if ($this->getOption('festival_id', false)) {
       $this->widgetSchema['festival_id']->setOption('default', $this->getOption('festival_id'));
     }
