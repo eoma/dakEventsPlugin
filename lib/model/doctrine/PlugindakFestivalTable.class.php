@@ -46,10 +46,34 @@ abstract class PlugindakFestivalTable extends Doctrine_Table
         return $q;
     }
 
+    public function defaultRequirements (Doctrine_Query $q) {
+        $rootAlias = $q->getRootAlias();
+
+        $q->where($rootAlias . '.startDate >= ? OR ' . $rootAlias . '.endDate >= ?', 
+                  array(date('Y-m-d', time() - 86400), date('Y-m-d', time() - 86400)));
+
+        return $q;
+    }
+
+    public function defaultJoinsAndRequirements (Doctrine_Query $q) {
+        $q = $this->defaultJoins($q);
+        $q = $this->defaultRequirements($q);
+
+        return $q;
+    }
+
     public function defaultQueryOptions(Doctrine_Query $q)
     {
         $this->defaultJoins($q);
         $this->defaultSelect($q);
         $this->defaultOrderBy($q);
+    }
+
+    public function defaultQueryOptionsAndRequirements(Doctrine_Query $q, $order = 'asc')
+    {
+        $q = $this->defaultQueryOptions($q, $order);
+        $q = $this->defaultRequirements($q);
+
+        return $q;
     }
 }
