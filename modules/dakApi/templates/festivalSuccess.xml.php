@@ -9,6 +9,8 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
   <data>
     <?php if ($subAction == 'get'): ?>
     <?php include_partial('festivalGet', array('festival' => $data['data'][0])) ?>
+    <?php elseif ($subAction == 'list'): ?>
+    <?php include_partial('festivalList', array('festivals' => $data['data'])) ?>
     <?php endif ?>
   </data>
 </eventdb>
