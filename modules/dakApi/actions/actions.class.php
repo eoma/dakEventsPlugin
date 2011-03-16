@@ -403,8 +403,8 @@ class dakApiActions extends sfActions
       $q->andWhereIn('e.festival_id', $festival_id);
     }
 
-
     $dayspan = intval($request->getParameter('dayspan', -1));
+    $noCurrentEvents = intval($request->getParameter('noCurrentEvents', 0));
 
     if ($history == 'past') {
       $this->extraArguments .= '&history=past';
@@ -421,8 +421,10 @@ class dakApiActions extends sfActions
         $q->andWhere('e.startDate <= ? OR e.endDate <= ?', array($endDate, $endDate));
       } else {
         // This specific query will ensure it only picks events that
-        // has already happened
-        $q->andWhere('e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('H:i:s')));        
+        // has already happened, if the noCurrentEvents parameter isn't specified
+        if ($noCurrentEvents == 0) {
+          $q->andWhere('e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+        }
       }
 
       if ($dayspan >= 0) {
@@ -439,7 +441,10 @@ class dakApiActions extends sfActions
       } else {
         // This specific query will ensure it only picks events currently
         // happening or will happen
-        $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+        // has already happened, if the noCurrentEvents parameter isn't specified
+        if ($noCurrentEvents == 0) {
+          $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+        }
       }
 
       if ($dayspan >= 0) {
