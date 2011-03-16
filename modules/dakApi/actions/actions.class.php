@@ -244,13 +244,103 @@ class dakApiActions extends sfActions
         'totalCount' => $totalCount,
         'data' => $festival,
       );
-    }
+    } else if ($this->subAction == 'list') {
+      $limit = intval($request->getParameter('limit', 20));
+
+      if ($limit > 1000) {
+        $limit = 1000;
+	  }
+
+      $offset = 0;
+      if ($limit > 0) {
+        $offset = intval($request->getParameter('offset', 0));
+      }
+
+      $history = $request->getParameter('history', 'future');
+
+      $q = Doctrine_Core::getTable('dakFestival')
+        ->createQuery('f')
+        ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+
+      if ($history == 'past') {
+        Doctrine_Core::getTable('dakFestival')->defaultQueryOptions($q, 'desc');
+      } else {
+        Doctrine_Core::getTable('dakFestival')->defaultQueryOptions($q, 'asc');
+      }
+
+      $noCurrentEvents = intval($request->getParameter('noCurrentEvents', 0));
+
+      if ($history == 'past') {
+        //$this->extraArguments .= '&history=past';
+
+        if ($request->hasParameter('startDate')) {
+          //$this->extraArguments .= '&startDate=' . $request->getParameter('startDate');
+          $startDate = $request->getParameter('startDate');
+          $q->andWhere('f.startDate >= ? OR f.endDate >= ?', array($startDate, $startDate));
+        }
+
+        if ($request->hasParameter('endDate')) {
+          //$this->extraArguments .= '&endDate=' . $request->getParameter('endDate');
+          $endDate = $request->getParameter('endDate');
+          $q->andWhere('f.startDate <= ? OR f.endDate <= ?', array($endDate, $endDate));
+        } else {
+          // This specific query will ensure it only picks events that
+          // has already happened, if the noCurrentEvents parameter isn't specified
+          if ($noCurrentEvents == 0) {
+            $q->andWhere('f.endDate < ? OR (f.endDate = ? AND f.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+          }
+        }
+      } else {
+        // Future events
+        if ($request->hasParameter('startDate')) {
+          //$this->extraArguments .= '&startDate=' . $request->getParameter('startDate');
+          $startDate = $request->getParameter('startDate');
+          $q->andWhere('f.startDate >= ? OR f.endDate >= ?', array($startDate, $startDate));
+        } else {
+          // This specific query will ensure it only picks events currently
+          // happening or will happen
+          // has already happened, if the noCurrentEvents parameter isn't specified
+          if ($noCurrentEvents == 0) {
+            $q->andWhere('f.startDate >= ? OR f.endDate > ? OR (f.endDate = ? AND f.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
+          }
+        }
+
+        if ($request->hasParameter('endDate')) {
+          //$this->extraArguments .= '&endDate=' . $request->getParameter('endDate');
+          $endDate = $request->getParameter('endDate');
+          $q->andWhere('f.startDate <= ? OR f.endDate <= ?', array($endDate, $endDate));
+        }
+      }
+
+      $festivals = $q->execute();
+
+      foreach ($festivals as &$f) {
+        $f['url'] = $this->getUrl($f['id'], 'festival');
+        $f['ical'] = url_for('@dak_api_ical_actions?action=festival&id=' . $f['id'], true);
+      }
+      unset($f);
+
+      $totalCount = $q->count();
+      $count = count($festivals);
+
+      $data = array(
+        'limit' => $limit,
+        'offset' => $offset,
+        'count' => $count,
+        'totalCount' => $totalCount,
+        'data' => $festivals,
+      );
+	}
 
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
     } else if ($request->getRequestFormat() == 'ical') {
       $cal = new myICalendar();
-      $cal->createICalEvent($festival[0]);
+
+      foreach ($data['data'] as $d) {
+        $cal->createICalEvent($d);
+      }
+
       $cal->returnCalendar();
       return sfView::NONE;
     } else {
