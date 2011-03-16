@@ -35,13 +35,17 @@ abstract class PlugindakFestivalTable extends Doctrine_Table
         return $q;
     }
 
-    public function defaultOrderBy(Doctrine_Query $q)
+    public function defaultOrderBy(Doctrine_Query $q, $order = 'asc')
     {
         $rootAlias = $q->getRootAlias();
+        
+        if ( !in_array($order, array('asc', 'desc')) ) {
+            $order = 'asc';
+        }
 
-        $q->orderBy($rootAlias . '.startDate asc, ' .
-                    $rootAlias . '.startTime asc, ' .
-                    $rootAlias . '.title asc');
+        $q->orderBy($rootAlias . '.startDate ' . $order . ', ' .
+                    $rootAlias . '.startTime ' . $order . ', ' .
+                    $rootAlias . '.title ' . $order);
 
         return $q;
     }
@@ -62,11 +66,11 @@ abstract class PlugindakFestivalTable extends Doctrine_Table
         return $q;
     }
 
-    public function defaultQueryOptions(Doctrine_Query $q)
+    public function defaultQueryOptions(Doctrine_Query $q, $order = 'asc')
     {
         $this->defaultJoins($q);
         $this->defaultSelect($q);
-        $this->defaultOrderBy($q);
+        $this->defaultOrderBy($q, $order);
     }
 
     public function defaultQueryOptionsAndRequirements(Doctrine_Query $q, $order = 'asc')
