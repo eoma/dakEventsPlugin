@@ -87,9 +87,9 @@ dakEvent:
 
       <p>Donec blandit mattis rhoncus. Cras at porttitor leo. Nam faucibus orci nec mauris pharetra dignissim. Praesent nec dui massa, id ultricies erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla sollicitudin vestibulum ante, eu pellentesque massa sollicitudin fermentum. Duis pulvinar, turpis et gravida adipiscing, nunc eros ultricies diam, ac faucibus dui erat at elit. Suspendisse adipiscing urna et eros sodales vitae mattis massa sollicitudin. Aliquam adipiscing odio accumsan sapien aliquet ac malesuada massa consequat. Cras ac ante eu nibh aliquam ultrices.</p>
 
-    startDate: "<?php $sd = mt_rand(time() + 86400, time() + 86400 * 100); echo date("Y-m-d", $sd); ?>"
+    startDate: "<?php $sd = mt_rand(time() - 10 * 86400, time() + 86400 * 100); echo date("Y-m-d", $sd); ?>"
     startTime: "<?php echo date("H:i:s", $sd) ?>"
-    endDate: "<?php $ed = $sd + mt_rand(3600, 86400); echo date("Y-m-d", $ed); ?>"
+    endDate: "<?php $ed = $sd + mt_rand(3600, 2 * 86400); echo date("Y-m-d", $ed); ?>"
     endTime: "<?php echo date("H:i:s", $ed) ?>"
     commonLocation: <?php echo $locations[mt_rand(0,5)] . "\n" ?>
     arranger: <?php echo $arrangers[mt_rand(0,4)] . "\n" ?>
