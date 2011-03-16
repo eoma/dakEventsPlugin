@@ -464,6 +464,11 @@ class dakApiActions extends sfActions
     $q->andWhere('e.is_public = ?', true);
 
     $limit = intval($request->getParameter('limit', 20));
+
+    if ($limit > 1000) {
+		$limit = 1000;
+	}
+
     $offset = 0;
     if ($limit > 0) {
       $offset = intval($request->getParameter('offset', 0));
