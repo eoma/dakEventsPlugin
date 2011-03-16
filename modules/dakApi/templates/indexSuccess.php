@@ -125,9 +125,10 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>history (past or future, future is default)</li>
       <li>startDate (yyyy-mm-dd format, current date is default if history=future)</li>
       <li>endDate (yyyy-mm-dd format, current date is default if history=past)</li>
-      <li>limit</li>
+      <li>limit (1000 is max)</li>
       <li>offset</li>
       <li>dayspan</li>
+      <li>noCurrentEvents (1 for true, 0 for false, 0 is default)</li>
     </ul>
   </li>
 </ul>
