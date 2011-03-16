@@ -26,10 +26,14 @@ dak_api_filteredEvents:
 
 dak_api_ical_actions:
   url: /api/ical/:action/get/*
-  param: { module: dakApi, sf_format: ical }
+  param: { module: dakApi, sf_format: ical, subaction: get }
   requirements:
     action: (?:event|festival)
     id: '\d+(?:,\d+)?'
+
+dak_api_ical_list_actions:
+  url: /api/ical/festival/list/*
+  param: { module: dakApi, sf_format: ical, action: festival, subaction: list }
 
 dak_api_actions:
   url: /api/:sf_format/:action/:subaction/*
