@@ -96,6 +96,16 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
           <li>id (req.)</li>
         </ul>
       </li>
+      <li>list
+        <ul>
+          <li>limit</li>
+          <li>offset</li>
+          <li>startDate</li>
+          <li>endDate</li>
+          <li>history (past or future, future is default)</li>
+          <li>noCurrentEvents (1 for true, 0 for false, 0 is default)</li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>
