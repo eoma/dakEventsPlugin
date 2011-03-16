@@ -4,6 +4,7 @@
     <id><?php echo $f['id'] ?></id>
     <title><?php echo $f['title'] ?></title>
     <url><?php echo $f['url'] ?></url>
+    <ical><?php echo $f['ical'] ?></ical>
     <leadParagraph><?php echo $f['leadParagraph'] ?></leadParagraph>
     <description><?php echo $f['description'] ?></description>
     <startDate><?php echo $f['startDate'] ?></startDate>
