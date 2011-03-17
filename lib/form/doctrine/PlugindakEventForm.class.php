@@ -23,15 +23,36 @@ class PlugindakEventForm extends BasedakEventForm
     );
 
     $years = range(date('Y'), date('Y') + 3);
+
     $this->widgetSchema['startDate'] = new sfWidgetFormDate(array(
       'format' => '%year%-%month%-%day%',
       'years' => array_combine($years, $years),
     ));
 
+    $startDateJs = "function (date) { wfd_%s_update_linked(date); var t = this;
+      $('#dak_event_endDate_jquery_control').datepicker('option', {mindate: $(t).datepicker('getDate')});
+wfd_dak_event_endDate_update_linked(date); }";
+
+    $this->widgetSchema['startDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['startDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+	'onSelect' => $startDateJs,
+      )
+    );
+
     $this->widgetSchema['endDate'] = new sfWidgetFormDate(array(
       'format' => '%year%-%month%-%day%',
       'years' => array_combine($years, $years),
     ));
+
+    $this->widgetSchema['endDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['endDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+      )
+    );
+
 
     $minutes = array();
     for ($i = 0; $i < 60; $i = $i + 5) $minutes[$i] = sprintf("%02d", $i);
