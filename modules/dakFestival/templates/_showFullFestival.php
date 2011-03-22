@@ -40,6 +40,9 @@ if (isset($inAdmin) && ($inAdmin == true)) {
     <?php echo __('from %1% to %2%', array('%1%' => format_date($festival['startDate']) . ' ' . $festival['startTime'], '%2%' => format_date($festival['endDate']) . ' ' . $festival['endTime'])) ?>
     <?php endif ?>
     <br />
+    <?php if (strlen($festival['covercharge']) > 0): ?>
+      <b><?php echo __('Covercharge') ?></b>: <?php echo $festival['covercharge'] ?><br />
+    <?php endif ?>
     <b><?php echo __('Who?') ?></b>
     <?php
     if (count($festival['arrangers']) > 0) {

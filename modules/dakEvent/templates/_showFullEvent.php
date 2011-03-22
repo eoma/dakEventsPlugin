@@ -41,6 +41,9 @@ if (isset($inAdmin) && ($inAdmin == true)) {
       }
     ?>
     <br />
+    <?php if (strlen($event['covercharge']) > 0): ?>
+      <b><?php echo __('Covercharge') ?></b>: <?php echo $event['covercharge'] ?><br />
+    <?php endif ?>
     <strong><?php echo __('Who?') ?></strong>
     <?php echo link_to($event['arranger']['name'], $rp['arranger'] . '_show?id=' . $event['arranger_id']) ?>
     <br />

@@ -18,6 +18,10 @@
         }
         ?><br />
         <?php echo __('When?') ?>: <?php include_partial('dakEvent/startEndDateTime', array('event' => $festival)) ?><br />
+       <?php if (strlen($festival['covercharge']) > 0): ?>
+         <b><?php echo __('Covercharge') ?></b>: <?php echo $festival['covercharge'] ?><br />
+       <?php endif ?>
+
         <?php echo __('Arrangers') ?>: <?php foreach ($festival['arrangers'] as $a) { echo link_to($a['name'], '@dak_arranger_show?id=' . $a['id']) . ' '; } ?>
       </td>
     </tr>

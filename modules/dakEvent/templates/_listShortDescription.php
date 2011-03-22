@@ -40,6 +40,9 @@ if (isset($inAdmin) && ($inAdmin == true)) {
         </span><br />
         <?php echo __('When?') ?> <?php include_partial('dakEvent/startEndDateTime', array('event' => $event)) ?><br />
         <?php echo __('Location') ?>: <?php include_partial('dakEvent/location', array('event' => $event)) ?><br />
+        <?php if (strlen($event['covercharge']) > 0): ?>
+          <b><?php echo __('Covercharge') ?></b>: <?php echo $event['covercharge'] ?><br />
+        <?php endif ?>
         <?php echo __('Arranger') ?>: <?php echo link_to($event['arranger']['name'], $rp['arranger'] . '_show?id=' . $event['arranger_id']) ?><br />
         <?php echo __('Categories') ?>: <?php foreach ($event['categories'] as $c) echo link_to($c['name'], $rp['category'] . '_show?id=' . $c['id']) . " "; ?><br />
         <?php if ($event['festival_id'] > 0): ?> 
