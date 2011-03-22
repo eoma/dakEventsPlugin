@@ -74,4 +74,7 @@
       <?php endforeach ?>
     </pictures>
     <?php endif ?>
+    <?php if (strlen($event['covercharge']) > 0): ?>
+    <covercharge><?php echo $event['covercharge'] ?></covercharge>
+    <?php endif ?>
   </event>

@@ -24,6 +24,9 @@
             <abbr class="dtend" title="<?php echo $e['endDate'] . 'T' . $e['endTime'] . 'Z' ?>">
               <?php echo format_datetime($e['endDate'] . ' ' . $e['endTime']) ?>
             </abbr><br />
+            <?php if (strlen($e['covercharge']) > 0): ?>
+            <strong><?php echo __('Covercharge') ?>:</strong> <?php echo $e['covercharge'] ?><br />
+            <?php endif ?>
             <strong><?php echo __('Arranger') ?>:</strong> <?php echo $e['arranger']['name'] ?><br />
             <strong><?php echo __('Category') ?>:</strong> <ul><?php foreach($e['categories'] as $c) { echo '<li>' . $c['name'] . '</li>'; } ?></ul>
           </p>

@@ -21,6 +21,9 @@
       </arranger>
       <?php endforeach ?>
     </arrangers>
+    <?php if (strlen($festival['covercharge']) > 0): ?>
+    <covercharge><?php echo $festival['covercharge'] ?></covercharge>
+    <?php endif ?>
   </festival>
   <?php endforeach ?>
 </festivals>
