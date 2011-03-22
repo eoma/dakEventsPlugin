@@ -6,6 +6,7 @@
     "data": [
         {
             "id": "6",
+            "ical": http://eventserver/api/ical/event/get/id/6,
             "title": "Storm Weather Shanty Choir",
             "leadParagraph": "Storm Weather Shanty Choir",
             "description": "",
@@ -40,10 +41,12 @@
             "primaryPicture": null,
             "pictures": [
 
-            ]
+            ],
+            "covercharge": null
         },
         {
             "id": "9",
+            "ical": http://eventserver/api/ical/event/get/id/9,
             "title": "Optical Substance",
             "leadParagraph": "",
             "description": "",
@@ -120,7 +123,8 @@
                         "height": 175
                     }
                 }
-            ]
+            ],
+            "covercharge": "1234 dollars"
         }
     ]
 }
