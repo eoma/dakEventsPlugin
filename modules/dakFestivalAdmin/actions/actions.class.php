@@ -46,13 +46,13 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
     if ( $this->getUser()->isAuthenticated() && ! $this->getUser()->hasGroup('admin') ) {
       $arrangerUsers = $this->getUser()->getArrangerIds();
 
-      $query->leftJoin($query->getRootAlias() . '.arrangers a');
+      $query->leftJoin($query->getRootAlias() . '.arrangers a2');
 
       if ( count($arrangerUsers) > 0 ) {
-        $query->andWhereIn('a.id', $arrangerUsers);
+        $query->andWhereIn('a2.id', $arrangerUsers);
       } else {
-        // No fiestivals can be created, edited or deleted with a.id set to null
-        $query->andWhere('a.id is null');
+        // No festivals can be created, edited or deleted with a.id set to null
+        $query->andWhere('a2.id is null');
       }
     }
     return $query;
