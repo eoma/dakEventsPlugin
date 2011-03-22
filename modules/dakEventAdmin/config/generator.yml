@@ -53,6 +53,7 @@ generator:
           - covercharge
           - customLocation
           - location_id
+          - arranger_id
           - categories_list
           - festival_id
           - primaryPicture_id
