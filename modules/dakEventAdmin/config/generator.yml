@@ -26,6 +26,7 @@ generator:
         endDate: { label: End date }
         endTime: { label: End time }
         festival_id: { help: Is this event supposed to be part of a festival? }
+        covercharge: { help: "Can be any text or number up to 64 characters, not required" }
       list:
         max_per_page: 10
         title: Eventlist
@@ -38,7 +39,24 @@ generator:
           <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
         table_method: defaultJoinsAndRequirements # defaultJoinsAndRequirements will make it impossible to get event lists vefore current date
       filter:  ~
-      form:    ~
+      form:
+        display:
+          - title
+          - leadParagraph
+          - description
+          - is_public
+          - is_accepted
+          - startDate
+          - startTime
+          - endDate
+          - endTime
+          - covercharge
+          - customLocation
+          - location_id
+          - categories_list
+          - festival_id
+          - primaryPicture_id
+          - pictures_list
       edit:
         title: Editing event "%%title%%"
       new:
