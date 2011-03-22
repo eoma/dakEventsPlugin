@@ -68,7 +68,7 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
       $this->dak_festival = $this->getRoute()->getObject();
       $usersArrangers = $user->getArrangerIds();
 
-      $festivalArrangers = $this->festival->getArrangers();
+      $festivalArrangers = $this->dak_festival->getArrangers();
       $festivalArrangerIds = array();
 
       foreach ($festivalArrangers as $f) {
