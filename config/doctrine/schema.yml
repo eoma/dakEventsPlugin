@@ -262,6 +262,7 @@ dakFestival: # This table will hold all festivals
     endTime: time
     customLocation: {type: string(255), notnull: false}
     location_id: integer
+    covercharge: string(64)
   relations:
     commonLocation:
       class: dakLocation
@@ -316,6 +317,7 @@ dakEvent: # This table will hold all events.
     arranger_id: {type: integer, notnull: true}
     festival_id: integer
     primaryPicture_id: integer
+    covercharge: string(64)
   relations:
     arranger:
       class: dakArranger
