@@ -33,11 +33,15 @@ class PlugindakEventForm extends BasedakEventForm
       $('#dak_event_endDate_jquery_control').datepicker('option', {mindate: $(t).datepicker('getDate')});
 wfd_dak_event_endDate_update_linked(date); }";
 
+    sfProjectConfiguration::getActive()->loadHelpers(array('Url'));
+	$calendarButtonPath = public_path(sfConfig::get('dak_events_module_web_dir') . '/images/calendar.png');
+
     $this->widgetSchema['startDate'] = new dakWidgetFormJqueryDate(
       array(
         'date_widget' => $this->widgetSchema['startDate'],
         'culture' => $this->getOption('currentUser')->getCulture(),
-	'onSelect' => $startDateJs,
+        'onSelect' => $startDateJs,
+        'image' => $calendarButtonPath,
       )
     );
 
@@ -50,6 +54,7 @@ wfd_dak_event_endDate_update_linked(date); }";
       array(
         'date_widget' => $this->widgetSchema['endDate'],
         'culture' => $this->getOption('currentUser')->getCulture(),
+        'image' => $calendarButtonPath,
       )
     );
 

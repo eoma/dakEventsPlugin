@@ -22,6 +22,42 @@ class PlugindakFestivalForm extends BasedakFestivalForm
     }
 
     unset($this['created_at'], $this['updated_at']);
+    
+    $years = range(date('Y'), date('Y') + 3);
+    
+    $this->widgetSchema['startDate'] = new sfWidgetFormDate(array(
+      'format' => '%year%-%month%-%day%',
+      'years' => array_combine($years, $years),
+    ));
+
+    $startDateJs = "function (date) { wfd_%s_update_linked(date); var t = this;
+      $('#dak_festival_endDate_jquery_control').datepicker('option', {mindate: $(t).datepicker('getDate')});
+wfd_dak_festival_endDate_update_linked(date); }";
+
+	sfProjectConfiguration::getActive()->loadHelpers(array('Url'));
+	$calendarButtonPath = public_path(sfConfig::get('dak_events_module_web_dir') . '/images/calendar.png');
+
+    $this->widgetSchema['startDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['startDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+        'onSelect' => $startDateJs,
+        'image' => $calendarButtonPath,
+      )
+    );
+
+    $this->widgetSchema['endDate'] = new sfWidgetFormDate(array(
+      'format' => '%year%-%month%-%day%',
+      'years' => array_combine($years, $years),
+    ));
+
+    $this->widgetSchema['endDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['endDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+        'image' => $calendarButtonPath,
+      )
+    );
 
     $minutes = array();
     for ($i = 0; $i < 60; $i = $i + 5) $minutes[$i] = sprintf("%02d", $i);
