@@ -1,3 +1,4 @@
 <?php
 use_helper('Date');
-echo format_datetime($dak_event->getStartDate() . ' ' . $dak_event->getStartTime());
+$combinedDate = $dak_event->getStartDate() . ' ' . $dak_event->getStartTime();
+echo format_date($combinedDate, 'p') . ' ' .  format_date($combinedDate, 'HH:mm');

@@ -1,6 +1,9 @@
 <?php
+$startDatetime = $dak_event['startDate'] . ' ' . $dak_event['startTime'];
+$endDatetime = $dak_event['endDate'] . ' ' . $dak_event['endTime'];
+
 if ($dak_event['startDate'] == $dak_event['endDate']) {
-  echo format_date($dak_event['startDate']) . ' from ' . $dak_event['startTime'] . ' to ' . $dak_event['endTime'];
+  echo format_date($startDatetime, 'p') . ' from ' . format_date($startDatetime, 'HH:mm') . ' to ' . format_date($endDatetime, 'HH:mm');
 } else {
-  echo 'from ' . format_date($dak_event['startDate']) . ' ' . $dak_event['startTime'] . ' to ' . format_date($dak_event['endDate']) . ' ' . $dak_event['endTime'];
+  echo 'from ' . format_date($startDatetime, 'p') . ' ' . format_date($startDatetime, 'HH:mm') . ' to ' . format_date($startDatetime, 'p') . ' ' . format_date($startDatetime, 'HH:mm');
 }

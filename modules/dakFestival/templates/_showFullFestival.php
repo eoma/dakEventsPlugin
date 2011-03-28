@@ -33,12 +33,14 @@ if (isset($inAdmin) && ($inAdmin == true)) {
     <br />
     <b><?php echo __('When?') ?></b> 
     <?php 
-    if ($festival['startDate'] == $festival['endDate']):
+      $startDatetime = $festival['startDate'] . ' ' . $festival['startTime'];
+      $endDatetime = $festival['endDate'] . ' ' . $festival['endTime'];
+      if ($festival['startDate'] == $festival['endDate']) {
+        echo __('%1% from %2% to %3%',  array('%1%' => format_date($startDatetime, 'p'), '%2%' => format_date($startDatetime, 'HH:mm'), '%3%' => format_date($endDatetime, 'HH:mm')));
+      } else {
+        echo __('from %1% to %2%', array('%1%' => format_date($startDatetime, 'p') . ' ' . format_date($startDatetime, 'HH:mm'), '%2%' => format_date($endDatetime, 'p') . ' ' . format_date($endDatetime, 'HH:mm')));
+      }
     ?>
-    <?php echo __('%1% from %2% to %3%',  array('%1%' => format_date($festival['startDate']), '%2%' => $festival['startTime'], '%3%' => $festival['endTime'])) ?>
-    <?php else: ?>
-    <?php echo __('from %1% to %2%', array('%1%' => format_date($festival['startDate']) . ' ' . $festival['startTime'], '%2%' => format_date($festival['endDate']) . ' ' . $festival['endTime'])) ?>
-    <?php endif ?>
     <br />
     <?php if (strlen($festival['covercharge']) > 0): ?>
       <b><?php echo __('Covercharge') ?></b>: <?php echo $festival['covercharge'] ?><br />

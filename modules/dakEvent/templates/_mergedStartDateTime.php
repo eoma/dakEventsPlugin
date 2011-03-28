@@ -1,3 +1,4 @@
 <?php
 use_helper('Date');
-echo format_datetime($event['startDate'] . ' ' . $event['startTime']);
+$startDatetime = $event['startDate'] . ' ' . $event['startTime'];
+echo format_date($startDatetime, 'p') . ' ' . format_date($startDatetime, 'HH:mm');

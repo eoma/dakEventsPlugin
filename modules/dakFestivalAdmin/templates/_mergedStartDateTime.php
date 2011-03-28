@@ -1,3 +1,4 @@
 <?php
 use_helper('Date');
-echo format_datetime($dak_festival->getStartDate() . ' ' . $dak_festival->getStartTime());
+$startDatetime = $dak_festival->getStartDate() . ' ' . $dak_festival->getStartTime();
+echo format_date($startDatetime, 'p') . ' ' . format_date($startDatetime, 'HH:mm');
