@@ -25,7 +25,7 @@ class dakEventAdminActions extends autodakEventAdminActions
     $action = $this->getActionName();
     $user = $this->getUser();
 
-    if (!$user->hasCredential('admin') && in_array($action, array('edit', 'delete', 'update', 'batchDelete')))
+    if (!$user->hasCredential('admin') && in_array($action, array('copy', 'edit', 'delete', 'update', 'batchDelete')))
     {
       $this->dak_event = $this->getRoute()->getObject();
 
@@ -56,6 +56,48 @@ class dakEventAdminActions extends autodakEventAdminActions
 
     $this->form = $this->configuration->getForm(null, $options);
     $this->dak_event = $this->form->getObject();
+  }
+
+  public function executeCopy(sfWebRequest $request)
+  {
+    $oldEvent = Doctrine_Core::getTable('dakEvent')->find($request->getParameter('id'));
+    $newEvent = $oldEvent->copy();
+
+    $newEvent->setTitle($newEvent->getTitle() . " copy");
+    $newEvent->setIsPublic(false);
+
+    $startTimestamp = strtotime($newEvent->getStartDate() . ' ' . $newEvent->getStartTime());
+
+    if ($startTimestamp < time()) {
+      $newEvent->setStartDate(date('Y-m-d', time() + 86400));
+      $newEvent->setEndDate(date('Y-m-d', time() + 86400 ));
+    } else {
+      $newEvent->setStartDate(date('Y-m-d', strtotime($newEvent->getStartDate()) + 86400));
+      $newEvent->setEndDate(date('Y-m-d', strtotime($newEvent->getEndDate()) + 86400 ));
+    }
+
+    // See here http://stackoverflow.com/questions/2357498/copy-a-doctrine-object-with-all-relations/2663837#2663837
+    foreach($oldEvent->getTable()->getRelations() as $relation) {
+      if ($relation instanceof Doctrine_Relation_Association) {
+        $ids = array();
+
+        foreach ($relation->fetchRelatedFor($oldEvent) as $r) {    
+            $ids[] = $r->getId();
+        }
+
+        $newEvent->link($relation->getAlias(), $ids);
+      }
+    }
+
+    $newEvent->setCreatedAt(date('Y-m-d H:i:s'));
+    $newEvent->setUpdatedAt(date('Y-m-d H:i:s'));
+
+    if ($newEvent->isValid()) {
+      $newEvent->save();
+      $this->redirect('dak_event_admin_edit', $newEvent);
+    } else {
+      $this->forward404("Couldn't copy the object, contact admin");
+    }
   }
 
   protected function buildQuery()

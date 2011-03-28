@@ -1,4 +1,7 @@
 
+copy:
+  credentials: [[admin, owner]]
+
 edit:
   credentials: [[admin, owner]]
 

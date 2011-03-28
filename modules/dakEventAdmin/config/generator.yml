@@ -38,6 +38,10 @@ generator:
           %%_eventHasFestival%%
           <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
         table_method: defaultJoinsAndRequirements # defaultJoinsAndRequirements will make it impossible to get event lists vefore current date
+        object_actions:
+          _edit: ~
+          _delete: ~
+          copy: { label: Copy, action: copy }
       filter:  ~
       form:
         display:
