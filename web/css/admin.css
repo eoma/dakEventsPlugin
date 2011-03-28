@@ -6,7 +6,7 @@
   display: none;
 }
 
-.noFloat {
+#sf_admin_bar.noFloat {
   float: none;
 }
 
