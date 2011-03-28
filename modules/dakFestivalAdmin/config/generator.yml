@@ -32,6 +32,10 @@ generator:
           %%_linkToShowFestival%%<br />At %%location%% %%_mergedStartDateTime%% by %%_renderedFestivalArrangers%%.<br />
           <small>Updated at %%updated_at%%. Created at %%created_at%%.</small>
         table_method: defaultJoinsAndRequirements
+        object_actions:
+          _edit: ~
+          _delete: ~
+          copy: { label: Copy, action: copy }
       filter:  ~
       form:
         display:

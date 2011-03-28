@@ -63,7 +63,7 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
     $action = $this->getActionName();
     $user = $this->getUser();
 
-    if (!$user->hasCredential('admin') && in_array($action, array('edit', 'update', 'delete', 'batchDelete')))
+    if (!$user->hasCredential('admin') && in_array($action, array('copy', 'edit', 'update', 'delete', 'batchDelete')))
     {
       $this->dak_festival = $this->getRoute()->getObject();
       $usersArrangers = $user->getArrangerIds();
@@ -86,5 +86,46 @@ class dakFestivalAdminActions extends autodakFestivalAdminActions
     return parent::getCredential();
   }
 
+
+  public function executeCopy(sfWebRequest $request)
+  {
+    $oldFestival = Doctrine_Core::getTable('dakFestival')->find($request->getParameter('id'));
+    $newFestival = $oldFestival->copy();
+
+    $newFestival->setTitle($newFestival->getTitle() . " copy");
+
+    $startTimestamp = strtotime($newFestival->getStartDate() . ' ' . $newFestival->getStartTime());
+
+    if ($startTimestamp < time()) {
+      $newFestival->setStartDate(date('Y-m-d', time() + 86400));
+      $newFestival->setEndDate(date('Y-m-d', time() + 86400 ));
+    } else {
+      $newFestival->setStartDate(date('Y-m-d', strtotime($newFestival->getStartDate()) + 86400));
+      $newFestival->setEndDate(date('Y-m-d', strtotime($newFestival->getEndDate()) + 86400 ));
+    }
+
+    // See here http://stackoverflow.com/questions/2357498/copy-a-doctrine-object-with-all-relations/2663837#2663837
+    foreach($oldFestival->getTable()->getRelations() as $relation) {
+      if ($relation instanceof Doctrine_Relation_Association) {
+        $ids = array();
+
+        foreach ($relation->fetchRelatedFor($oldFestival) as $r) {    
+            $ids[] = $r->getId();
+        }
+
+        $newFestival->link($relation->getAlias(), $ids);
+      }
+    }
+
+    $newFestival->setCreatedAt(date('Y-m-d H:i:s'));
+    $newFestival->setUpdatedAt(date('Y-m-d H:i:s'));
+
+    if ($newFestival->isValid()) {
+      $newFestival->save();
+      $this->redirect('dak_festival_admin_edit', $newFestival);
+    } else {
+      $this->forward404("Couldn't copy the object, contact admin");
+    }
+  }
 
 }
