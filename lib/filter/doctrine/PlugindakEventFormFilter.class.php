@@ -10,22 +10,24 @@
  */
 class PlugindakEventFormFilter extends BasedakEventFormFilter
 {
-  public function configure()
+  public function setup()
   {
+    parent::setup();
+
     if (!($this->getOption('currentUser')) instanceof sfGuardSecurityUser) {
       throw new InvalidArgumentException("You must pass a user object as an option to this form!");
     }
 
-    $arrangerQuery = Doctrine_Core::getTable('arranger')
+    $arrangerQuery = Doctrine_Core::getTable('dakArranger')
       ->createQuery('a')
       ->select('a.*');
-    Doctrine_Core::getTable('arranger')->defaultOrderBy($arrangerQuery);
+    Doctrine_Core::getTable('dakArranger')->defaultOrderBy($arrangerQuery);
 
-    $festivalQuery = Doctrine_Core::getTable('festival')
+    $festivalQuery = Doctrine_Core::getTable('dakFestival')
       ->createQuery('f')
       ->select('f.*')
       ->where('f.startDate >= ? OR f.endDate >= ?', array(date('Y-m-d'), date('Y-m-d')));
-    Doctrine_Core::getTable('festival')->defaultOrderBy($festivalQuery);
+    Doctrine_Core::getTable('dakFestival')->defaultOrderBy($festivalQuery);
 
     if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
       // Widget arranger_is of type sfWidgetFormDoctrineChoice, which supports queries.
@@ -42,6 +44,8 @@ class PlugindakEventFormFilter extends BasedakEventFormFilter
 
     $this->widgetSchema['arranger_id']->setOption('query', $arrangerQuery);
     $this->widgetSchema['festival_id']->setOption('query', $festivalQuery);
+
+    unset($this->widgetSchema['primaryPicture_id'], $this->widgetSchema['pictures_list']);
 
   }
 }
