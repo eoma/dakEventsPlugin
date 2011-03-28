@@ -6,6 +6,10 @@
   display: none;
 }
 
+.noFloat {
+  float: none;
+}
+
 #sf_admin_container ul li.sf_admin_action_new a {
   padding-left: 0;
   background: url(../images/greenbutton.png) right 0px;

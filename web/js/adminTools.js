@@ -5,6 +5,7 @@ $(document).ready(function() {
   // This function is useful for showing or hiding the filter table
   $('#filter_showhide').click(function() {
     $('.sf_admin_filter tbody, .sf_admin_filter tfoot').toggle();
+    $('#sf_admin_bar').toggleClass('noFloat');
   });
 });
 
