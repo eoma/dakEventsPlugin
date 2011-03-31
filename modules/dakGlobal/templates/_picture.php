@@ -9,6 +9,10 @@ $imgOptions = array(
   'alt' => $picture['description'],
 );
 
+if (isset($class)) {
+  $imgOptions['class'] = strval($class);
+}
+
 $imgOptions += ImageHelper::TransformSize($format, $picture['width'], $picture['height']);
 
 $picArgs = array(
