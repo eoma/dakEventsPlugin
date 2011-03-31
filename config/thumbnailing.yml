@@ -5,12 +5,12 @@ all:
         quality: 100
         mime_type: image/jpeg, image/png, image/gif
         transformations:
-          - { adapter: GD, transformation: resize, param: { width: 130, height: 130, proportional: true } }
+          - { adapter: GD, transformation: resize, param: { width: 130, height: 130, inflate: false, proportional: true } }
       primaryPicture:
         quality: 100
         mime_type: image/jpeg, image/png, image/gif
         transformations:
-          - { adapter: GD, transformation: resize, param: { width: 350, height: 200, proportional: true } }
+          - { adapter: GD, transformation: resize, param: { width: 350, height: 200, inflate: false, proportional: true } }
       thumbnail_scale:
         quality: 75
         mime_type: image/jpg, image/png, image/gif

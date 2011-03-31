@@ -46,6 +46,11 @@ class ImageHelper
           $height = $param['height'];
           $width = $param['width'];
         }
+
+        if (isset($param['inflate']) && ($param['inflate'] == false) && ($origWidth < $param['width']) && ($origHeight < $param['height'])) {
+          $height = $origHeight;
+          $width = $origWidth;
+	}
       }
     }
     
