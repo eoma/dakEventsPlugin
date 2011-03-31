@@ -6,6 +6,11 @@ all:
         mime_type: image/jpeg, image/png, image/gif
         transformations:
           - { adapter: GD, transformation: resize, param: { width: 130, height: 130, inflate: false, proportional: true } }
+      listSmall:
+        quality: 90
+        mime_type: image/jpeg, image/png, image/gif
+        transformations:
+          - { adapter: GD, transformation: resize, param: { width: 75, height: 75, inflate: false, proportional: true } }
       primaryPicture:
         quality: 100
         mime_type: image/jpeg, image/png, image/gif
