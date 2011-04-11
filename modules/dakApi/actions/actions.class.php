@@ -414,7 +414,7 @@ class dakApiActions extends sfActions
     }
 
     $dayspan = intval($request->getParameter('dayspan', -1));
-    $noCurrentEvents = intval($request->getParameter('noCurrentEvents', 0));
+    $noCurrentEvents = (bool) $request->getParameter('noCurrentEvents', false);
 
     if ($history == 'past') {
       $this->extraArguments .= '&history=past';
@@ -432,7 +432,7 @@ class dakApiActions extends sfActions
       } else {
         // This specific query will ensure it only picks events that
         // has already happened, if the noCurrentEvents parameter isn't specified
-        if ($noCurrentEvents == 0) {
+        if (!$noCurrentEvents) {
           $q->andWhere('e.endDate < ? OR (e.endDate = ? AND e.endTime < ?)', array(date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
         }
       }
@@ -452,7 +452,7 @@ class dakApiActions extends sfActions
         // This specific query will ensure it only picks events currently
         // happening or will happen
         // has already happened, if the noCurrentEvents parameter isn't specified
-        if ($noCurrentEvents == 0) {
+        if (!$noCurrentEvents) {
           $q->andWhere('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)', array(date('Y-m-d'), date('Y-m-d'), date('Y-m-d'), date('H:i:s')));
         }
       }
@@ -476,8 +476,8 @@ class dakApiActions extends sfActions
     $limit = intval($request->getParameter('limit', 20));
 
     if ($limit > 1000) {
-		$limit = 1000;
-	}
+      $limit = 1000;
+    }
 
     $offset = 0;
     if ($limit > 0) {
