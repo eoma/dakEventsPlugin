@@ -330,7 +330,7 @@ class dakApiActions extends sfActions
         'totalCount' => $totalCount,
         'data' => $festivals,
       );
-	}
+    }
 
     if ($request->getRequestFormat() == 'json') {
       return $this->returnJson($data);
@@ -349,87 +349,7 @@ class dakApiActions extends sfActions
   }
 
   public function executeUpcomingEvents (sfWebRequest $request) {
-    // This action can accept the parameters limit and offset
-
-    $limit = intval($request->getParameter('limit', 20));
-    $offset = 0;
-    if ($limit > 0) {
-      $offset = intval($request->getParameter('offset', 0));
-    }
-
-    $q = Doctrine_Core::getTable('dakEvent')
-      ->createQuery('e');
-    Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
-    // This specific query will ensure it only picks events currently
-    // happening or will happen
-
-    // This query ensures that only upcoming or currently ongoing events will be selected.
-    $q->where('e.startDate >= ? OR e.endDate > ? OR (e.endDate = ? AND e.endTime >= ?)',
-      array(
-        date('Y-m-d'),
-        date('Y-m-d'),
-        date('Y-m-d'),
-        date('H:i:s'),
-      )
-    );
-
-    $dayspan = intval($request->getParameter('dayspan', -1));
-
-    if ($dayspan >= 0) {
-      // Dayspan lets you specify how many days forward it should pick events,
-      // starting from 0 (today)
-      $q->andWhere('e.startDate <= ?', date('Y-m-d', time() + 86400 * $dayspan));
-    }
-
-    $q->andWhere('e.is_public = ?', true)
-      ->limit($limit)
-      ->offset($offset)
-      ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
-
-    $events = $this->prepareEventPictures($q->execute());
-
-    foreach ($events as &$e) {
-      $e['url'] = $this->getUrl($e['id']);
-      $e['ical'] = url_for('@dak_api_ical_actions?action=event&id=' . $e['id'], true);
-      
-      if ($e['festival_id'] > 0) {
-        $e['festival']['url'] = $this->getUrl($e['festival_id'], 'festival');
-      }
-    }
-
-    $totalCount = $q->count();
-    $count = count($events);
-
-    $data = array(
-      'limit' => $limit,
-      'offset' => $offset,
-      'count' => $count,
-      'totalCount' => $totalCount,
-      'data' => $events,
-    );
-
-    if ($request->getRequestFormat() == 'json') {
-      return $this->returnJson($data);
-    } else if ($request->getRequestFormat() == 'ical') {
-      $cal = new myICalendar();
-      
-      foreach ($events as $e) {
-        $cal->createICalEvent($e);
-      }
-
-      $cal->returnCalendar();
-      return sfView::NONE;
-    } else {
-      $this->data = $data;
-      $this->latestUpdate = 0;
-
-      foreach ($events as $e) {
-        $t = strtotime($e['updated_at']);
-        if ($t > $this->latestUpdate) {
-          $this->latestUpdate = $t;
-        }
-      }
-    }
+    return $this->executeFilteredEvents($request);
   }
 
   public function executeFilteredEvents (sfWebRequest $request) {
