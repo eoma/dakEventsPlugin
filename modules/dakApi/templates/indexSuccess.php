@@ -118,12 +118,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
 <p>The actions and related optional parameters</p>
 
 <ul>
-  <li>upcomingEvents
-    <ul>
-      <li>limit</limit>
-      <li>offset</limit>
-      <li>dayspan</li>
-    </ul>
+  <li>upcomingEvents - this function is to be phased out. It will redirect to filteredEvents instead.
   </li>
   <li>filteredEvents
     <ul>
