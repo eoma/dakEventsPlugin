@@ -129,6 +129,7 @@ dakRequirementLightSound:
       local: locationReservation_id
       foreign: id
       foreignType: one
+      foreignAlias: requirementLightSound
       onDelete: CASCADE
 
 dakRequirementPhotography:
@@ -147,6 +148,7 @@ dakRequirementPhotography:
       local: locationReservation_id
       foreign: id
       foreignType: one
+      foreignAlias: requirementPhotography
       onDelete: CASCADE
 
 dakRequirementCatering:
@@ -164,6 +166,7 @@ dakRequirementCatering:
       local: locationReservation_id
       foreign: id
       foreignType: one
+      foreignAlias: requirementCatering
       onDelete: CASCADE
 
 dakLocationAccessory: # This table can be used to list what accomodations/items a location can provide
