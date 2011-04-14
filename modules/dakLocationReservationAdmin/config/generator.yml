@@ -15,6 +15,15 @@ generator:
       actions: ~
       fields:
         statusString: { label: "Status" }
+
+        activateEmbedRequirementLightSound: { label: Make use of light and sound? }
+        embedRequirementLightSound: { label: " " }
+
+        activateEmbedRequirementPhotography: { label: Would you like photography? }
+        embedRequirementPhotography: { label: " " }
+
+        activateEmbedRequirementCatering: { label: Do you need catering? }
+        embedRequirementCatering: { label: " " }
       list:
         sort: [startDate, asc, title, asc]
         max_per_page: 10

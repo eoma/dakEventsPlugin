@@ -30,5 +30,9 @@ class PlugindakRequirementCateringForm extends BasedakRequirementCateringForm
 
     $this->setDefault('servedAtDate', $servedAt['date']);
     $this->setDefault('servedAtTime', $servedAt['time']);
+
+    $this->widgetSchema['numberOfEaters']->setOption('label', 'How many are going to eat?');
+    $this->widgetSchema['servedAtDate']->setOption('label', 'Serve date?');
+    $this->widgetSchema['servedAtTime']->setOption('label', 'Serve time?');
   }
 }

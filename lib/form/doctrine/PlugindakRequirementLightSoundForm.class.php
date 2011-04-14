@@ -36,5 +36,16 @@ class PlugindakrequirementLightSoundForm extends BasedakRequirementLightSoundFor
     $this->setDefault('soundCheckTime', $soundCheck['time']);
     $this->setDefault('getInDate', $getIn['date']);
     $this->setDefault('getInTime', $getIn['time']);
+
+    $this->widgetSchema['externalSoundTech']->setOption('label', 'External sound technician?');
+    $this->widgetSchema['externalLightTech']->setOption('label', 'External light technician?');
+    $this->widgetSchema['externalBackline']->setOption('label', 'External backline?');
+    $this->widgetSchema['is_requiringSmoke']->setOption('label', 'Smoke?');
+    $this->widgetSchema['numberOfCrewMembers']->setOption('label', 'Number of crew members');
+    $this->widgetSchema['numberOfBandMembers']->setOption('label', 'Number of band members');
+    $this->widgetSchema['soundCheckDate']->setOption('label', 'Sound check date');
+    $this->widgetSchema['soundCheckTime']->setOption('label', 'Sound check time');
+    $this->widgetSchema['getInDate']->setOption('label', 'Get in date');
+    $this->widgetSchema['getInTime']->setOption('label', 'Get in time');
   }
 }

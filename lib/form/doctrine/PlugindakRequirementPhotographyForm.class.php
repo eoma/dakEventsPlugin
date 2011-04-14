@@ -31,5 +31,8 @@ class PlugindakRequirementPhotographyForm extends BasedakRequirementPhotographyF
     $this->setDefault('meetAtDate', $meetAt['date']);
     $this->setDefault('meetAtTime', $meetAt['time']);
 
+    $this->widgetSchema['meetAtDate']->setOption('label', 'Meet at date');
+    $this->widgetSchema['meetAtTime']->setOption('label', 'Meet at time');
+
   }
 }
