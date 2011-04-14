@@ -17,7 +17,6 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
   {
     parent::setup();
 
-    $this->removeTimestamps();
     unset( $this['created_at'], $this['updated_at'], $this['user_id'] );
     
     if (!($this->getOption('currentUser')) instanceof sfGuardSecurityUser) {
@@ -32,8 +31,8 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
     $this->setDefault('endDate', date('Y-m-d', time() + 86400));
     $this->setDefault('endTime', '21:00');
 
-    $this->widgetSchema['status'] = new sfWidgetFormSelect( array( 'choices' => locationReservation::getStatusChoices() ));
-    $this->validatorSchema['status'] = new sfValidatorChoice( array( 'choices' => array_keys(locationReservation::getStatusChoices()) ) );
+    $this->widgetSchema['status'] = new sfWidgetFormSelect( array( 'choices' => dakLocationReservation::getStatusChoices() ));
+    $this->validatorSchema['status'] = new sfValidatorChoice( array( 'choices' => array_keys(dakLocationReservation::getStatusChoices()) ) );
 
     if ( ! $this->isNew() )
     {
@@ -58,12 +57,12 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
       if ($this->getObject()->relatedExists('requirementLightSound'))
       {
         $this->addActivateCheckbox('embedRequirementLightSound', true);
-        $this->embedRelation('requirementLightSound as embedRequirementLightSound', 'requirementLightSoundForm', array('options' => $lightSoundOptions));
+        $this->embedRelation('requirementLightSound as embedRequirementLightSound', 'dakRequirementLightSoundForm', array('options' => $lightSoundOptions));
       }
       else
       {
         $this->addActivateCheckbox('embedRequirementLightSound');
-        $requirementLightSoundForm = new requirementLightSoundForm(array(), $lightSoundOptions);
+        $requirementLightSoundForm = new dakRequirementLightSoundForm(array(), $lightSoundOptions);
         $this->embedForm('embedRequirementLightSound', $requirementLightSoundForm);
       }
 
@@ -74,12 +73,12 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
       if ($this->getObject()->relatedExists('requirementPhotography'))
       {
         $this->addActivateCheckbox('embedRequirementPhotography', true);
-        $this->embedRelation('requirementPhotography as embedRequirementPhotography', 'requirementPhotographyForm', array('options' => $photographyOptions));
+        $this->embedRelation('requirementPhotography as embedRequirementPhotography', 'dakRequirementPhotographyForm', array('options' => $photographyOptions));
       }
       else
       {
         $this->addActivateCheckbox('embedRequirementPhotography');
-        $requirementPhotographyForm = new requirementPhotographyForm(array(), $photographyOptions);
+        $requirementPhotographyForm = new dakRequirementPhotographyForm(array(), $photographyOptions);
         $this->embedForm('embedRequirementPhotography', $requirementPhotographyForm);
       }
 
@@ -90,12 +89,12 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
       if ($this->getObject()->relatedExists('requirementCatering'))
       {
         $this->addActivateCheckbox('embedRequirementCatering', true);
-        $this->embedRelation('requirementCatering as embedRequirementCatering', 'requirementCateringForm', array('options' => $cateringOptions));
+        $this->embedRelation('requirementCatering as embedRequirementCatering', 'dakRequirementCateringForm', array('options' => $cateringOptions));
       }
       else
       {
         $this->addActivateCheckbox('embedRequirementCatering');
-        $requirementCateringForm = new requirementCateringForm(array(), $cateringOptions);
+        $requirementCateringForm = new dakRequirementCateringForm(array(), $cateringOptions);
         $this->embedForm('embedRequirementCatering', $requirementCateringForm);
       }
 
@@ -118,9 +117,9 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
   public function doBind ( array $values ) 
   {
     
-    $this->checkIfActivatedRequirement('embedRequirementCatering', 'requirementCatering', $values);
-    $this->checkIfActivatedRequirement('embedRequirementLightSound', 'requirementLightSound', $values);
-    $this->checkIfActivatedRequirement('embedRequirementPhotography', 'requirementPhotography', $values);
+    $this->checkIfActivatedRequirement('embedRequirementCatering', 'dakRequirementCatering', $values);
+    $this->checkIfActivatedRequirement('embedRequirementLightSound', 'dakRequirementLightSound', $values);
+    $this->checkIfActivatedRequirement('embedRequirementPhotography', 'dakRequirementPhotography', $values);
 
     parent::doBind($values);
   }
