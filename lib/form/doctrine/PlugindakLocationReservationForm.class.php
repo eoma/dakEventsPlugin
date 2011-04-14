@@ -104,22 +104,33 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
   
   public function addActivateCheckbox($name, $checked = false)
   {
-    $name = 'activate' . ucfirst($name);
-    $this->widgetSchema[$name] = new sfWidgetFormInputCheckbox();
-    $this->validatorSchema[$name] = new sfValidatorBoolean();
-    
+    $checkboxName = 'activate' . ucfirst($name);
+    $this->widgetSchema[$checkboxName] = new dakWidgetFormInputCheckbox();
+
+    $this->validatorSchema[$checkboxName] = new sfValidatorBoolean();
+
     if ($checked == true)
     {
-      $this->widgetSchema[$name]->setDefault(true);
+      $this->widgetSchema[$checkboxName]->setDefault(true);
     }
+
+    $this->widgetSchema[$checkboxName]->setOption('javascript', '$(document).ready(function() {
+  if ($("input#dak_location_reservation_'. $checkboxName .':not(:checked)").length > 0) {
+    $(".sf_admin_form_field_'. $name .'").hide();
+  }
+  $("#dak_location_reservation_'. $checkboxName .'").click(function(e) {
+    $(".sf_admin_form_field_'. $name .'").toggle();
+  });
+});');
+
   }
   
   public function doBind ( array $values ) 
   {
     
-    $this->checkIfActivatedRequirement('embedRequirementCatering', 'dakRequirementCatering', $values);
-    $this->checkIfActivatedRequirement('embedRequirementLightSound', 'dakRequirementLightSound', $values);
-    $this->checkIfActivatedRequirement('embedRequirementPhotography', 'dakRequirementPhotography', $values);
+    $this->checkIfActivatedRequirement('embedRequirementCatering', 'requirementCatering', $values);
+    $this->checkIfActivatedRequirement('embedRequirementLightSound', 'requirementLightSound', $values);
+    $this->checkIfActivatedRequirement('embedRequirementPhotography', 'requirementPhotography', $values);
 
     parent::doBind($values);
   }
