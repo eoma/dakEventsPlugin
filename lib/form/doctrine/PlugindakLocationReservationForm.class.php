@@ -30,6 +30,11 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
     $this->setDefault('startTime', '19:00');
     $this->setDefault('endDate', date('Y-m-d', time() + 86400));
     $this->setDefault('endTime', '21:00');
+    
+    $this->setWidget('location_id', new sfWidgetFormDoctrineChoiceNestedSet(array(
+      'model'     => 'dakLocation',
+      'add_empty' => true,
+    )));
 
     $this->widgetSchema['status'] = new sfWidgetFormSelect( array( 'choices' => dakLocationReservation::getStatusChoices() ));
     $this->validatorSchema['status'] = new sfValidatorChoice( array( 'choices' => array_keys(dakLocationReservation::getStatusChoices()) ) );
