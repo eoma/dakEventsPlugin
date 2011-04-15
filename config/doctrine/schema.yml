@@ -55,7 +55,7 @@ dakLocationReservation: # This table contains reservations of locations
   actAs: [Timestampable]
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    title: string(255)
+    title: { type: string(255), notnull: true }
     description: string
     location_id: { type: integer, notnull: true }
     accessDate: date # By default it will be set to startDate
