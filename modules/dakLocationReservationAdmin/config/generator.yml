@@ -25,9 +25,10 @@ generator:
         activateEmbedRequirementCatering: { label: Do you need catering? }
         embedRequirementCatering: { label: " " }
       list:
-        sort: [startDate, asc, title, asc]
+        sort: [created_at, desc]
         max_per_page: 10
-        display: [=title, statusString, arranger, location, activatedRequirements, updated_at]
+        display: [=title, statusString, arranger, location, activatedRequirements, created_at, updated_at]
+        table_method: defaultJoins
       filter:  ~
       form:    ~
       edit:    ~
