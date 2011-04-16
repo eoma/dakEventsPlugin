@@ -16,4 +16,75 @@ abstract class PlugindakLocationReservationTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('dakLocationReservation');
     }
+
+    public function defaultJoins(Doctrine_Query $q)
+    {
+        $rootAlias = $q->getRootAlias();
+
+        $q->leftJoin($rootAlias . '.location l')
+          ->leftJoin($rootAlias . '.arranger a')
+          ->leftJoin($rootAlias . '.requirementLightSound rls')
+          ->leftJoin($rootAlias . '.requirementPhotography rp')
+          ->leftJoin($rootAlias . '.requirementCatering rc');
+
+        return $q;
+    }
+
+    public function defaultSelect(Doctrine_Query $q) {
+        //This function assumes you've used eventTable::defaultJoins
+
+        $rootAlias = $q->getRootAlias();
+
+        $q->select( $rootAlias . '.*, l.name, a.name');
+
+        return $q;
+    }
+
+    public function defaultOrderBy(Doctrine_Query $q, $order = 'asc')
+    {
+        $rootAlias = $q->getRootAlias();
+
+        if ( !in_array($order, array('asc', 'desc')) ) {
+            $order = 'asc';
+        }
+
+        $q->orderBy($rootAlias . '.startDate ' . $order . ', ' .
+                    $rootAlias . '.startTime ' . $order . ', ' .
+                    $rootAlias . '.title ' . $order);
+
+        return $q;
+    }
+
+    public function defaultRequirements (Doctrine_Query $q) {
+        $rootAlias = $q->getRootAlias();
+
+        $q->where($rootAlias . '.startDate >= ? OR ' . $rootAlias . '.endDate >= ?', 
+                  array(date('Y-m-d'), date('Y-m-d')));
+
+        return $q;
+    }
+
+    public function defaultJoinsAndRequirements (Doctrine_Query $q) {
+        $q = $this->defaultJoins($q);
+        $q = $this->defaultRequirements($q);
+
+        return $q;
+    }
+
+    public function defaultQueryOptions(Doctrine_Query $q, $order = 'asc')
+    {
+        $q = $this->defaultJoins($q);
+        $q = $this->defaultSelect($q);
+        $q = $this->defaultOrderBy($q, $order);
+
+        return $q;
+    }
+
+    public function defaultQueryOptionsAndRequirements(Doctrine_Query $q, $order = 'asc')
+    {
+        $q = $this->defaultQueryOptions($q, $order);
+        $q = $this->defaultRequirements($q);
+
+        return $q;
+    }
 }
