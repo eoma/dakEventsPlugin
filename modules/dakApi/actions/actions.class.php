@@ -357,6 +357,10 @@ class dakApiActions extends sfActions
     // location_id, arranger_id, category_id, festival_id,
     // startDate, endDate, history, limit, offset
 
+    // The internal $noMatch parameter is to be used when subqueries
+    // found no match
+    $noMatch = false;
+
     $history = $request->getParameter('history', 'future');
     // The history parameter is only good for getting mostly past events
     // without specifying a date and getting it sorted from the most recent
@@ -389,6 +393,51 @@ class dakApiActions extends sfActions
       $this->extraArguments .= '&location_id=' . $request->getParameter('location_id');
       $location_id = explode(',', $request->getParameter('location_id'));
       $location_id = array_map(create_function('$value', 'return (int)$value;'), $location_id);
+      //$q->andWhereIn('e.location_id', $location_id);
+    }
+
+    if (!$noMatch && $request->hasParameter('master_location_id')) {
+      $this->extraArguments .= '&master_location_id=' . $request->getParameter('master_location_id');
+      $master_location_id = explode(',', $request->getParameter('master_location_id'));
+      $master_location_id = array_map(create_function('$value', 'return (int)$value;'), $master_location_id);
+
+      $mLocs = Doctrine_Core::getTable('dakLocation')
+             ->createQuery('l')
+             ->select('l.id, l.lft, l.rgt, l.root_id')
+             ->whereIn('l.id', $master_location_id)
+             ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
+             ->execute();
+
+      // alt 1 - a straightforward, but more cumputationally
+      // exhausting procedure, requires 1 extra query
+
+      if (empty($mLocs)) {
+        $noMatch = true;
+      } else {
+        $loc_q = Doctrine_Core::getTable('dakLocation')
+              ->createQuery('l')
+              ->select('l.id');
+
+        foreach ($mLocs as $m) {
+          $loc_q->orWhere('(l.root_id = ? AND l.lft >= ? AND l.rgt <= ?)', array($m['root_id'], $m['lft'], $m['rgt']));
+        }
+
+        $locs = $loc_q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
+                       ->execute();
+
+        if (!isset($location_id)) $location_id = array();
+
+        foreach ($locs as $l) {
+          $location_id[] = $l['id'];
+        }
+      }
+
+      // alt 2
+
+      //$q->andWhereIn('e.location_id', $location_id);
+    }
+
+    if (!empty($location_id) && !$noMatch && ($request->hasParameter('location_id') || $request->hasParameter('master_location_id'))) {
       $q->andWhereIn('e.location_id', $location_id);
     }
     
@@ -488,8 +537,13 @@ class dakApiActions extends sfActions
 
     $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-    $eventIdsResult = $q->execute();
-    $totalCount = $q->count();
+    if (!$noMatch) {
+      $eventIdsResult = $q->execute();
+      $totalCount = $q->count();
+    } else {
+      $eventIdsResult = array();
+      $totalCount = 0;
+    }
 
     if (count($eventIdsResult) > 0) {
       $eventIds = array();
