@@ -5,6 +5,7 @@
 <div class="articleMenu">
   <ul>
     <li><a href="#howtoQuery">How to make a query</a></li>
+    <li><a href="#aNoteOnLocations">A note on locations</a></li>
     <li><a href="#responseFormat">Response format</a></li>
     <li><a href="#externalPlugins">External plugins</a>
       <ul>
@@ -123,6 +124,10 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
   <li>filteredEvents
     <ul>
       <li>location_id (comma seperated values (csv))</li>
+      <li>
+        <span>master_location_id (csv)</span>
+        <p>This parameter will select this location and all locations having the specified location as ancestor.</p>
+      </li>
       <li>arranger_id (csv)</li>
       <li>category_id (csv)</li>
       <li>festival_id (csv)</li>
@@ -139,6 +144,17 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
 </ul>
 
 <p>These two are probably the one you'll use the most. <tt>upcomingEvents</tt> is the same as <tt>filteredEvents</tt> without any arguments-</p>
+
+<h2 id="aNoteOnLocations">A note on locations</h2>
+
+<p>
+The socalled "commonLocation" variable you will see in <a href="responseFormat">Response format</a> is structured in a hierarchy of a multi root nested set tree (see <a href="http://en.wikipedia.org/wiki/Nested_set_model">Nested set model</a>).
+</p>
+
+<p>
+When you query for a list of locations each location will contain the variables lft, rgt, level and root_id. 
+These variables can be uxed to construct trees.
+</p>
 
 <h2 id="responseFormat">Response format</h2>
 
