@@ -4,7 +4,25 @@
 
 <div class="articleMenu">
   <ul>
-    <li><a href="#howtoQuery">How to make a query</a></li>
+    <li><a href="#howtoQuery">How to make a query</a>
+      <ul>
+        <li><a href="#ordinaryQueries">Ordinary queries</a>
+          <ul>
+            <li><a href="#arranger">Arranger</a></li>
+            <li><a href="#location">Location</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><a href="#event">Event</a></li>
+            <li><a href="#festival">Festival</a></li>
+          </ul>
+        </li>
+        <li><a href="#filterQueries">Filter queries</a> (this is the one you'll probably most interested in)
+          <ul>
+            <li><a href="#upcomingEvents">Upcoming events</a></li>
+            <li><a href="#filteredEvents">Filtered events</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
     <li><a href="#aNoteOnLocations">A note on locations</a></li>
     <li><a href="#responseFormat">Response format</a></li>
     <li><a href="#externalPlugins">External plugins</a>
@@ -27,6 +45,8 @@ or all three. It can also create output iCalendar-supported calendars and events
 
 <h2 id="howtoQuery">How to make a query</h2>
 
+<h3 id="ordinaryQueries">Ordinary queries</h3>
+
 <p>You can query for action, subaction and possible parameters with the format:</p>
 
 <code>
@@ -36,7 +56,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
 <p>(replace <tt>http://eventserver</tt> with eg. <tt><?php echo public_path('', true) ?></tt>). This format is valid for the following actions:</p>
 
 <ul>
-  <li>arranger (action)
+  <li id="arranger">arranger (action)
     <ul>
       <li>get (subaction)
         <ul>
@@ -51,7 +71,28 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
       </li>
     </ul>
   </li>
-  <li>location
+  <li id="location">location
+    <ul>
+      <li>get
+        <ul>
+          <li>id (req.)</li>
+        </ul>
+      </li>
+      <li>list
+        <ul>
+          <li>limit</li>
+          <li>offset</li>
+          <li>master_id (integer, will select all locations that has master_id as ancestor)</li>
+          <li>levelDepth (integer)
+           <p>levelDepth can only be used together with master_id. Use this to restrict the number of levels below master_id to fetch. If, f.ex., you onlt want to fetch the child locations of master_id, set levelDepth=1, if you want to fetch both children and grandchildren of master_id set levelDepth=2</p>
+          </li>
+          <li>onlyRoots (bool)
+            <p>onlyRoots=1 will only fetch the roots of the location hierarchy. It is useful if you want to build trees and don't want to fetch the whole tree at once, only parts of it when needed. It is to be used as the basis for the trees.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li id="category">category
     <ul>
       <li>get
         <ul>
@@ -66,22 +107,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
       </li>
     </ul>
   </li>
-  <li>category
-    <ul>
-      <li>get
-        <ul>
-          <li>id (req.)</li>
-        </ul>
-      </li>
-      <li>list
-        <ul>
-          <li>limit</li>
-          <li>offset</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>event
+  <li id="event">event
     <ul>
       <li>get
         <ul>
@@ -90,7 +116,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
       </li>
     </ul>
   </li>
-  <li>festival
+  <li id="festival">festival
     <ul>
       <li>get
         <ul>
@@ -111,6 +137,8 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
   </li>
 </ul>
 
+<h3 id="filterQueries">Filter queries</h3>
+
 <p>In addition there are two special actions, they don't have any subactions, only parameters. The query must have the format</p>
 <code>
 http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;param2=value2&amp;...
@@ -119,26 +147,28 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
 <p>The actions and related optional parameters</p>
 
 <ul>
-  <li>upcomingEvents - this function is to be phased out. It will redirect to filteredEvents instead.
+  <li id="upcomingEvents">upcomingEvents - this action is to be phased out. It will redirect to filteredEvents instead as that action is superior and works in the same way as upcomingEvents.
   </li>
-  <li>filteredEvents
+  <li id="filteredEvents">filteredEvents
     <ul>
       <li>location_id (comma seperated values (csv))</li>
       <li>
         <span>master_location_id (csv)</span>
-        <p>This parameter will select this location and all locations having the specified location as ancestor.</p>
+        <p>This parameter will select this location (master_location_id) and all locations having the specified location as ancestor.</p>
       </li>
       <li>arranger_id (csv)</li>
       <li>category_id (csv)</li>
       <li>festival_id (csv)</li>
       <li>event_id (csv)</li>
-      <li>history (past or future, future is default)</li>
+      <li>history (past or future events, future is default)</li>
       <li>startDate (yyyy-mm-dd format, current date is default if history=future)</li>
       <li>endDate (yyyy-mm-dd format, current date is default if history=past)</li>
       <li>limit (1000 is max)</li>
       <li>offset</li>
-      <li>dayspan</li>
-      <li>noCurrentEvents (1 for true, 0 for false, 0 is default)</li>
+      <li>dayspan (maximum days forward to fetch events for)</li>
+      <li>noCurrentEvents (bool, 1 for true, 0 for false, 0 is default)
+        <p>Useful for spiders wishing to get all public events ever created in a chronological order.</p>
+      </li>
     </ul>
   </li>
 </ul>
@@ -153,7 +183,7 @@ The socalled "commonLocation" variable you will see in <a href="responseFormat">
 
 <p>
 When you query for a list of locations each location will contain the variables lft, rgt, level and root_id. 
-These variables can be uxed to construct trees.
+These variables can be used to construct trees.
 </p>
 
 <h2 id="responseFormat">Response format</h2>
