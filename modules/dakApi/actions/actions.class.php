@@ -142,10 +142,33 @@ class dakApiActions extends sfActions
         $offset = intval($request->getParameter('offset', 0));
       }
 
-      $q->select('l.name, l.id')
+      $q->select('l.name, l.id, l.lft, l.rgt, l.level, l.root_id')
         ->limit($limit)
         ->offset($offset);
-    
+
+      if ($request->hasParameter('master_id')) {
+        $mLoc = Doctrine_Core::getTable('dakLocation')
+              ->createQuery('l')
+              ->select('l.id, l.lft, l.rgt, l.root_id, l.level')
+              ->where('l.id = ?', (int) $request->getParameter('master_id'))
+              ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
+              ->fetchOne();
+
+        $dql = 'l.lft > ? AND l.rgt < ? AND l.root_id = ?';
+        $dqlArgs = array($mLoc['lft'], $mLoc['rgt'], $mLoc['root_id']);
+
+        if ($request->hasParameter('levelDepth')) {
+          $dql .= ' AND l.level <= ?';
+          $dqlArgs[] = $mLoc['level'] + (int) $request->getParameter('levelDepth');
+        }
+
+        $q->andWhere($dql, $dqlArgs);
+      }
+
+      if ($request->hasParameter('onlyRoots') && ($request->getParameter('onlyRoots') == 1)) {
+        $q->where('l.id = l.root_id');
+      }
+
       $dbResponse = $q->execute();
     }
 
