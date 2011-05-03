@@ -39,7 +39,22 @@ abstract class PlugindakEventTable extends Doctrine_Table
         $q->select( $rootAlias . '.*, l.name, a.name, c.name, '
                     . ' f.title, f.startDate, f.startTime, '
                     . 'pp.filename, pp.description, pp.width, pp.height, pp.mime_type, '
-		    . 'p.filename, p.description, p.width, p.height, p.mime_type');
+                    . 'p.filename, p.description, p.width, p.height, p.mime_type');
+
+        return $q;
+    }
+    
+    public function defaultSummarySelect(Doctrine_Query $q) {
+        //This function assumes you've used eventTable::defaultJoins
+
+        $q->select( 'title, leadParagraph, startDate, startTime, '
+                    . 'endDate, endTime, is_accepted, is_public, '
+                    . 'customLocation, location_id, arranger_id, '
+                    . 'festival_id, primaryPicture_id, covercharge, '
+                    . 'updated_at, created_at, '
+                    . 'l.name, a.name, c.name, '
+                    . 'f.title, f.startDate, f.startTime, '
+                    . 'pp.filename, pp.description, pp.width, pp.height, pp.mime_type');
 
         return $q;
     }
