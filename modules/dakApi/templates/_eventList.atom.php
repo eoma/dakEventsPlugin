@@ -38,9 +38,11 @@
 	  </p>
 	  <?php endif ?>
 
+          <?php if (isset($e['leadParagraph'])): ?>
           <p class="description">
             <?php echo $e->getRaw('leadParagraph') ?>
           </p>
+          <?php endif ?>
           
           <p>
             <small><a href="<?php echo $e['ical'] ?>"><?php echo __('Add event to your calendar (iCalendar format)') ?></a></small>

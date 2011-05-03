@@ -575,10 +575,19 @@ class dakApiActions extends sfActions
       }
 
       $q = Doctrine_Core::getTable('dakEvent')->createQuery('e');
-      if ($history == 'past') {
-        Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q, 'desc');
+      
+      // The onlySummaries query parameter will not pull description and pictures
+      // which can save you some unnecessary traffic.
+      $onlySummaries = (bool) $request->getParameter('onlySummaries', false);
+      
+      $sort = ($history == 'past') ? 'desc' : 'asc';
+      
+      if ($onlySummaries) {
+        Doctrine_Core::getTable('dakEvent')->defaultJoins($q);
+        Doctrine_Core::getTable('dakEvent')->defaultSummarySelect($q);
+        Doctrine_Core::getTable('dakEvent')->defaultOrderBy($q, $sort);
       } else {
-        Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q);
+        Doctrine_Core::getTable('dakEvent')->defaultQueryOptions($q, $sort);
       }
 
       $q->whereIn('e.id', $eventIds);

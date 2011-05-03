@@ -6,8 +6,12 @@
     <title><?php echo $event['title'] ?></title>
     <url><?php echo $event['url'] ?></url>
     <ical><?php echo $event['ical'] ?></ical>
+    <?php if (isset($event['leadParagraph'])): ?>
     <leadParagraph><?php echo $event['leadParagraph'] ?></leadParagraph>
+    <?php endif ?>
+    <?php if (isset($event['description'])): ?>
     <description><?php echo $event['description'] ?></description>
+    <?php endif ?>
     <startDate><?php echo $event['startDate'] ?></startDate>
     <startTime><?php echo $event['startTime'] ?></startTime>
     <endDate><?php echo $event['endDate'] ?></endDate>
@@ -59,7 +63,7 @@
       </thumb>
     </primaryPicture>
     <?php endif ?>
-    <?php if (count($event['pictures']) > 0): ?>
+    <?php if (!empty($event['pictures'])): ?>
     <pictures>
       <?php foreach ($event['pictures'] as $p): ?>
       <picture>
