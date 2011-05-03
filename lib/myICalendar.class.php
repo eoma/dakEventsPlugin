@@ -1,5 +1,7 @@
 <?php
 
+require_once(sfConfig::get('sf_lib_dir') . '/vendor/iCalcreator/iCalcreator.class.php');
+
 /**
  * Specialized class for creating standardized iCalendar events and collections
  */
