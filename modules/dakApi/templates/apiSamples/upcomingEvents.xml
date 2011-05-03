@@ -33,6 +33,31 @@
         </commonLocation>
       </event>
       <event>
+        <id>8</id>
+        <title>Some event</title>
+        <leadParagraph>Some event text</leadParagraph>
+        <startDate>2011-01-20</startDate>
+        <startTime>22:00:00</startTime>
+        <endDate>2011-01-21</endDate>
+        <endTime>02:00:00</endTime>
+        <createdAt>2011-01-10 14:25:27</createdAt>
+        <updatedAt>2011-01-10 16:07:34</updatedAt>
+        <categories>
+          <category>
+            <id>1</id>
+            <name>Konsert</name>
+          </category>
+        </categories>
+        <arranger>
+          <id>2</id>
+          <name>RF</name>
+        </arranger>
+        <commonLocation>
+          <id>2</id>
+          <name>Teglverket</name>
+        </commonLocation>
+      </event>
+      <event>
         <id>9</id>
         <title>Optical Substance</title>
         <leadParagraph></leadParagraph>

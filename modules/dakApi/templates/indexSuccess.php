@@ -169,6 +169,9 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>noCurrentEvents (bool, 1 for true, 0 for false, 0 is default)
         <p>Useful for spiders wishing to get all public events ever created in a chronological order.</p>
       </li>
+      <li>onlySummaries (bool, 1 for true, 0 for false, 0 is default)
+        <p>Useful when constructing large lists and you don't want potentially large description fields.</p>
+      </li>
     </ul>
   </li>
 </ul>

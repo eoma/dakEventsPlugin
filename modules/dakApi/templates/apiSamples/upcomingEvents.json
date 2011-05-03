@@ -6,7 +6,8 @@
     "data": [
         {
             "id": "6",
-            "ical": http://eventserver/api/ical/event/get/id/6,
+            "url": "http://eventserver/en/event/6",
+            "ical": "http://eventserver/api/ical/event/get/id/6",
             "title": "Storm Weather Shanty Choir",
             "leadParagraph": "Storm Weather Shanty Choir",
             "description": "",
@@ -45,8 +46,45 @@
             "covercharge": null
         },
         {
+            "id": "8",
+            "url": "http://eventserver/en/event/8",
+            "ical": "http://eventserver/api/ical/event/get/id/8",
+            "title": "Some event",
+            "leadParagraph": "Some event text",
+            "startDate": "2011-01-20",
+            "startTime": "22:00:00",
+            "endDate": "2011-01-21",
+            "endTime": "02:00:00",
+            "is_accepted": true,
+            "is_public": true,
+            "customLocation": "",
+            "location_id": "2",
+            "arranger_id": "2",
+            "festival_id": null,
+            "created_at": "2011-01-10 14:25:27",
+            "updated_at": "2011-01-10 16:07:34",
+            "commonLocation": {
+                "id": "2",
+                "name": "Teglverket"
+            },
+            "arranger": {
+                "id": "2",
+                "name": "RF"
+            },
+            "categories": [
+                {
+                    "id": "1",
+                    "name": "Konsert"
+                }
+            ],
+            "festival": null,
+            "primaryPicture": null,
+            "covercharge": null
+        },
+        {
             "id": "9",
-            "ical": http://eventserver/api/ical/event/get/id/9,
+            "url": "http://eventserver/en/event/9",
+            "ical": "http://eventserver/api/ical/event/get/id/9",
             "title": "Optical Substance",
             "leadParagraph": "",
             "description": "",
