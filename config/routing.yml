@@ -107,13 +107,14 @@ dak_location_show:
 
 dak_thumb:
   class: sfImageTransformRoute
-  url:   /thumbs/:type/:path/:format/:id.:sf_format
-  param: { module: sfImageTransformator, action: index, attribute: filename}
+  #url:   /thumbs/:type/:path/:format/:id.:sf_format
+  url:   /thumbs/:type/:path/:format/:id.jpeg
+  param: { module: sfImageTransformator, action: index, attribute: filename, sf_format: jpeg }
   requirements:
     format:    '[\w_-]+'
     path:      '[\w/]+'
     id:        '\d+(?:,\d+)?'
-    sf_format: 'gif|png|jpg|jpeg'
+    #sf_format: 'png|jpeg'
     sf_method: [ get ]
   options:
     image_source: Doctrine # or Propel

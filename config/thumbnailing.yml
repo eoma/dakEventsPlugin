@@ -2,27 +2,27 @@ all:
   .settings:
     formats:
       list:
-        quality: 100
-        mime_type: image/jpeg, image/png, image/gif
+        quality: 95
+        mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: resize, param: { width: 130, height: 130, inflate: false, proportional: true } }
       listSmall:
-        quality: 90
-        mime_type: image/jpeg, image/png, image/gif
+        quality: 95
+        mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: resize, param: { width: 75, height: 75, inflate: false, proportional: true } }
       primaryPicture:
-        quality: 100
-        mime_type: image/jpeg, image/png, image/gif
+        quality: 95
+        mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: resize, param: { width: 350, height: 200, inflate: false, proportional: true } }
       thumbnail_scale:
         quality: 75
-        mime_type: image/jpg, image/png, image/gif
+        mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: thumbnail, param: { width: 80, height: 80, method: scale}}
       thumbnail_fit:
         quality: 75
-        mime_type: image/jpg, image/png, image/gif
+        mime_type: image/jpeg
         transformations:
           - { adapter: GD, transformation: thumbnail, param: { width: 80, height: 80, method: fit}}
