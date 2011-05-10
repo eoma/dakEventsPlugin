@@ -21,9 +21,11 @@ $picArgs = array(
   'id' => $picture['id'],
 );
 
+$imageFormats = ImageHelper::FormatList();
+
 $extension = substr($picture['mime_type'], 6);
 
-if (in_array($extension, array('png', 'gif', 'jpg', 'jpeg'))) {
+if (in_array($picture['mime_type'], $imageFormats[$format]['mime_type'])) {
   $picArgs['sf_format'] = $extension;
 }
 

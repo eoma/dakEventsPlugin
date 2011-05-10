@@ -88,6 +88,7 @@ class ImageHelper
       $tmp = array(
         'height' => $param['height'],
         'width' => $param['width'],
+        'mime_type' => explode(', ', $data['mime_type']),
       );
 
       $list[$format] = $tmp;
