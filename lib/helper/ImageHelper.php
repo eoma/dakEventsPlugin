@@ -56,4 +56,43 @@ class ImageHelper
     
     return array('height' => $height, 'width' => $width);
   }
+
+  /**
+   * Returns an associative array of transform formats
+   * and their final resulting image size limits
+   *
+   * @return array
+   */
+  public static function FormatList () {
+    if (empty(self::$formats)) {
+      // This will fetch all defined thumbnailing formats defined in
+      // various projects', plugins' and applications' thumbnailing.yml for
+      // sfImageTransformExtraPlugin.
+      self::$formats = sfConfig::get('thumbnailing_formats');
+    }
+
+    $list = array();
+
+    foreach (self::$formats as $format => $data) {
+
+      if (!isset($data['transformations'][0]['param'])) {
+        continue;
+      }
+
+      $param = $data['transformations'][0]['param'];
+
+      if (!isset($param['height']) || !isset($param['width'])) {
+        continue;
+      }
+
+      $tmp = array(
+        'height' => $param['height'],
+        'width' => $param['width'],
+      );
+
+      $list[$format] = $tmp;
+    }
+
+    return $list;
+  }
 }
