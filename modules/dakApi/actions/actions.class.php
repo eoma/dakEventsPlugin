@@ -10,6 +10,11 @@
  */
 class dakApiActions extends sfActions
 {
+
+ public function preExecute () {
+    $this->getContext()->getConfiguration()->loadHelpers('Url', 'Image');
+ }
+
  /**
   * Executes index action
   *
@@ -205,8 +210,14 @@ class dakApiActions extends sfActions
         ->limit($limit)
         ->offset($offset)
         ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
-	
-      $event = $this->prepareEventPictures($q->execute());
+
+      $pictureFormat = $request->getParameter('pictureFormat', 'primaryPicture');
+      if ( !array_key_exists($pictureFormat, ImageHelper::FormatList()) ) {
+        $pictureFormat = 'primaryPicture';
+      }
+
+      $event = $this->prepareEventPictures($q->execute(), $pictureFormat);
+
       $event[0]['url'] = $this->getUrl($event[0]['id']);
       $event[0]['ical'] = url_for('@dak_api_ical_actions?action=event&id=' . $event[0]['id'], true);
       if ($event[0]['festival_id'] > 0) {
@@ -593,7 +604,12 @@ class dakApiActions extends sfActions
       $q->whereIn('e.id', $eventIds);
       $q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
-      $events = $this->prepareEventPictures($q->execute());
+      $pictureFormat = $request->getParameter('pictureFormat', 'primaryPicture');
+      if ( !array_key_exists($pictureFormat, ImageHelper::FormatList()) ) {
+        $pictureFormat = 'primaryPicture';
+      }
+
+      $events = $this->prepareEventPictures($q->execute(), $pictureFormat);
  
       foreach ($events as &$e) {
         $e['url'] = $this->getUrl($e['id']);
@@ -642,13 +658,12 @@ class dakApiActions extends sfActions
     }
   }
 
-  protected function prepareEventPictures ($events) {
+  protected function prepareEventPictures ($events, $format = 'primaryPicture') {
     $transformRouteArgs = array(
-      'format' => 'primaryPicture',
+      'format' => strval($format),
       'type' => 'dakPicture',
     );
 
-    $this->getContext()->getConfiguration()->loadHelpers('Url', 'Image');
     foreach ($events as &$e) {
       if (!empty($e['primaryPicture']['id'])) {
         $e['primaryPicture']['url'] = public_path('uploads/dakpicture', true) . '/' . $e['primaryPicture']['filename'];
@@ -708,7 +723,6 @@ class dakApiActions extends sfActions
    * @return string url
    */
   protected function getUrl($id, $type = 'event') {
-    $this->getContext()->getConfiguration()->loadHelpers('Url');
     return url_for('@dak_' . $type . '_show?id=' . $id, true);
   }
 
