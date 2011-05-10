@@ -1,3 +1,5 @@
+<?php use_helper('Image') ?>
+
 <?php include_partial('dakGlobal/assets') ?>
 <?php slot('title', __('API documentation')) ?>
 <h1>API documentation</h1>
@@ -24,6 +26,7 @@
       </ul>
     </li>
     <li><a href="#aNoteOnLocations">A note on locations</a></li>
+    <li><a href="#pictureFormats">Picture formats</a></li>
     <li><a href="#responseFormat">Response format</a></li>
     <li><a href="#externalPlugins">External plugins</a>
       <ul>
@@ -112,6 +115,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
       <li>get
         <ul>
           <li>id (req.)</li>
+          <li>pictureFormat (string, see <a href="#pictureFormats">picture formats</a>, only relevant for event <tt>primaryPicture</tt> and <tt>pictures</tt> variables)</li>
         </ul>
       </li>
     </ul>
@@ -172,6 +176,7 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>onlySummaries (bool, 1 for true, 0 for false, 0 is default)
         <p>Useful when constructing large lists and you don't want potentially large description fields.</p>
       </li>
+      <li>pictureFormat (string, see <a href="#pictureFormats">picture formats</a>, only relevant for event <tt>primaryPicture</tt> and <tt>pictures</tt> variables)</li>
     </ul>
   </li>
 </ul>
@@ -188,6 +193,19 @@ The socalled "commonLocation" variable you will see in <a href="responseFormat">
 When you query for a list of locations each location will contain the variables lft, rgt, level and root_id. 
 These variables can be used to construct trees.
 </p>
+
+<h2 id="pictureFormats">Picture formats</h2>
+
+These are allowed picture formats to request from the api.
+
+<ul>
+<?php foreach (ImageHelper::FormatList() as $n => $f): ?>
+  <li><?php echo $n ?><br />
+    Max width: <?php echo $f['width'] ?><br />
+    Max height: <?php echo $f['height'] ?>
+  </li>
+<?php endforeach ?>
+</ul>
 
 <h2 id="responseFormat">Response format</h2>
 
