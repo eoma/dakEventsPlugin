@@ -3,8 +3,8 @@
 
 # default values
 all:
-  max_events_on_page: 10
-  max_arrangers_on_page: 10
-  max_categories_on_page: 10
-  max_locations_on_page: 10
+  max_events_on_page: 15
+  max_arrangers_on_page: 50
+  max_categories_on_page: 30
+  max_locations_on_page: 20
   max_festivals_on_page: 10
