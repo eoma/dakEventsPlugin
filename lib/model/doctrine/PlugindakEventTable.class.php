@@ -107,6 +107,13 @@ abstract class PlugindakEventTable extends Doctrine_Table
         return $q;
     }
 
+	/**
+	 * Will return an initial Doctrine_Query instance configured to return
+	 * event frequencies per month. It can be used in further queries, eg. combine
+	 * arranger ids, location ids, etc.
+	 *
+	 * @return object Doctrine_Query
+	 */
 	public function getNumberOfEventsPerMonth () {
 		$driver = strtolower(Doctrine_Manager::connection()->getDriverName());
 
@@ -120,8 +127,8 @@ abstract class PlugindakEventTable extends Doctrine_Table
 		}
 
 		$q->groupBy('yearmonth');
-		$q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+		$q->orderBy('yearmonth asc');
 
-		return $q->execute();
+		return $q;
 	}
 }
