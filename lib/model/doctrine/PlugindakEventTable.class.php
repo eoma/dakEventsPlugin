@@ -106,4 +106,22 @@ abstract class PlugindakEventTable extends Doctrine_Table
 
         return $q;
     }
+
+	public function getNumberOfEventsPerMonth () {
+		$driver = strtolower(Doctrine_Manager::connection()->getDriverName());
+
+		$q = $this->createQuery('e');
+		$q->select('COUNT(e.id) as num');
+
+		if ($driver == 'sqlite') {
+			$q->addSelect("strftime('%Y%m', e.startdate) as yearmonth");
+		} else {
+			$q->addSelect("EXTRACT(YEAR_MONTH FROM e.startdate) as yearmonth");
+		}
+
+		$q->groupBy('yearmonth');
+		$q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+
+		return $q->execute();
+	}
 }
