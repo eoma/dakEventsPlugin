@@ -75,7 +75,7 @@ if (isset($inAdmin) && ($inAdmin == true)) {
   <?php include_partial('dakEvent/listShortDescription', array('events' => $pager->getResults(), 'inAdmin' => $inAdmin)) ?>
 
   <?php if ($pager->haveToPaginate()): ?>
-    <?php include_partial('global/pager', array('route' => $rp['festival'] . '_show?id=' . $festival['id'], 'pager' => $pager, 'inAdmin' => $inAdmin)) ?>
+    <?php include_partial('dakGlobal/pager', array('route' => $rp['festival'] . '_show?id=' . $festival['id'], 'pager' => $pager, 'inAdmin' => $inAdmin)) ?>
   <?php endif ?>
 </div>
 
