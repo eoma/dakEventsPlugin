@@ -17,10 +17,11 @@
             <li><a href="#festival">Festival</a></li>
           </ul>
         </li>
-        <li><a href="#filterQueries">Filter queries</a> (this is the one you'll probably most interested in)
+        <li><a href="#filterQueries">Filter queries and history</a> (this is the one you'll probably most interested in)
           <ul>
             <li><a href="#upcomingEvents">Upcoming events</a></li>
             <li><a href="#filteredEvents">Filtered events</a></li>
+            <li><a href="#historyList">History list</a></li>
           </ul>
         </li>
       </ul>
@@ -141,9 +142,9 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;/&lt;subaction&gt;?p
   </li>
 </ul>
 
-<h3 id="filterQueries">Filter queries</h3>
+<h3 id="filterQueries">Filter queries and history</h3>
 
-<p>In addition there are two special actions, they don't have any subactions, only parameters. The query must have the format</p>
+<p>In addition there are three special actions, they don't have any subactions, only parameters. The query must have the format</p>
 <code>
 http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;param2=value2&amp;...
 </code>
@@ -179,9 +180,33 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
       <li>pictureFormat (string, see <a href="#pictureFormats">picture formats</a>, only relevant for event <tt>primaryPicture</tt> and <tt>pictures</tt> variables)</li>
     </ul>
   </li>
+  <li id="historyList">historyList
+    <p>
+      You'll want to use this if you want to construct an overview page of all events
+      grouped after month. Also useful for statistical purposes.
+    </p>
+
+    <p>
+      Each element in the response will contain the variable <tt>yearmonth</tt> and the variable <tt>num</tt>.
+      <tt>yearmonth</tt> is a string formatted as YYYYMM, where YYYY is the year and MM is the month.
+    </p>
+
+    <span>
+     <tt>historyList</tt> accepts the following parameters:
+    </span>
+    <ul>
+      <li>location_id (comma seperated values (csv))</li>
+      <li>
+        <span>master_location_id (csv)</span>
+        <p>This parameter will select this location (master_location_id) and all locations having the specified location as ancestor.</p>
+      </li>
+      <li>arranger_id (csv)</li>
+      <li>category_id (csv)</li>
+    </ul>
+  </li>
 </ul>
 
-<p>These two are probably the one you'll use the most. <tt>upcomingEvents</tt> is the same as <tt>filteredEvents</tt> without any arguments-</p>
+<p>The two actions upcomingEvents and filteredEvents are probably the one you'll use the most. <tt>upcomingEvents</tt> is the same as <tt>filteredEvents</tt> without any arguments-</p>
 
 <h2 id="aNoteOnLocations">A note on locations</h2>
 
