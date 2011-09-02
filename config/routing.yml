@@ -24,6 +24,12 @@ dak_api_filteredEvents:
   requirements:
     sf_format: (?:json|xml|atom|ical)
 
+dak_api_historyList:
+  url: /api/:sf_format/historylist/*
+  param: { module: dakApi, action: historyList, sf_format: json }
+  requirements:
+    sf_format: (?:json|xml)
+
 dak_api_ical_actions:
   url: /api/ical/:action/get/*
   param: { module: dakApi, sf_format: ical, subaction: get }

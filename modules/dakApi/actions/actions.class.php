@@ -658,6 +658,117 @@ class dakApiActions extends sfActions
     }
   }
 
+  public function executeHistoryList (sfWebRequest $request) {
+    $q = Doctrine_Core::getTable('dakEvent')->getNumberOfEventsPerMonth()
+      ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+
+    // $noMatch are used for subqueries. If a subquery returns an empty set, $noMatch is set
+    // to true.
+    $noMatch = false;
+
+    if ($request->hasParameter('location_id')) {
+      $location_id = explode(',', $request->getParameter('location_id'));
+      $location_id = array_map(create_function('$value', 'return (int)$value;'), $location_id);
+      //$q->andWhereIn('e.location_id', $location_id);
+    }
+
+    if ($request->hasParameter('master_location_id')) {
+      $master_location_id = explode(',', $request->getParameter('master_location_id'));
+      $master_location_id = array_map(create_function('$value', 'return (int)$value;'), $master_location_id);
+
+      $mLocs = Doctrine_Core::getTable('dakLocation')
+             ->createQuery('l')
+             ->select('l.id, l.lft, l.rgt, l.root_id')
+             ->whereIn('l.id', $master_location_id)
+             ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
+             ->execute();
+
+      // alt 1 - a straightforward, but more cumputationally
+      // exhausting procedure, requires 1 extra query
+
+      if (empty($mLocs)) {
+        $noMatch = true;
+      } else {
+        $loc_q = Doctrine_Core::getTable('dakLocation')
+              ->createQuery('l')
+              ->select('l.id');
+
+        foreach ($mLocs as $m) {
+          $loc_q->orWhere('(l.root_id = ? AND l.lft >= ? AND l.rgt <= ?)', array($m['root_id'], $m['lft'], $m['rgt']));
+        }
+
+        $locs = $loc_q->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
+                       ->execute();
+
+        if (!isset($location_id)) $location_id = array();
+
+        foreach ($locs as $l) {
+          $location_id[] = $l['id'];
+        }
+      }
+
+      // alt 2
+
+      //$q->andWhereIn('e.location_id', $location_id);
+    }
+
+    if (!empty($location_id) && !$noMatch && ($request->hasParameter('location_id') || $request->hasParameter('master_location_id'))) {
+      $q->andWhereIn('e.location_id', $location_id);
+    }
+
+    if ($request->hasParameter('arranger_id')) {
+      $arranger_id = explode(',', $request->getParameter('arranger_id'));
+      $arranger_id = array_map(create_function('$value', 'return (int)$value;'), $arranger_id);
+      $q->andWhereIn('e.arranger_id', $arranger_id);
+    }
+
+    if ($request->hasParameter('category_id')) {
+      $category_id = explode(',', $request->getParameter('category_id'));
+      $category_id = array_map(create_function('$value', 'return (int)$value;'), $category_id);
+      $q->andWhereIn('e.category_id', $category_id);
+    }
+
+    $limit = 0;
+    $offset = 0;
+
+    $driver = strtolower(Doctrine_Manager::connection()->getDriverName());
+
+    if (!$noMatch) {
+      $historyList = $q->execute();
+
+      if ($driver == 'sqlite') {
+        $totalCount = count($historyList);
+
+        foreach ($historyList as &$h) {
+          $h['num'] = intval($h['num']);
+        }
+
+        unset($h);
+      } else {
+        $totalCount = $q->count();
+      }
+    } else {
+      $historyList = array();
+      $totalCount = 0;
+    }
+
+    $count = count($historyList);
+
+    $data = array(
+      'limit' => $limit,
+      'offset' => $offset,
+      'count' => $count,
+      'totalCount' => $totalCount,
+      'data' => $historyList,
+    );
+
+    if ($request->getRequestFormat() == 'json') {
+      return $this->returnJson($data);
+    } else {
+      $this->data = $data;
+    }
+  }
+
   protected function prepareEventPictures ($events, $format = 'primaryPicture') {
     $transformRouteArgs = array(
       'format' => strval($format),
