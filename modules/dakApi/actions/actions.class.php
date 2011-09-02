@@ -736,17 +736,13 @@ class dakApiActions extends sfActions
     if (!$noMatch) {
       $historyList = $q->execute();
 
-      if ($driver == 'sqlite') {
-        $totalCount = count($historyList);
-
-        foreach ($historyList as &$h) {
-          $h['num'] = intval($h['num']);
-        }
-
-        unset($h);
-      } else {
-        $totalCount = $q->count();
+      foreach ($historyList as &$h) {
+        $h['num'] = intval($h['num']);
       }
+
+      unset($h);
+
+      $totalCount = count($historyList);
     } else {
       $historyList = array();
       $totalCount = 0;
