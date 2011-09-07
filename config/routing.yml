@@ -25,7 +25,7 @@ dak_api_filteredEvents:
     sf_format: (?:json|xml|atom|ical)
 
 dak_api_historyList:
-  url: /api/:sf_format/historylist/*
+  url: /api/:sf_format/historyList/*
   param: { module: dakApi, action: historyList, sf_format: json }
   requirements:
     sf_format: (?:json|xml)
