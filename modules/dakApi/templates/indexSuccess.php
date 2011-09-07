@@ -187,8 +187,8 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
     </p>
 
     <p>
-      Each element in the response will contain the variable <tt>yearmonth</tt> and the variable <tt>num</tt>.
-      <tt>yearmonth</tt> is a string formatted as YYYYMM, where YYYY is the year and MM is the month.
+      Each element in the response will contain the variable <tt>timestamp</tt> and the variable <tt>num</tt>.
+      <tt>timestamp</tt> is a standard unix timestamp.
     </p>
 
     <span>

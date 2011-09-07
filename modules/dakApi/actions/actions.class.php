@@ -660,7 +660,8 @@ class dakApiActions extends sfActions
 
   public function executeHistoryList (sfWebRequest $request) {
     $q = Doctrine_Core::getTable('dakEvent')->getNumberOfEventsPerMonth()
-      ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
+      ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
+      ->where('e.is_public = ?', true);
 
     // $noMatch are used for subqueries. If a subquery returns an empty set, $noMatch is set
     // to true.
@@ -738,6 +739,7 @@ class dakApiActions extends sfActions
 
       foreach ($historyList as &$h) {
         $h['num'] = intval($h['num']);
+        $h['timestamp'] = intval($h['timestamp']);
       }
 
       unset($h);
