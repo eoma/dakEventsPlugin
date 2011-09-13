@@ -121,13 +121,13 @@ abstract class PlugindakEventTable extends Doctrine_Table
 		$q->select('COUNT(e.id) as num');
 
 		if ($driver == 'sqlite') {
-			$q->addSelect("strftime('%s', strftime('%Y-%m-01', e.startdate)) as timestamp");
+			$q->addSelect("strftime('%Y-%m-01', e.startdate) as date");
 		} else {
-			$q->addSelect("UNIX_TIMESTAMP(DATE_FORMAT(e.startdate, '%Y-%m-01')) as timestamp");
+			$q->addSelect("DATE_FORMAT(e.startdate, '%Y-%m-01') as date");
 		}
 
-		$q->groupBy('timestamp');
-		$q->orderBy('timestamp asc');
+		$q->groupBy('date');
+		$q->orderBy('date asc');
 
 		return $q;
 	}

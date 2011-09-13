@@ -187,8 +187,8 @@ http://eventserver/api/&lt;responseFormat&gt;/&lt;action&gt;?param1=value1&amp;p
     </p>
 
     <p>
-      Each element in the response will contain the variable <tt>timestamp</tt> and the variable <tt>num</tt>.
-      <tt>timestamp</tt> is a standard unix timestamp.
+      Each element in the response will contain the variable <tt>date</tt> and the variable <tt>num</tt>.
+      <tt>date</tt> is a standard ISO date (formatted as YYYY-MM-DD).
     </p>
 
     <span>

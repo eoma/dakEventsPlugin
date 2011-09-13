@@ -739,7 +739,7 @@ class dakApiActions extends sfActions
 
       foreach ($historyList as &$h) {
         $h['num'] = intval($h['num']);
-        $h['timestamp'] = intval($h['timestamp']);
+        $h['date'] = $h['date'];
       }
 
       unset($h);
