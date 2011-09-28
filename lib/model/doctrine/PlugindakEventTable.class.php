@@ -37,7 +37,7 @@ abstract class PlugindakEventTable extends Doctrine_Table
         $rootAlias = $q->getRootAlias();
 
         $q->select( $rootAlias . '.*, l.name, a.name, c.name, '
-                    . ' f.title, f.startDate, f.startTime, '
+                    . ' f.title, f.startDate, f.startTime, f.endDate, f.endTime, '
                     . 'pp.filename, pp.description, pp.width, pp.height, pp.mime_type, '
                     . 'p.filename, p.description, p.width, p.height, p.mime_type');
 
@@ -53,7 +53,7 @@ abstract class PlugindakEventTable extends Doctrine_Table
                     . 'festival_id, primaryPicture_id, covercharge, '
                     . 'updated_at, created_at, '
                     . 'l.name, a.name, c.name, '
-                    . 'f.title, f.startDate, f.startTime, '
+                    . 'f.title, f.startDate, f.startTime, f.endDate, f.endTime, '
                     . 'pp.filename, pp.description, pp.width, pp.height, pp.mime_type');
 
         return $q;
