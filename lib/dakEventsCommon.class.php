@@ -5,12 +5,12 @@ class dakEventsCommon
 
   public static function CKEditorToolbarBasic ()
   {
-    return array(array('Source', 'RemoveFormat', '-', 'Copy', 'Cut', 'Paste', 'PasteText', 'PasteFromWord'));
+    return array(array('Source', 'RemoveFormat', '-', 'Copy', 'Cut', 'PasteText'));
   }
 
   public static function CKEditorToolbarBlock ()
   {
-    return array(array('Source', 'RemoveFormat', '-', 'Copy', 'Cut', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Bold', 'Italic', '-', 'Link', 'Unlink'));
+    return array(array('Source', 'RemoveFormat', '-', 'Copy', 'Cut', 'PasteText', '-', 'Bold', 'Italic', '-', 'Link', 'Unlink'));
   }
 
   public static function CKEditorToolbarCommon ()

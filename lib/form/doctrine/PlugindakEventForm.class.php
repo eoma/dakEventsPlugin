@@ -109,6 +109,7 @@ wfd_dak_event_endDate_update_linked(date); }";
     $editor = $this->widgetSchema['leadParagraph']->getEditor();
     $editor->config['toolbar'] = dakEventsCommon::CKEditorToolbarBlock();
     $editor->config['entities'] = false;
+    $editor->config['forcePasteAsPlainText'] = true;
 
     $this->widgetSchema['description'] = new sfWidgetFormCKEditor();
     $editor = $this->widgetSchema['description']->getEditor();
