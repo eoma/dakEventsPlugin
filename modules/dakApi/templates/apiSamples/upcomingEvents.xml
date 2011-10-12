@@ -2,13 +2,14 @@
 <eventdb xmlns="https://intern.kvarteret.no/events/api">
   <limit>20</limit>
   <offset>0</offset>
-  <count>2</count>
-  <totalCount>2</totalCount>
+  <count>3</count>
+  <totalCount>3</totalCount>
   <data>
     <events>
       <event>
         <id>6</id>
         <title>Storm Weather Shanty Choir</title>
+        <url>http://someaddress/en/event/g</url>
         <leadParagraph>Storm Weather Shanty Choir</leadParagraph>
         <description></description>
         <startDate>2011-01-20</startDate>
@@ -35,6 +36,7 @@
       <event>
         <id>8</id>
         <title>Some event</title>
+        <url>http://someaddress/en/event/8</url>
         <leadParagraph>Some event text</leadParagraph>
         <startDate>2011-01-20</startDate>
         <startTime>22:00:00</startTime>
@@ -60,6 +62,7 @@
       <event>
         <id>9</id>
         <title>Optical Substance</title>
+        <url>http://someaddress/en/event/9</url>
         <leadParagraph></leadParagraph>
         <description></description>
         <startDate>2011-01-22</startDate>
@@ -87,6 +90,7 @@
           <title>Helhus</title>
           <startDate>2011-01-22</startDate>
           <startTime>22:00:00</startTime>
+          <url>http://someaddress/en/festival/3</url>
         </festival>
         <primaryPicture>
           <id>1</id>

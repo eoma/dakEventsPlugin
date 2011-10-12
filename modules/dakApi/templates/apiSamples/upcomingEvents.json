@@ -1,8 +1,8 @@
 {
     "limit": 20,
     "offset": 0,
-    "count": 2,
-    "totalCount": 2,
+    "count": 3,
+    "totalCount": 3,
     "data": [
         {
             "id": "6",
@@ -119,7 +119,8 @@
                 "id": "3",
                 "title": "Helhus",
                 "startDate": "2011-01-22",
-                "startTime": "22:00:00"
+                "startTime": "22:00:00",
+                "url": "http:\/\/someaddress\/en/festival/9"
             },
             "primaryPicture": {
                 "id": "1",
