@@ -219,10 +219,18 @@ dakArranger:
       autoincrement: true
     name: string(255)
     description: string
+    picture_id: {type: integer, notnull: false}
   indexes:
     name_idx:
       fields: [name]
       type: unique
+  relations:
+    logo:
+      class: dakPicture
+      local: picture_id
+      foreign: id
+      foreignAlias: arrangers
+      onDelete: SET NULL # Prevent deletion of arranger if picture is deleted
 
 dakArrangerUser:
   columns:
