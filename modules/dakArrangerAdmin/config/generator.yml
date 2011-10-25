@@ -17,7 +17,8 @@ generator:
           credentials: [admin]
         _delete:
           credentials: [admin]
-      fields:  ~
+      fields:
+        picture_id: { label: Logo, help: "Optional. You can specify a logo to be associated with the arranger." }
       list:
         max_per_page: 20
         sort: [name, asc]
