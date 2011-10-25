@@ -25,7 +25,27 @@ class PlugindakArrangerForm extends BasedakArrangerForm
       $this['created_at'], $this['updated_at'], $this['festivals_list']
     );
 
+    $logoChoice = array();
+    if (!$this->isNew() && $this->getObject()->relatedExists('logo')) {
+      $logoTemp = $this->getObject()->getLogo();
+      $logoChoice[$logoTemp->getPrimaryKey()] = $logoTemp;
+    }
 
+    $this->widgetSchema['picture_id'] = new sfWidgetFormChoiceAutocomplete(
+      array(
+        'choices' => $logoChoice,
+        'multiple' => false,
+        'class' => 'dakPictureAutocomplete',
+        'source' => '@dak_picture_admin_jsonsearch',
+        'selectTemplate' => dakPictureChoiceAutocomplete::jQueryUISelectTemplate(),
+        'resultTemplate' => dakPictureChoiceAutocomplete::jQueryUIResultTemplate(),
+        'focusField' => 'description',
+        'list_options' => array(
+          'renderer_class' => 'dakPictureChoiceAutocomplete',
+         ),
+      ),
+      array()
+    );
 
     if ($this->getOption('currentUser')->hasGroup('admin')) {
       if ( ! $this->isNew() ) {
