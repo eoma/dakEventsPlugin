@@ -31,12 +31,14 @@ class dakApiActions extends sfActions
 
     $q = Doctrine_Core::getTable('dakArranger')
       ->createQuery('a')
+      ->leftJoin('a.logo l')
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
     if (($this->subAction == 'get') && ($request->hasParameter('id'))) {
       $limit = 1;
       $offset = 0;
 
+      $q->select('a.*, l.filename, l.description, l.width, l.height, l.mime_type');
       $q->where('a.id = ?', $request->getParameter('id'));
       $q->limit($limit);
       $dbResponse = $q->execute();
@@ -51,7 +53,7 @@ class dakApiActions extends sfActions
         $offset = intval($request->getParameter('offset', 0));
       }
 
-      $q->select('a.name, a.id')
+      $q->select('a.name, a.id, l.description, l.width, l.height, l.mime_type')
         ->limit($limit)
         ->offset($offset);    
     
@@ -60,6 +62,18 @@ class dakApiActions extends sfActions
       $totalCount = $q->count();
       $count = count($dbResponse);
     }
+
+    $pictureFormat = $request->getParameter('pictureFormat', 'primaryPicture');
+    if ( !array_key_exists($pictureFormat, ImageHelper::FormatList()) ) {
+      $pictureFormat = 'primaryPicture';
+    }
+
+    foreach ($dbResponse as &$a) {
+      if (!empty($a['logo']['id'])) {
+        $a['logo'] = $this->preparePicture($a['logo'], $pictureFormat);
+      }
+    }
+    unset($a);
 
     $data = array(
       'limit' => $limit,
