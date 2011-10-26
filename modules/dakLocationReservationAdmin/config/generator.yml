@@ -24,6 +24,17 @@ generator:
 
         activateEmbedRequirementCatering: { label: Do you need catering? }
         embedRequirementCatering: { label: " " }
+
+        accessDate: { label: "Access date" }
+        accessTime: { label: "Access time" }
+
+        startDate: { label: "Start date" }
+        startTime: { label: "Start time" }
+
+        endDate: { label: "End date" }
+        endTime: { label: "End time" }
+
+        parentLocationReservation_id: { label: "Master reservation", help: "Connect this reservation to another reservation?" }
       list:
         sort: [created_at, desc]
         max_per_page: 10
