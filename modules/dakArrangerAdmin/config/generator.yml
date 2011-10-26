@@ -23,7 +23,7 @@ generator:
         max_per_page: 20
         sort: [name, asc]
         title: Arranger management
-        display: [=name, created_at, updated_at]
+        display: [_logo, =name, created_at, updated_at]
       filter:  ~
       form:    ~
       edit:
