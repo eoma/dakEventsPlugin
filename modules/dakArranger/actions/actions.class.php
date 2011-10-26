@@ -19,6 +19,7 @@ class dakArrangerActions extends sfActions
   {
     $q = Doctrine_Core::getTable('dakArranger')
       ->createQuery('a')
+      ->leftJoin('a.logo l')
       ->orderBy('a.name asc')
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY);
 
@@ -32,6 +33,7 @@ class dakArrangerActions extends sfActions
   {
     $this->arranger = Doctrine_Core::getTable('dakArranger')
       ->createQuery('a')
+      ->leftJoin('a.logo l')
       ->where('a.id = ?', $request->getParameter('id'))
       ->setHydrationMode(Doctrine_Core::HYDRATE_ARRAY)
       ->fetchOne();

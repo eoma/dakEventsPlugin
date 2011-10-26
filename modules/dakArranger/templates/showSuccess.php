@@ -13,6 +13,10 @@
 
 <p><small><?php echo __('Created at %1%. Updated at %2%.', array('%1%' => format_datetime($arranger['created_at']), '%2%' => format_datetime($arranger['updated_at']))) ?></small></p>
 
+<?php if($arranger['picture_id'] > 0)
+  include_partial('dakGlobal/picture', array('picture' => $arranger['logo'], 'format' => 'primaryPicture'));
+?>
+
 <a href="<?php echo url_for('@dak_arranger_index') ?>"><?php echo __('Back to list') ?></a>
 
 <h2 id="events"><?php echo __('Events scheduled for %1%', array('%1%' => $arranger['name'])) ?></h2>
