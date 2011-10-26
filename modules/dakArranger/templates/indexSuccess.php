@@ -4,7 +4,7 @@
 <?php slot('title', 'Arranger list') ?>
 <h1><?php echo __('Arranger list') ?></h1>
 
-<table>
+<table class="dak_padded_table">
   <thead>
     <tr>
       <th />

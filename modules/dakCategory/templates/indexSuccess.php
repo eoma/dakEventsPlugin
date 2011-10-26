@@ -3,7 +3,7 @@
 <?php slot('title', __('Category list')) ?>
 <h1><?php echo __('Category list') ?></h1>
 
-<table>
+<table class="dak_padded_table">
   <thead>
     <tr>
       <th><?php echo __('Name') ?></th>

@@ -4,7 +4,7 @@
 <?php echo slot('title', __('Location list')) ?>
 <h1><?php echo __('Location list') ?></h1>
 
-<table>
+<table class="dak_padded_table">
   <thead>
     <tr>
       <th><?php echo __('Name') ?></th>

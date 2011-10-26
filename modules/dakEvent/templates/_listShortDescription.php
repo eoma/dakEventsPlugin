@@ -20,7 +20,7 @@ if (isset($inAdmin) && ($inAdmin == true)) {
 
 ?>
 
-<table id="eventList">
+<table id="eventList" class="dak_padded_table">
   <tbody>
     <?php foreach ($events as $event): ?>
     <tr class="<?php echo HtmlList::Alternate('odd','even'); ?>">
