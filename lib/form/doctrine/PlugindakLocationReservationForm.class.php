@@ -23,13 +23,80 @@ class PlugindakLocationReservationForm extends BasedakLocationReservationForm
       throw new InvalidArgumentException("You must pass a user object as an option to this form!");
     }
 
+    $years = range(date('Y'), date('Y') + 3);
+
+    sfProjectConfiguration::getActive()->loadHelpers(array('Url'));
+	$calendarButtonPath = public_path(sfConfig::get('dak_events_module_web_dir') . '/images/calendar.png');
+
+    $this->widgetSchema['accessDate'] = new sfWidgetFormDate(array(
+      'format' => '%year%-%month%-%day%',
+      'years' => array_combine($years, $years),
+    ));
+
+    $accessDateJs = "function (date) {\n"
+                 . "	wfd_%s_update_linked(date);\n"
+                 . "	var t = this;\n"
+                 . "	$('#dak_location_reservation_startDate_jquery_control').datepicker('option', {mindate: $(t).datepicker('getDate')});\n"
+                 . "	wfd_dak_location_reservation_startDate_update_linked(date);\n"
+                 . "	$('#dak_location_reservation_endDate_jquery_control').datepicker('option', {mindate: $(t).datepicker('getDate')});\n"
+                 . "	wfd_dak_location_reservation_endDate_update_linked(date);\n"
+                 . "}\n";
+
+    $this->widgetSchema['accessDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['accessDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+        'image' => $calendarButtonPath,
+        'onSelect' => $accessDateJs,
+      )
+    );
+
+    $this->widgetSchema['startDate'] = new sfWidgetFormDate(array(
+      'format' => '%year%-%month%-%day%',
+      'years' => array_combine($years, $years),
+    ));
+
+    $startDateJs = "function (date) {\n"
+                 . "	wfd_%s_update_linked(date); var t = this;\n"
+                 . "	$('#dak_location_reservation_endDate_jquery_control').datepicker('option', {mindate: $(t).datepicker('getDate')});\n"
+                 . "	wfd_dak_location_reservation_endDate_update_linked(date);\n"
+                 . "}";
+
+    $this->widgetSchema['startDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['startDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+        'onSelect' => $startDateJs,
+        'image' => $calendarButtonPath,
+      )
+    );
+
+    $this->widgetSchema['endDate'] = new sfWidgetFormDate(array(
+      'format' => '%year%-%month%-%day%',
+      'years' => array_combine($years, $years),
+    ));
+
+    $this->widgetSchema['endDate'] = new dakWidgetFormJqueryDate(
+      array(
+        'date_widget' => $this->widgetSchema['endDate'],
+        'culture' => $this->getOption('currentUser')->getCulture(),
+        'image' => $calendarButtonPath,
+      )
+    );
+
+    $minutes = array();
+    for ($i = 0; $i < 60; $i = $i + 5) $minutes[$i] = sprintf("%02d", $i);
+
     // Set default start and end date to the next day
     $this->setDefault('accessDate', date('Y-m-d', time() + 86400));
-    $this->setDefault('accessTime', '19:00');
+    $this->setDefault('accessTime', '14:00');
+    $this->widgetSchema['accessTime']->setOption('minutes', $minutes);
     $this->setDefault('startDate', date('Y-m-d', time() + 86400));
     $this->setDefault('startTime', '19:00');
+    $this->widgetSchema['startTime']->setOption('minutes', $minutes);
     $this->setDefault('endDate', date('Y-m-d', time() + 86400));
     $this->setDefault('endTime', '21:00');
+    $this->widgetSchema['endTime']->setOption('minutes', $minutes);
     
     $this->setWidget('location_id', new sfWidgetFormDoctrineChoiceNestedSet(array(
       'model'     => 'dakLocation',
