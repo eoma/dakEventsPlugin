@@ -823,7 +823,7 @@ class dakApiActions extends sfActions
 
     foreach ($events as &$e) {
       if (!empty($e['primaryPicture']['id'])) {
-        $e['primaryPicture'] = $this->preparePicture($e, $format);
+        $e['primaryPicture'] = $this->preparePicture($e['primaryPicture'], $format);
       }
 
       if (!empty($e['pictures'])) {
