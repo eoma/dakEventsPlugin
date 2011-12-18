@@ -360,6 +360,10 @@ class dakApiActions extends sfActions
         }
       }
 
+      if ($request->hasParameter('titleContains')) {
+        $q->andWhere('f.title like ?', '%' . $request->getParameter('titleContains') . '%');
+      }
+
       $festivals = $q->execute();
 
       foreach ($festivals as &$f) {
@@ -565,6 +569,11 @@ class dakApiActions extends sfActions
         $endDate = $request->getParameter('endDate');
         $q->andWhere('e.startDate <= ? OR e.endDate <= ?', array($endDate, $endDate));
       }
+    }
+
+    if ($request->hasParameter('titleContains')) {
+      $this->extraArguments .= '&titleContains=' . rawurlencode($request->getParameter('titleContains'));
+      $q->andWhere('f.title like ?', '%' . $request->getParameter('titleContains') . '%');
     }
 
     // Don't fetch non-public events
