@@ -508,7 +508,7 @@ class dakApiActions extends sfActions
     }
 
     if ($request->hasParameter('festival_id')) {
-      $this->extraArguments .= 'festival_id=' . $request->getParameter('festival_id');
+      $this->extraArguments .= '&festival_id=' . $request->getParameter('festival_id');
       $festival_id = explode(',', $request->getParameter('festival_id'));
       $festival_id = array_map(create_function('$value', 'return (int)$value;'), $festival_id);
       $q->andWhereIn('e.festival_id', $festival_id);
@@ -516,6 +516,10 @@ class dakApiActions extends sfActions
 
     $dayspan = intval($request->getParameter('dayspan', -1));
     $noCurrentEvents = (bool) $request->getParameter('noCurrentEvents', false);
+
+    if ($noCurrentEvents) {
+      $this->extraArguments .= '&noCurrentEvents=1';
+    }
 
     if ($history == 'past') {
       $this->extraArguments .= '&history=past';
@@ -574,6 +578,10 @@ class dakApiActions extends sfActions
     if ($request->hasParameter('titleContains')) {
       $this->extraArguments .= '&titleContains=' . rawurlencode($request->getParameter('titleContains'));
       $q->andWhere('e.title like ?', '%' . $request->getParameter('titleContains') . '%');
+    }
+
+    if (!empty($this->extraArguments)) {
+      $this->extraArguments = substr($this->extraArguments, 1);
     }
 
     // Don't fetch non-public events
