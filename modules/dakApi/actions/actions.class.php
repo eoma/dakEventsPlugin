@@ -573,7 +573,7 @@ class dakApiActions extends sfActions
 
     if ($request->hasParameter('titleContains')) {
       $this->extraArguments .= '&titleContains=' . rawurlencode($request->getParameter('titleContains'));
-      $q->andWhere('f.title like ?', '%' . $request->getParameter('titleContains') . '%');
+      $q->andWhere('e.title like ?', '%' . $request->getParameter('titleContains') . '%');
     }
 
     // Don't fetch non-public events
