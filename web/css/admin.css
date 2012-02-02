@@ -83,3 +83,9 @@
   float: left;
   padding: 0.5em;
 }
+
+#sf_admin_container .radio_list li,
+#sf_admin_container .checkbox_list li
+{
+  display: inline-block;
+}
