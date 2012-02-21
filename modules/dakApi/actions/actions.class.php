@@ -364,6 +364,8 @@ class dakApiActions extends sfActions
         $q->andWhere('f.title like ?', '%' . $request->getParameter('titleContains') . '%');
       }
 
+      $q->limit($limit)->offset($offset);
+
       $festivals = $q->execute();
 
       foreach ($festivals as &$f) {
