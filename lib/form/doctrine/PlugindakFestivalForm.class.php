@@ -74,17 +74,25 @@ wfd_dak_festival_endDate_update_linked(date); }";
       'add_empty' => true,
     )));
 
-    $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(
-        array(
-          // Add a date validator, require that end date and time is at least 
-          // bigger than start date and time
-          new sfValidatorCallback(array('callback' => array($this, 'checkStartAndEndDateTime'))),
+    $validatorRequirements = array(
+      // Add a date validator, require that end date and time is at least
+      // bigger than start date and time
+      new sfValidatorCallback(array('callback' => array($this, 'checkStartAndEndDateTime'))),
 
-          // Add location validator, check if either location_id or customLocation is set
-          new sfValidatorCallback(array('callback' => array($this, 'checkIfLocationIsSet'))),
+      // Add location validator, check if either location_id or customLocation is set
+      new sfValidatorCallback(array('callback' => array($this, 'checkIfLocationIsSet'))),
+    );
+
+    if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
+      $validatorRequirements[] = new sfValidatorCallback(
+        array(
+          'callback' => array($this, 'ensureNormalUserHasCorrectArrangers')
         )
-      )
+      );
+    }
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorAnd($validatorRequirements)
     );
 
     $this->widgetSchema['title']->setAttribute('size', 64);
@@ -108,13 +116,6 @@ wfd_dak_festival_endDate_update_linked(date); }";
     $this->validatorSchema['arrangers_list']->setOption('required', true);
     $this->widgetSchema['arrangers_list']->setOption('expanded', true);
 
-    if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
-      $user = $this->getOption('currentUser')->getGuardUser();
-
-      $this->widgetSchema['arrangers_list']->setOption('query',
-        Doctrine_Core::getTable('dakArranger')->createQuery('a')->select('a.*')->leftJoin('a.users u')->where('u.user_id = ?', $user->getId())
-      );
-    }
   }
 
   public function checkIfLocationIsSet ($validator, $values) {
@@ -129,6 +130,44 @@ wfd_dak_festival_endDate_update_linked(date); }";
     }
 
     return $values;
+  }
+
+  /**
+   * Ensures that a user has checked at least one related arranger
+   * when creating/editing a festival. This method is not required for
+   * administrators.
+   */
+  public function ensureNormalUserHasCorrectArrangers($validator, $values) {
+    $arrangersForUser = dakEventsUser::getArrangerIds($this->getOption('currentUser'));
+    if (count(array_intersect($values['arrangers_list'], $arrangersForUser)) == 0) {
+
+      $errorMsg = "You must specify at least an arranger that you are related to!";
+
+      $error = new sfValidatorError($validator, $errorMsg);
+      throw new sfValidatorErrorSchema($validator, array(
+        'arrangers_list' => $error,
+      ));
+
+    }
+
+    return $values;
+  }
+
+  /**
+   * If the user is not an arranger, this method
+   * sets the user's connected arrangers as default
+   */
+  public function updateDefaultsFromObject() {
+    parent::updateDefaultsFromObject();
+
+    if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
+      if (isset($this->widgetSchema['arrangers_list']) && $this->isNew()) {
+        $this->setDefault('arrangers_list',
+          dakEventsUser::getArrangerIds($this->getOption('currentUser'))
+        );
+      }
+    }
+
   }
 
   public function checkStartAndEndDateTime($validator, $values) {
