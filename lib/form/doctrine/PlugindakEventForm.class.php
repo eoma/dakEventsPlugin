@@ -77,9 +77,20 @@ wfd_dak_event_endDate_update_linked(date); }";
       'add_empty' => true,
     )));
 
+    $festivalQuery = Doctrine_Core::getTable('dakFestival')
+                  ->createQuery('f')
+                  ->select('f.*')
+                  ->where('f.endDate >= ?', date('Y-m-d', time() - 86400));
+
+    if ( ! $this->getOption('currentUser')->hasGroup('admin') ) {
+      $festivalQuery->leftJoin('f.arrangers a')
+                    ->andWhereIn('a.id', dakEventsUser::getArrangerIds($this->getOption('currentUser')));
+    }
+
     $this->widgetSchema['festival_id']->setOption('query',
-      // Limit the number of festivals returned to the ones that ended yesterday or further into the future
-      Doctrine_Core::getTable('dakFestival')->createQuery('f')->select('f.*')->where('f.endDate >= ?', date('Y-m-d', time() - 86400))
+      // Limit the number of festivals returned to the ones that ended yesterday or
+      // further into the future, and which have the arangers the current user has access to.
+      $festivalQuery
     );
 
     if ($this->getOption('festival_id', false)) {
