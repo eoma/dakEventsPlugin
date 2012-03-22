@@ -39,7 +39,7 @@ class myHTMLPurifier extends HTMLPurifier {
 		$config->set('HTML.AllowedElements', 'a,strong,em,br,p,span,img,li,ul,ol,blockquote');
 
 		// these are allowed html attributes, coool!
-		$config->set('HTML.AllowedAttributes', 'a.href,a.title,span.style,span.class,img.src,img.style,img.alt,img.title,img.width,img.height');
+		$config->set('HTML.AllowedAttributes', 'a.href,a.title,img.src,img.alt,img.title');
 
 		return $this->purify($value, $config);
 	}
