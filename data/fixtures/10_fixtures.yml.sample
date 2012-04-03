@@ -94,6 +94,7 @@ dakEvent:
     commonLocation: <?php echo $locations[mt_rand(0,5)] . "\n" ?>
     arranger: <?php echo $arrangers[mt_rand(0,4)] . "\n" ?>
     is_public: true
+    age_limit: <?php echo ((mt_rand(0,1) > 0) ? mt_rand(18, 21) : "null") . "\n"; ?>
 <?php endfor ?>
 
 dakEventCategory:

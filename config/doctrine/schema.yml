@@ -329,6 +329,7 @@ dakEvent: # This table will hold all events.
     festival_id: integer
     primaryPicture_id: integer
     covercharge: string(64)
+    age_limit: string(64)
   relations:
     arranger:
       class: dakArranger

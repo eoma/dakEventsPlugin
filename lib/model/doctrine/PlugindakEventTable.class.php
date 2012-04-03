@@ -51,7 +51,7 @@ abstract class PlugindakEventTable extends Doctrine_Table
                     . 'endDate, endTime, is_accepted, is_public, '
                     . 'customLocation, location_id, arranger_id, '
                     . 'festival_id, primaryPicture_id, covercharge, '
-                    . 'updated_at, created_at, '
+                    . 'age_limit, updated_at, created_at, '
                     . 'l.name, a.name, c.name, '
                     . 'f.title, f.startDate, f.startTime, f.endDate, f.endTime, '
                     . 'pp.filename, pp.description, pp.width, pp.height, pp.mime_type');
