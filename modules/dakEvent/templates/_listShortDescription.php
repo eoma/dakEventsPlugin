@@ -20,14 +20,16 @@ if (isset($inAdmin) && ($inAdmin == true)) {
 
 ?>
 
-<table id="eventList" class="dak_padded_table">
+<table id="eventList" class="dak_padded_table dak">
   <tbody>
     <?php foreach ($events as $event): ?>
     <tr class="<?php echo HtmlList::Alternate('odd','even'); ?>">
-      <td>
-        <?php if($event['primaryPicture_id'] > 0) 
+      <td class="cf">
+        <div class="primaryPicture">
+        <?php if($event['primaryPicture_id'] > 0)
           include_partial('dakGlobal/picture', array('picture' => $event['primaryPicture'], 'format' => 'list'));
         ?>
+        </div>
         <div class="shortEvent">
           <?php echo link_to($event['title'], $rp['event'] . '_show?id=' . $event['id']) ?><br />
           <span>

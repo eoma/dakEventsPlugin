@@ -1,24 +1,41 @@
-.odd {
-  background-color: #c9c5db;
+.dak .odd {
+  /*background-color: #c9c5db;*/
 }
 
-.even {
-  background-color: #a6a3b5;
+.dak .even {
+  /*background-color: #a6a3b5;*/
 }
 
 .dak_padded_table td {
-  padding: 0.5em;
+  padding: 8px;
 }
 
 #eventList {
-  width: 50em;
+  width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
-#eventList td img {
+#eventList tr {
+  border-top: 1px solid #aaa;
+}
+
+#eventList tr:first-child {
+  border-top: none;
+}
+
+#eventList td .primaryPicture {
+  width: 130px;
+  min-height: 100px;
   float: left;
-  padding-right: 0.5em;
+  display: inline-block;
+}
+
+#eventList td .shortEvent {
+  float: left;
+  display: inline-block;
+  margin-left: 8px;
+  width: 546px; /* 700 - 130 - 2*8 - 8 */
 }
 
 #eventContent p:first-child {
@@ -28,4 +45,12 @@
 
 #eventContent p {
   margin-bottom: 1em;
+}
+
+.dak_pagination {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 200px;
+  text-align: center;
 }
