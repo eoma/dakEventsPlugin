@@ -53,7 +53,7 @@ class dakApiActions extends sfActions
         $offset = intval($request->getParameter('offset', 0));
       }
 
-      $q->select('a.name, a.id, l.description, l.width, l.height, l.mime_type')
+      $q->select('a.name, a.id, a.description, l.description, l.width, l.height, l.mime_type')
         ->limit($limit)
         ->offset($offset);    
     
