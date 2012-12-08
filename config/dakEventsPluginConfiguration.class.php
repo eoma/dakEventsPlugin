@@ -12,6 +12,19 @@ class dakEventsPluginConfiguration extends sfPluginConfiguration
 
     $this->dispatcher->connect('user.method_not_found', array('dakEventsUser', 'methodNotFound'));
 
+    if (sfConfig::get('app_dakEvents_pingOnUpdate')) {
+      /* Only enable eventlisteners if the config pingOnUpdate exists
+       * under the name dakEvents
+       */
+
+      /* Eventlisteners */
+      $this->dispatcher->connect('dak.event.saved', array('dakEventsPing', 'pingEvent'));
+      $this->dispatcher->connect('dak.event.deleted', array('dakEventsPing', 'pingEvent'));
+
+      $this->dispatcher->connect('dak.festival.saved', array('dakEventsPing', 'pingFestival'));
+      $this->dispatcher->connect('dak.festival.deleted', array('dakEventsPing', 'pingFestival'));
+    }
+
     $adminModules = array(
       'dakEventAdmin',
       'dakFestivalAdmin',
