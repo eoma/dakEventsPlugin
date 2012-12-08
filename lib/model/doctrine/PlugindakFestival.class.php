@@ -59,4 +59,22 @@ abstract class PlugindakFestival extends BasedakFestival
     $this->_set('leadParagraph', trim($this->purifier->blockHtml($value)));
   }
 
+  public function postSave($event) {
+    parent::postSave($event);
+
+	// Takes care of notifying eventlisteners that
+	// some data hase changed
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+
+     $dispatcher->notify(new sfEvent(null, 'dak.festival.saved', array('id' => $this->getId())));
+ }
+
+  public function postDelete($event) {
+    parent::postDelete($event);
+
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+
+    $dispatcher->notify(new sfEvent(null, 'dak.festival.deleted', array('id' => $this->getId())));
+
+  }
 }

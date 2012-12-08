@@ -15,6 +15,8 @@ abstract class PlugindakEvent extends BasedakEvent
 
   protected $purifier = null;
 
+  protected $previousIsPublic = null;
+
   /**
    * Returns recurring location if location_id is set, 
    * if not it will return custom location
@@ -49,5 +51,36 @@ abstract class PlugindakEvent extends BasedakEvent
     $this->myHTMLPurifierInstance();
 
     $this->_set('leadParagraph', trim($this->purifier->blockHtml($value)));
+  }
+
+  public function setIsPublic ($value) {
+    $this->previousIsPublic = $this->getIsPublic();
+
+	$this->_set('is_public', $value);
+  }
+
+  public function postSave($event) {
+    parent::postSave($event);
+
+	// Takes care of notifying eventlisteners that
+	// some data hase changed
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+
+    if ($this->getIsPublic()) {
+	  // Notify event listeners of updated data
+      $dispatcher->notify(new sfEvent(null, 'dak.event.saved', array('id' => $this->getId())));
+    } elseif (($this->previousIsPublic === true) && !$this->getIsPublic()) {
+	  // Notify event listeners of data that should be removed
+      $dispatcher->notify(new sfEvent(null, 'dak.event.deleted', array('id' => $this->getId())));
+    }
+ }
+
+  public function postDelete($event) {
+    parent::postDelete($event);
+
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+
+    $dispatcher->notify(new sfEvent(null, 'dak.event.deleted', array('id' => $this->getId())));
+
   }
 }
