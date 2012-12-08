@@ -188,3 +188,23 @@ to be defined in the backend's view.yml or layout.php
 
 It's recommended that you set the backend to be secure by default, but you've probably
 did that already, as it's assumed you've install the plugin [sfDoctrineGuardPlugin][].
+
+##### Application settings
+
+If you want to enable push updates, you should add these fields to your 
+backend application app.yml:
+
+all:
+  dakEvents:
+    pingOnUpdate:
+      kvarteretWp:
+        url: 'http://some-page/some/path/xmlrc.php'
+        type: xmlrpc-wp
+        user: admin
+        pass: test
+        methodName: dak.xmlrpc
+        triggerOn: # will by default trigger on all updates
+          arranger_id: [1]
+      kvarteretPing:
+        type: ping
+        url: 'http://some-page/some/path/somePingHandler.php'
