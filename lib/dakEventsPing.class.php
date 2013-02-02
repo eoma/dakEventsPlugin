@@ -149,10 +149,16 @@ class dakEventsPing {
 			$queryArgs[] = $payLoad;
 		}
 
+		$ixr->debug = 1;
+
+		ob_start();
 		if (!call_user_func_array(array($ixr, 'query'), $queryArgs)) {
+			$s = ob_get_contents();
 			sfContext::getInstance()
 				->getLogger()
-				->debug('{' . __METHOD__ . '} err for ' . $clientName . ':' . $ixr->getErrorCode() . ": " . $ixr->getErrorMessage());
+				->debug('{' . __METHOD__ . '} err for ' . $clientName . ':' . $ixr->getErrorCode() . ": " . $ixr->getErrorMessage() . " :: " . $s );
 		}
+
+		ob_end_clean();
 	}
 }
