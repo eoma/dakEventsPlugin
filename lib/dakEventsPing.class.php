@@ -149,7 +149,7 @@ class dakEventsPing {
 			$queryArgs[] = $payLoad;
 		}
 
-		if (!call_user_func(array($ixr, 'query'), $queryArgs)) {
+		if (!call_user_func_array(array($ixr, 'query'), $queryArgs)) {
 			sfContext::getInstance()
 				->getLogger()
 				->debug('{' . __METHOD__ . '} err for ' . $clientName . ':' . $ixr->getErrorCode() . ": " . $ixr->getErrorMessage());
