@@ -23,6 +23,11 @@ class dakEventsPluginConfiguration extends sfPluginConfiguration
 
       $this->dispatcher->connect('dak.festival.saved', array('dakEventsPing', 'pingFestival'));
       $this->dispatcher->connect('dak.festival.deleted', array('dakEventsPing', 'pingFestival'));
+
+      /* This one is responsible for actually executing any pending ping operations.
+	   * It should only be dispatched after a successful sql commit
+	   */
+      $this->dispatcher->connect('dak.ping.execute', array('dakEventsPing', 'execute'));
     }
 
     $adminModules = array(

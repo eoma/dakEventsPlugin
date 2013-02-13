@@ -6,6 +6,8 @@ class dakEventsPing {
 
 	private $config = array();
 
+	private $pingOperations = array();
+
 	private static $instance = null;
 
 	public function __construct() {
@@ -58,8 +60,7 @@ class dakEventsPing {
 			//sfContext::getInstance()->getLogger()->debug('{'. __CLASS__ . '}' . ' payload: ' . $json);
 		}
 
-
-		$inst->doRequests($args);
+		$inst->pingOperations[] = $args;
 	}
 
 	public static function pingFestival (sfEvent $festival, $result = null) {
@@ -77,7 +78,18 @@ class dakEventsPing {
 
 		//$args['id'] = 2; // test og debug
 
-		$inst->doRequests($args);
+		$inst->pingOperations[] = $args;
+	}
+
+    public static function execute(sfEvent $e, $result = null) {
+		$inst = self::getInstance();
+
+		while (!empty($inst->pingOperations)) {
+			$op = array_pop($inst->pingOperations);
+			if ($op != null) {
+				$inst->doRequests($op);
+			}
+		}
 	}
 
 	public function doRequests(array $args) {

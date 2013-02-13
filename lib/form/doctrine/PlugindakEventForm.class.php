@@ -251,4 +251,15 @@ wfd_dak_event_endDate_update_linked(date); }";
 
     return $values;
   }
+
+  public function save($con = null) {
+    $retval = parent::save($con);
+
+
+    // Notify the ping class that data has been changed and stored to the database
+    $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
+    $dispatcher->notify(new sfEvent(null, 'dak.ping.execute', null));
+
+	return $retval;
+  }
 }
