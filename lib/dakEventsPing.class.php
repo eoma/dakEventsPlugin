@@ -49,17 +49,6 @@ class dakEventsPing {
 			$args['type'] = 'delete';
 		}
 
-		//$args['id'] = 2; // test og debug
-
-		if ($args['type'] == 'update') {
-			// Make a response object if client wants it as a payload to the request,
-			// just in case.
-			// The following does not work
-			//$dakApi = new dakApiActions();
-			//$json = $dakApi->fetchEvent($args['id']);
-			//sfContext::getInstance()->getLogger()->debug('{'. __CLASS__ . '}' . ' payload: ' . $json);
-		}
-
 		$inst->pingOperations[] = $args;
 	}
 
@@ -75,8 +64,6 @@ class dakEventsPing {
 		if ($festival->getName() == "dak.festival.deleted") {
 			$args['type'] = 'delete';
 		}
-
-		//$args['id'] = 2; // test og debug
 
 		$inst->pingOperations[] = $args;
 	}
