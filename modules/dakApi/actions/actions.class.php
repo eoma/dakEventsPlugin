@@ -51,6 +51,8 @@ class dakApiActions extends sfActions
       $offset = 0;
       if ($limit > 0) {
         $offset = intval($request->getParameter('offset', 0));
+      } else {
+        $limit = 20;
       }
 
       $q->select('a.name, a.id, a.description, l.description, l.width, l.height, l.mime_type')
@@ -111,6 +113,8 @@ class dakApiActions extends sfActions
       $offset = 0;
       if ($limit > 0) {
         $offset = intval($request->getParameter('offset', 0));
+      } else {
+        $limit = 20;
       }
 
       $q->select('c.name, c.id')
@@ -159,6 +163,8 @@ class dakApiActions extends sfActions
       $offset = 0;
       if ($limit > 0) {
         $offset = intval($request->getParameter('offset', 0));
+      } else {
+        $limit = 20;
       }
 
       $q->select('l.name, l.id, l.lft, l.rgt, l.level, l.root_id')
@@ -302,7 +308,10 @@ class dakApiActions extends sfActions
       $offset = 0;
       if ($limit > 0) {
         $offset = intval($request->getParameter('offset', 0));
+      } else {
+        $limit = 20;
       }
+
 
       $history = $request->getParameter('history', 'future');
 
@@ -598,6 +607,8 @@ class dakApiActions extends sfActions
     $offset = 0;
     if ($limit > 0) {
       $offset = intval($request->getParameter('offset', 0));
+    } else {
+      $limit = 20;
     }
 
     $q->limit($limit)->offset($offset);
