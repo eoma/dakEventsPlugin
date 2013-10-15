@@ -139,6 +139,7 @@ class dakEventsPing {
 			$clientConfig['methodName'],
 			$clientConfig['user'],
 			$clientConfig['pass'],
+			$clientConfig['key'],
 			$args['type'],
 			$args['arrangement'],
 			$args['id']
