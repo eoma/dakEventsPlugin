@@ -229,6 +229,7 @@ wfd_dak_event_endDate_update_linked(date); }";
     $startTimestamp = strtotime($startDate . ' ' . $startTime);
     $endTimestamp = strtotime($endDate . ' ' . $endTime);
 
+	/*
     if ($startTimestamp < time()) {
       $errorMsg = "You can't set start date and time to the past";
 
@@ -238,6 +239,7 @@ wfd_dak_event_endDate_update_linked(date); }";
 	'startTime' => $error,
       ));
     }
+	*/
 
     if ($endTimestamp < $startTimestamp) {
       $errorMsg = "End date and time must be later than start date and time";
