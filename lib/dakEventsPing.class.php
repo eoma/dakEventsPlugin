@@ -39,8 +39,6 @@ class dakEventsPing {
 	public static function pingEvent (sfEvent $event, $result = null) {
 		$inst = self::getInstance();
 
-		self::debugLog('{' . __METHOD__ . '} ping type ' . $event->getName() );
-
 		$args = array(
 			'type' => 'update',
 			'arrangement' => 'event',
