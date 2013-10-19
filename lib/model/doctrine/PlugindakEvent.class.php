@@ -81,6 +81,7 @@ abstract class PlugindakEvent extends BasedakEvent
     $dispatcher = ProjectConfiguration::getActive()->getEventDispatcher();
 
     $dispatcher->notify(new sfEvent(null, 'dak.event.deleted', array('id' => $this->getId())));
+    $dispatcher->notify(new sfEvent(null, 'dak.ping.execute', null));
 
   }
 }
