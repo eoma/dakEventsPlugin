@@ -25,7 +25,7 @@ class dakEventsPing {
 		}
 		unset($c);
 
-		sfContext::getInstance()->getLogger()->debug('{'. __CLASS__ . '}' . var_export($this->config, true));
+		self::debugLog('{'. __CLASS__ . '}' . var_export($this->config, true));
 	}
 
 	public static function getInstance() {
@@ -38,6 +38,8 @@ class dakEventsPing {
 
 	public static function pingEvent (sfEvent $event, $result = null) {
 		$inst = self::getInstance();
+
+		self::debugLog('{' . __METHOD__ . '} ping type ' . $event->getName() );
 
 		$args = array(
 			'type' => 'update',
@@ -80,12 +82,12 @@ class dakEventsPing {
 	}
 
 	public function doRequests(array $args) {
-		sfContext::getInstance()->getLogger()->debug('{'. __CLASS__ . '}' . ' sending request with params:' . var_export($args, true));
+		self::debugLog('{'. __CLASS__ . '}' . ' sending request with params:' . var_export($args, true));
 
 		foreach ($this->config as $clientName => $clientConfig) {
 			if ($clientConfig['type'] == 'xmlrpc-wp') {
 				$this->xmlrpcWpRequest($clientName, $clientConfig, $args);
-			} else if ($clientCOnfig['type'] == 'ping') {
+			} else if ($clientConfig['type'] == 'ping') {
 				$this->pingClient($clientConfig['url'], $args['type'], $args['arrangement'], $args['id'], $args['key']);
 			}
 		}
@@ -154,11 +156,15 @@ class dakEventsPing {
 		ob_start();
 		if (!call_user_func_array(array($ixr, 'query'), $queryArgs)) {
 			$s = ob_get_contents();
-			sfContext::getInstance()
-				->getLogger()
-				->debug('{' . __METHOD__ . '} err for ' . $clientName . ':' . $ixr->getErrorCode() . ": " . $ixr->getErrorMessage() . " :: " . $s );
+			self::debugLog('{' . __METHOD__ . '} err for ' . $clientName . ':' . $ixr->getErrorCode() . ": " . $ixr->getErrorMessage() . " :: " . $s );
 		}
 
 		ob_end_clean();
+	}
+
+	protected static function debugLog($text) {
+		if (sfContext::hasInstance()) {
+			sfContext::getInstance()->getLogger()->debug($text);
+		}
 	}
 }
